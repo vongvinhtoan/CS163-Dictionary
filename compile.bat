@@ -1,0 +1,1 @@
+.\build\mingw64\bin\g++ -L".\build\libs\SFML-2.5.1\lib" -I".\build\libs\SFML-2.5.1\include" -I".\build\libs\jsoncpp" -I".\include" .\src\*.cpp .\build\libs\jsoncpp\jsoncpp.cpp -o main.exe -lsfml-graphics -lsfml-window -lsfml-system -lcomdlg32 -std=c++17 && .\main.exe
