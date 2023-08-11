@@ -8,6 +8,8 @@ private:
     // Variables
     Json::Value dataset_Eng_Eng;
     Json::Value dataset_Eng_Vie;
+    Json::Value dataset_Vie_Eng;
+    Json::Value dataset_Emoji;
 
 public:
     Json::Value get_dataset(std::string dataset_name);  
