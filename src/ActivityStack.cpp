@@ -72,7 +72,7 @@ bool ActivityStack::isEmpty() const
 Activity::Ptr ActivityStack::createActivity(int activityID)
 {
     auto found = mFactories.find(activityID);
-    assert(found != std::nullopt);
+    assert(found != mFactories.end());
 
     return found->second();
 }

@@ -3,7 +3,7 @@
 #include <Activity.hpp>
 #include <SFML/Graphics.hpp>
 #include <functional>
-#include <Map.hpp>
+#include <map>
 
 class ActivityStack
 {
@@ -43,7 +43,7 @@ private:
     std::vector<Activity::Ptr>                      mStack;
     std::vector<PendingChange>                      mPendingList;
     Activity::Context                               mContext;
-    Map<int, std::function<Activity::Ptr()>>        mFactories;
+    std::map<int, std::function<Activity::Ptr()>>   mFactories;
 };
 
 template <typename T>

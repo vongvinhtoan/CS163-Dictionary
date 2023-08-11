@@ -2,7 +2,7 @@
 
 #include <PersistentTrie.hpp>
 #include <string>
-#include <Map.hpp>
+#include <map>
 
 class Trie
 {
@@ -11,7 +11,7 @@ private:
 
     struct Node
     {
-        Map<char, Node*> children;
+        std::map<char, Node*> children;
         bool isWord;
         std::string definition;
         Node* root;
