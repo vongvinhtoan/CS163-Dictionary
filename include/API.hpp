@@ -8,7 +8,10 @@ class API
 {
 public:
     enum DictionaryId {
-        blablalba,
+        VIET_ENG,
+        ENG_ENG,
+        ENG_VIET,
+        EMOJI,
         NONE
     };
     
@@ -18,7 +21,7 @@ public:
         std::string description;
     };
     
-private:
+protected:
     Database &database;
 
 public:

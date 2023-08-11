@@ -1,9 +1,20 @@
 #pragma once
 
 #include <API.hpp>
+#include <PersistentTrie.hpp>
 
 class API_Dummy_1 : public API
 {
+private:
+    // Variables
+
+private:
+    // Functions
+
+public:
+    API_Dummy_1();
+    ~API_Dummy_1();
+
 public:
     virtual void set_dictionary(DictionaryId id);
     virtual DictionaryId get_dictionary_id();
