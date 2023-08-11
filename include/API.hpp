@@ -12,7 +12,7 @@ public:
         ENG_ENG,
         ENG_VIET,
         EMOJI,
-        NONE
+        SIZE
     };
     
     struct VersionDescriptor

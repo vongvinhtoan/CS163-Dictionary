@@ -1,11 +1,16 @@
 #pragma once
 
+#include <json.h>
+#include <fstream>
+
 class Database {
 private:
     // Variables
+    Json::Value dataset_Eng_Eng;
+    Json::Value dataset_Eng_Vie;
 
 public:
-    // Public functions
+    Json::Value get_dataset(std::string dataset_name);  
 
 public:
     static Database& get_instance() {
