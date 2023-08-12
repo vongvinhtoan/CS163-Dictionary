@@ -10,7 +10,7 @@ class PersistentTrie
 private:
     std::vector<Trie*> children;
     Trie* insert(const std::string &word, const std::string &definition, int index);
-
+    bool check(const std::string &word,const std::string &defininion, int index);
 public:
     PersistentTrie();
     ~PersistentTrie();

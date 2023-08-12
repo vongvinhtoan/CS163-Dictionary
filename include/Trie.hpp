@@ -13,7 +13,7 @@ private:
     {
         std::map<char, Node*> children;
         bool isWord;
-        std::string definition;
+        std::vector<std::string> definition;
         Node* root;
 
         Node();
@@ -23,9 +23,10 @@ private:
 
     Node* root;
     std::string find(Node* node, const std::string &key);
-
+    void insert(Node* node, const std::string &key, const std::string &definition);
 public:
     Trie();
     ~Trie();
     std::string find(const std::string &key);
+    void insert(const std::string &key, const std::string &definition);
 };
