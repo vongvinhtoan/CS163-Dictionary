@@ -2,11 +2,30 @@
 
 void API_Dummy_0::set_dictionary(DictionaryId id)
 {
+    switch(id){
+        case VIET_ENG:
+            database.get_dataset("Viet_Eng");
+            break;
+        case ENG_VIET:
+            database.get_dataset("Eng_Viet");
+            break;
+        case ENG_ENG:
+            database.get_dataset("Eng_Eng");
+            break;
+        case EMOJI:
+            database.get_dataset("Emoji");
+            break;
+        case SLANG_WORD:
+            database.get_dataset("Slang_Word");
+            break;
+        default:
+            break;
+    }
 }
 
 API::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return DictionaryId::NONE;
+    return DictionaryId::SIZE;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)

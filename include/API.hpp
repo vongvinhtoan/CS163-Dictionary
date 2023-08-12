@@ -12,6 +12,7 @@ public:
         ENG_ENG,
         ENG_VIET,
         EMOJI,
+        SLANG_WORD,
         SIZE
     };
     

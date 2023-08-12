@@ -28,6 +28,8 @@ Json::Value Database::get_dataset(std:: string dataset_name){
         dataset = dataset_Emoji;
     }else if(dataset_name == "Slang_Word"){
         dataset= dataset_Slang_Word;
+    }else {
+        return Json::Value();
     }
 
     return dataset;
