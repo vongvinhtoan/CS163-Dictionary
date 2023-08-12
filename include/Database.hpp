@@ -10,7 +10,7 @@ private:
     Json::Value dataset_Eng_Vie;
     Json::Value dataset_Vie_Eng;
     Json::Value dataset_Emoji;
-
+    Json::Value dataset_Slang_Word;
 public:
     Json::Value get_dataset(std::string dataset_name);  
 
