@@ -47,17 +47,17 @@ Trie* PersistentTrie::insert(const std::string &word, const std::string &definit
      Trie::Node* dummy=children[index]->root;   
      for(int i=0;i<word.size();i++){
         for(auto x:dummy->children){
-            if(word[0]!='x.first')node->children[x.first]=x.second;  
+            if(word[i]!='x.first')node->children[x.first]=x.second;  
             else{
                 node->children[word[i]]=new Trie::Node();
                 node= node->children[word[i]];
             }
+        }         
     }
     node->isWord=true;
     node->definition.push_back(definition);
-    return new_trie;        
+    return new_trie;
 }
-
 void PersistentTrie::insert(const std::string &key, const std::string &definition){
     
     children.push_back(insert(key, definition, children.size()));
