@@ -9,7 +9,7 @@ private:
     // Variables
 
 private:
-    PersistentTrie build_trie_from_value(Json::Value dictionary);
+    // Functions
 
 public:
     API_Dummy_1();
