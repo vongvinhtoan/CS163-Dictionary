@@ -2,6 +2,7 @@
 
 #include <json.h>
 #include <fstream>
+#include <API.hpp>
 
 class Database {
 private:
@@ -12,7 +13,7 @@ private:
     Json::Value dataset_Emoji;
     Json::Value dataset_Slang_Word;
 public:
-    Json::Value get_dataset(std::string dataset_name);  
+    Json::Value get_dataset(API::DictionaryId id);
 
 public:
     static Database& get_instance() {
