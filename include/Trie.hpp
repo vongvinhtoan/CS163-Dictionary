@@ -8,25 +8,28 @@ class Trie
 {
 private:
     friend class PersistentTrie;
-
+    
     struct Node
     {
+        static int id_counter;
+
         std::map<char, Node*> children;
-        bool isWord;
         std::vector<std::string> definition;
-        Node* root;
+        bool isWord;
+        int id;
 
         Node();
-        Node(Node* root);
         ~Node();
+        Json::Value to_json();
     };
-
     Node* root;
-    std::string find(Node* node, const std::string &key);
-    void insert(Node* node, const std::string &key, const std::string &definition);
+    std::string version_description;
+    void insert_helper(Node* node, const std::string &key, const std::string &definition);
+
 public:
     Trie();
     ~Trie();
-    std::string find(const std::string &key);
-    void insert(const std::string &key, const std::string &definition);
+    void insert(const std::string &word, const std::string &definition);
+    std::vector<std::string> search(const std::string &word);
+    Json::Value to_json();
 };

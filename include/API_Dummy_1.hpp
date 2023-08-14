@@ -2,14 +2,17 @@
 
 #include <API.hpp>
 #include <PersistentTrie.hpp>
+#include <Trie.hpp>
 
 class API_Dummy_1 : public API
 {
 private:
-    // Variables
+    int version;
+    DictionaryId dictionary_id;
+    std::vector<PersistentTrie*> dictionaries;
 
 private:
-    // Functions
+    void extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json);
 
 public:
     API_Dummy_1();
@@ -32,4 +35,5 @@ public:
     virtual std::vector<std::string> get_randome_definitions(int count);
     virtual std::pair<std::string, std::string> get_random_definition_and_word();
     virtual std::vector<std::string> get_randome_words(int count);
+    Json::Value to_json();
 };

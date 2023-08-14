@@ -6,7 +6,7 @@ void API_Dummy_0::set_dictionary(DictionaryId id)
 
 API::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return DictionaryId::NONE;
+    return DictionaryId::ENG_ENG;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
