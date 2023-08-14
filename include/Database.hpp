@@ -23,7 +23,7 @@ public:
     ~Database();
 
 private:
-    Database() {} // Private constructor
+    Database(); // Private constructor
     Database(const Database&) = delete; // Delete copy constructor
     Database& operator=(const Database&) = delete; // Delete copy assignment operator
 };

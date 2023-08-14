@@ -14,16 +14,10 @@ Database::Database()
     reader.parse(dataset_Vie_Eng_file,dataset_Vie_Eng);
     reader.parse(dataset_Emoji_file,dataset_Emoji);
     reader.parse(dataset_Slang_Word_file,dataset_Slang_Word);
-
-    for(Json::Value item: dataset_Eng_Eng) {
-        std::string word = item["word"].asString();
-        std::string definition = item["definition"].asString();
-
-    }
 }
 
 Json::Value Database::get_dataset(API::DictionaryId id){
-    if(id == API::DictionaryId::EMOJI) return dataset_Emoji;
+
 }
 
 Database::~Database()
