@@ -207,13 +207,13 @@ void PersistentTrie::initialize(std::vector<std::pair<std::string, std::string>>
 
     trie->version_description = "Version 0: initialize \n";
     versions.push_back(trie);
-    std::cout<<"version.push_back(trie); + initialize\n";
+    //std::cout<<"version.push_back(trie); + initialize\n";
 }
 
 Json::Value PersistentTrie::to_json()
 {
     Json::Value root = Json::Value(Json::arrayValue);
-    std::cout<<versions.size()<<std::endl;
+    //std::cout<<versions.size()<<std::endl;
     for(int i = 0; i < versions.size(); i++) {
         Json::Value version;
         version["version"] = i;

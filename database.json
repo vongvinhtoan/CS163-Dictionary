@@ -1,0 +1,1672 @@
+[
+	{
+		"description" : "Version 0: initialize \n",
+		"trie" : 
+		{
+			"nodes" : 
+			[
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 16
+						},
+						{
+							"char" : 100,
+							"id" : 5
+						},
+						{
+							"char" : 107,
+							"id" : 27
+						},
+						{
+							"char" : 109,
+							"id" : 32
+						},
+						{
+							"char" : 119,
+							"id" : 1
+						}
+					],
+					"id" : 0,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 37
+						},
+						{
+							"char" : 112,
+							"id" : 17
+						}
+					],
+					"id" : 16,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 6
+						}
+					],
+					"id" : 5,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 28
+						}
+					],
+					"id" : 27,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 33
+						}
+					],
+					"id" : 32,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 2
+						}
+					],
+					"id" : 1,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 104,
+							"id" : 38
+						}
+					],
+					"id" : 37,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 112,
+							"id" : 18
+						}
+					],
+					"id" : 17,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 7
+						}
+					],
+					"id" : 6,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 29
+						}
+					],
+					"id" : 28,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 34
+						}
+					],
+					"id" : 33,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 114,
+							"id" : 3
+						}
+					],
+					"id" : 2,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 39
+						}
+					],
+					"id" : 38,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 19
+						}
+					],
+					"id" : 18,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 8
+						}
+					],
+					"id" : 7,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 30
+						}
+					],
+					"id" : 29,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 115,
+							"id" : 35
+						}
+					],
+					"id" : 34,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 100,
+							"id" : 4
+						}
+					],
+					"id" : 3,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 40
+						}
+					],
+					"id" : 39,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 20
+						}
+					],
+					"id" : 19,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 9
+						}
+					],
+					"id" : 8,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 31
+						}
+					],
+					"id" : 30,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 36
+						}
+					],
+					"id" : 35,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"nghia"
+					],
+					"id" : 4,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 41
+						}
+					],
+					"id" : 40,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 99,
+							"id" : 21
+						}
+					],
+					"id" : 20,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 10
+						}
+					],
+					"id" : 9,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"vua"
+					],
+					"id" : 31,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"chuot"
+					],
+					"id" : 36,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 42
+						}
+					],
+					"id" : 41,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 22
+						}
+					],
+					"id" : 21,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 11
+						}
+					],
+					"id" : 10,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 43
+						}
+					],
+					"id" : 42,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 116,
+							"id" : 23
+						}
+					],
+					"id" : 22,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 12
+						}
+					],
+					"id" : 11,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"xin chao VN"
+					],
+					"id" : 43,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 24
+						}
+					],
+					"id" : 23,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 13
+						}
+					],
+					"id" : 12,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 25
+						}
+					],
+					"id" : 24,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 118,
+							"id" : 14
+						}
+					],
+					"id" : 13,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 26
+						}
+					],
+					"id" : 25,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 15
+						}
+					],
+					"id" : 14,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"ung dung"
+					],
+					"id" : 26,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"yeu em"
+					],
+					"id" : 15,
+					"isWord" : true
+				}
+			],
+			"root" : 0
+		},
+		"version" : 0
+	},
+	{
+		"description" : "Version 1: insert \nWord: fuck\nDefinition: concu\n",
+		"trie" : 
+		{
+			"nodes" : 
+			[
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 16
+						},
+						{
+							"char" : 100,
+							"id" : 5
+						},
+						{
+							"char" : 102,
+							"id" : 45
+						},
+						{
+							"char" : 107,
+							"id" : 27
+						},
+						{
+							"char" : 109,
+							"id" : 32
+						},
+						{
+							"char" : 119,
+							"id" : 1
+						}
+					],
+					"id" : 0,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 37
+						},
+						{
+							"char" : 112,
+							"id" : 17
+						}
+					],
+					"id" : 16,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 6
+						}
+					],
+					"id" : 5,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 46
+						}
+					],
+					"id" : 45,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 28
+						}
+					],
+					"id" : 27,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 33
+						}
+					],
+					"id" : 32,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 2
+						}
+					],
+					"id" : 1,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 104,
+							"id" : 38
+						}
+					],
+					"id" : 37,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 112,
+							"id" : 18
+						}
+					],
+					"id" : 17,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 7
+						}
+					],
+					"id" : 6,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 99,
+							"id" : 47
+						}
+					],
+					"id" : 46,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 29
+						}
+					],
+					"id" : 28,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 34
+						}
+					],
+					"id" : 33,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 114,
+							"id" : 3
+						}
+					],
+					"id" : 2,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 39
+						}
+					],
+					"id" : 38,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 19
+						}
+					],
+					"id" : 18,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 8
+						}
+					],
+					"id" : 7,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 107,
+							"id" : 48
+						}
+					],
+					"id" : 47,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 30
+						}
+					],
+					"id" : 29,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 115,
+							"id" : 35
+						}
+					],
+					"id" : 34,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 100,
+							"id" : 4
+						}
+					],
+					"id" : 3,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 40
+						}
+					],
+					"id" : 39,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 20
+						}
+					],
+					"id" : 19,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 9
+						}
+					],
+					"id" : 8,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"concu"
+					],
+					"id" : 48,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 31
+						}
+					],
+					"id" : 30,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 36
+						}
+					],
+					"id" : 35,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"nghia"
+					],
+					"id" : 4,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 41
+						}
+					],
+					"id" : 40,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 99,
+							"id" : 21
+						}
+					],
+					"id" : 20,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 10
+						}
+					],
+					"id" : 9,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"vua"
+					],
+					"id" : 31,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"chuot"
+					],
+					"id" : 36,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 42
+						}
+					],
+					"id" : 41,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 22
+						}
+					],
+					"id" : 21,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 11
+						}
+					],
+					"id" : 10,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 43
+						}
+					],
+					"id" : 42,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 116,
+							"id" : 23
+						}
+					],
+					"id" : 22,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 12
+						}
+					],
+					"id" : 11,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"xin chao VN"
+					],
+					"id" : 43,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 24
+						}
+					],
+					"id" : 23,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 13
+						}
+					],
+					"id" : 12,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 25
+						}
+					],
+					"id" : 24,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 118,
+							"id" : 14
+						}
+					],
+					"id" : 13,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 26
+						}
+					],
+					"id" : 25,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 15
+						}
+					],
+					"id" : 14,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"ung dung"
+					],
+					"id" : 26,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"yeu em"
+					],
+					"id" : 15,
+					"isWord" : true
+				}
+			],
+			"root" : 0
+		},
+		"version" : 1
+	},
+	{
+		"description" : "Version 2: insert \nWord: australia\nDefinition: hi hi\n",
+		"trie" : 
+		{
+			"nodes" : 
+			[
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 16
+						},
+						{
+							"char" : 100,
+							"id" : 5
+						},
+						{
+							"char" : 102,
+							"id" : 45
+						},
+						{
+							"char" : 107,
+							"id" : 27
+						},
+						{
+							"char" : 109,
+							"id" : 32
+						},
+						{
+							"char" : 119,
+							"id" : 1
+						}
+					],
+					"id" : 0,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 37
+						},
+						{
+							"char" : 112,
+							"id" : 17
+						},
+						{
+							"char" : 117,
+							"id" : 51
+						}
+					],
+					"id" : 16,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 6
+						}
+					],
+					"id" : 5,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 46
+						}
+					],
+					"id" : 45,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 28
+						}
+					],
+					"id" : 27,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 33
+						}
+					],
+					"id" : 32,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 2
+						}
+					],
+					"id" : 1,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 104,
+							"id" : 38
+						}
+					],
+					"id" : 37,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 112,
+							"id" : 18
+						}
+					],
+					"id" : 17,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 115,
+							"id" : 52
+						}
+					],
+					"id" : 51,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 7
+						}
+					],
+					"id" : 6,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 99,
+							"id" : 47
+						}
+					],
+					"id" : 46,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 29
+						}
+					],
+					"id" : 28,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 34
+						}
+					],
+					"id" : 33,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 114,
+							"id" : 3
+						}
+					],
+					"id" : 2,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 39
+						}
+					],
+					"id" : 38,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 19
+						}
+					],
+					"id" : 18,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 116,
+							"id" : 53
+						}
+					],
+					"id" : 52,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 8
+						}
+					],
+					"id" : 7,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 107,
+							"id" : 48
+						}
+					],
+					"id" : 47,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 30
+						}
+					],
+					"id" : 29,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 115,
+							"id" : 35
+						}
+					],
+					"id" : 34,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 100,
+							"id" : 4
+						}
+					],
+					"id" : 3,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 40
+						}
+					],
+					"id" : 39,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 20
+						}
+					],
+					"id" : 19,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 114,
+							"id" : 54
+						}
+					],
+					"id" : 53,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 9
+						}
+					],
+					"id" : 8,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"concu"
+					],
+					"id" : 48,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 31
+						}
+					],
+					"id" : 30,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 36
+						}
+					],
+					"id" : 35,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"nghia"
+					],
+					"id" : 4,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 41
+						}
+					],
+					"id" : 40,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 99,
+							"id" : 21
+						}
+					],
+					"id" : 20,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 55
+						}
+					],
+					"id" : 54,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 117,
+							"id" : 10
+						}
+					],
+					"id" : 9,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"vua"
+					],
+					"id" : 31,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"chuot"
+					],
+					"id" : 36,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 121,
+							"id" : 42
+						}
+					],
+					"id" : 41,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 22
+						}
+					],
+					"id" : 21,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 56
+						}
+					],
+					"id" : 55,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 32,
+							"id" : 11
+						}
+					],
+					"id" : 10,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 43
+						}
+					],
+					"id" : 42,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 116,
+							"id" : 23
+						}
+					],
+					"id" : 22,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 57
+						}
+					],
+					"id" : 56,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 108,
+							"id" : 12
+						}
+					],
+					"id" : 11,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"xin chao VN"
+					],
+					"id" : 43,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 105,
+							"id" : 24
+						}
+					],
+					"id" : 23,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 97,
+							"id" : 58
+						}
+					],
+					"id" : 57,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 13
+						}
+					],
+					"id" : 12,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 111,
+							"id" : 25
+						}
+					],
+					"id" : 24,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"hi hi"
+					],
+					"id" : 58,
+					"isWord" : true
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 118,
+							"id" : 14
+						}
+					],
+					"id" : 13,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 110,
+							"id" : 26
+						}
+					],
+					"id" : 25,
+					"isWord" : false
+				},
+				{
+					"children" : 
+					[
+						{
+							"char" : 101,
+							"id" : 15
+						}
+					],
+					"id" : 14,
+					"isWord" : false
+				},
+				{
+					"definition" : 
+					[
+						"ung dung"
+					],
+					"id" : 26,
+					"isWord" : true
+				},
+				{
+					"definition" : 
+					[
+						"yeu em"
+					],
+					"id" : 15,
+					"isWord" : true
+				}
+			],
+			"root" : 0
+		},
+		"version" : 2
+	}
+]

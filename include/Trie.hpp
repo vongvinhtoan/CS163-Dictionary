@@ -25,11 +25,12 @@ private:
     Node* root;
     std::string version_description;
     void insert_helper(Node* node, const std::string &key, const std::string &definition);
-
+    
 public:
     Trie();
     ~Trie();
     void insert(const std::string &word, const std::string &definition);
     std::vector<std::string> search(const std::string &word);
     Json::Value to_json();
+    std::vector<std::string> get_random_word_and_definition();
 };

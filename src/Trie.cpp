@@ -2,7 +2,7 @@
 #include <json.h>
 #include <queue>
 #include <iostream>
-
+#include<time.h>
 int Trie::Node::id_counter = 0;
 
 Trie::Node::Node()
@@ -95,6 +95,69 @@ Json::Value Trie::to_json()
     }
     return trie;
 }
+
+std::vector<std::string> Trie:: get_random_word_and_definition(){
+    Node* node=root;
+    std::vector<std::string> word_and_definition;
+    std::string word;
+    srand((int)time(0));
+    int y=rand()%(10+1);
+    
+    for(int i=0;i<y;i++){
+        int n=rand()%(26+1);
+        std::cout<<n<<std::endl;
+        char find_char = 'a' + n;
+        if(!node->children.empty()){
+            while(node->children.find(find_char) == node->children.end()){
+                
+                n=rand()%(26+1);
+                std::cout<<n<<std::endl;
+                find_char = 'a' + n;
+            }
+
+            word.push_back(find_char);
+            node = node->children[find_char];
+        }
+
+        else {
+            word_and_definition=node->definition;
+            word_and_definition.push_back(word);   
+            return word_and_definition;
+        }
+
+    }
+
+    if(node->isWord){
+        
+        word_and_definition= node->definition;
+        word_and_definition.push_back(word);
+        return word_and_definition;
+    }
+
+    else{
+        while(!node->isWord){
+            int n=rand()%(26+1);
+            char find_char = 'a' + n;
+                while(node->children.find(find_char) == node->children.end()){
+                n=rand()%(26+1);
+                find_char = 'a' + n;
+            }
+            node = node->children[find_char];
+            word.push_back(find_char);
+
+            
+           
+        }
+        word_and_definition=node->definition;
+        word_and_definition.push_back(word);
+        return word_and_definition;
+    }
+    return word_and_definition;
+        
+
+}
+
+
 
 // std::string Trie::find(Node* node, const std::string &key)
 // {

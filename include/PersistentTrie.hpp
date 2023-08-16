@@ -9,7 +9,7 @@ class Trie;
 class PersistentTrie
 {
 private:
-    std::vector<Trie*> versions;
+    std::vector<Trie*> versions;//version 0: dictionary, version 1 : favourite list
     Trie* insert_helper(const std::string &word, const std::string &definition);
     Trie* delete_word_helper(const std::string &word);
     Trie* delete_definition_helper(const std::string &word, const std::string &definition);
@@ -24,3 +24,5 @@ public:
     void initialize(std::vector<std::pair<std::string, std::string>> &words);
     Json::Value to_json();
 };
+
+

@@ -7,9 +7,13 @@ class Database {
 private:
     // Variables
     Json::Value dataset_Eng_Eng;
+    Json::Value dataset_Eng_Eng_favourite;
     Json::Value dataset_Eng_Vie;
+    Json::Value dataset_Eng_Vie_favourite;
     Json::Value dataset_Vie_Eng;
+    Json::Value dataset_Vie_Eng_favourite;
     Json::Value dataset_Emoji;
+    Json::Value dataset_history;
 
 public:
     Json::Value get_dataset(std::string dataset_name);  
