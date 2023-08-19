@@ -105,10 +105,16 @@ std::vector<std::string> API_Dummy_1::get_random_word_and_definition()
         random.push_back(get_random_words(0));
     }
    
-    for(int i=0;i<4;i++){
+     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
-           if(i!=j) result.push_back(compare_definiton_word(random[i],random[j]).first);
+           if(i!=j) {
+            while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
+                random[j]=get_random_words(0);
+            }
+           }
         }
+        result.push_back(random[i][0]);
+        
     }
     result.push_back(random[3][random[3].size()-1]);
     return result;
@@ -131,13 +137,13 @@ std::vector< std::string> API_Dummy_1::get_random_definition_and_word()
     }
    
     for(int i=0;i<4;i++){
-        // for(int j=0;j<4;j++){
-        //    if(i!=j) {
-        //     while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
-        //         random[j]=get_random_words(0);
-        //     }
-        //    }
-        // }
+        for(int j=0;j<4;j++){
+           if(i!=j) {
+            while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
+                random[j]=get_random_words(0);
+            }
+           }
+        }
         result.push_back(random[i][random[i].size()-1]);
         
     }
@@ -147,7 +153,7 @@ std::vector< std::string> API_Dummy_1::get_random_definition_and_word()
 
 std::vector<std::string> API_Dummy_1::get_random_words(int count)
 {
-    return dictionaries[0]->get_version(version)->get_random_word_and_definition();
+    return dictionaries[0]->get_version(version)->get_random_word();
 }
 
 Json::Value API_Dummy_1::to_json()
@@ -166,8 +172,8 @@ std::pair<std::string,std::string> API_Dummy_1:: compare_definiton_word(std::vec
         result.second=str1[n1-1];
         return result;
     }
-    str1=dictionaries[0]->get_version(version)->get_random_word_and_definition();
+    str1=dictionaries[0]->get_version(version)->get_random_word();
     return compare_definiton_word(str1,str2);
     
 }
-
+ 

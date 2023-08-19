@@ -32,5 +32,5 @@ public:
     void insert(const std::string &word, const std::string &definition);
     std::vector<std::string> search(const std::string &word);
     Json::Value to_json();
-    std::vector<std::string> get_random_word_and_definition();
+    std::vector<std::string> get_random_word();
 };

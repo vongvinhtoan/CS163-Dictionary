@@ -41,4 +41,5 @@ public:
     virtual std::pair<std::string,std::string>  compare_definiton_word
     (std::vector<std::string>& str1,std::vector<std::string> str2);
     Json::Value to_json();
+    
 };

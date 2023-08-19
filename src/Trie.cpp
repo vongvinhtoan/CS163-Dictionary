@@ -96,11 +96,11 @@ Json::Value Trie::to_json()
     return trie;
 }
 
-std::vector<std::string> Trie:: get_random_word_and_definition(){
+std::vector<std::string> Trie:: get_random_word(){
     Node* node=root;
     std::vector<std::string> word_and_definition;
     std::string word;
-    srand((int)time(0));
+   
     int y=rand()%(10+1);
     
     for(int i=0;i<y;i++){
@@ -111,7 +111,6 @@ std::vector<std::string> Trie:: get_random_word_and_definition(){
         }
         std::map<char, Node*>::iterator it =node->children.begin();
         std::advance(it, rand() % (node->children.size()));
-        std::cout<<node->children.size()<<std::endl;
         word.push_back(it->first);
         node=it->second;
     }
@@ -136,45 +135,3 @@ std::vector<std::string> Trie:: get_random_word_and_definition(){
     }
     return word_and_definition;
 }
-
-
-
-// std::string Trie::find(Node* node, const std::string &key)
-// {
-//     // Code here
-//     for(auto c: key) {
-//         if(node->children.find(c) == node->children.end())
-//             return "Word not found";
-//         node = node->children[c];
-//     }
-
-//     if(!node->isWord)
-//         return "No definition found";
-    
-//     std::string s;
-//     for(auto c: node->definition)
-//         s+= c;
-//     return s;
-// }
-
-// std::string Trie::find(const std::string &key)
-// {
-//     return find(root, key);
-// }
-// void Trie::insert(Node* node, const std::string &key, const std::string &definition)
-// {
-//     for(auto c: key)
-//     {
-//         if(node->children.find(c) == node->children.end())
-//         node->children[c] = new Node();
-//         node = node->children[c];
-//     }
-//     node->isWord = true;
-//     node->definition.push_back(definition);
-
-// }
-// void Trie::insert(const std::string &key, const std::string &definition)
-// {
-//     insert(root, key, definition);
-// }
-
