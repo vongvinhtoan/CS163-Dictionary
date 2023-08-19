@@ -16,12 +16,12 @@ Database::Database()
     reader.parse(dataset_Slang_Word_file,dataset_Slang_Word);
 }
 
-Json::Value Database::get_dataset(API::DictionaryId id){
-    if(id == API::DictionaryId::EMOJI) return dataset_Emoji;
-    else if(id == API::DictionaryId::ENG_ENG) return dataset_Eng_Eng;
-    else if(id == API::DictionaryId::ENG_VIET) return dataset_Eng_Vie;
-    else if(id == API::DictionaryId::VIET_ENG) return dataset_Vie_Eng;
-    else if(id == API::DictionaryId::SLANG_WORD) return dataset_Slang_Word;
+Json::Value Database::get_dataset(DictionaryId id){
+    if(id == DictionaryId::EMOJI) return dataset_Emoji;
+    else if(id == DictionaryId::ENG_ENG) return dataset_Eng_Eng;
+    else if(id == DictionaryId::ENG_VIET) return dataset_Eng_Vie;
+    else if(id == DictionaryId::VIET_ENG) return dataset_Vie_Eng;
+    else if(id == DictionaryId::SLANG_WORD) return dataset_Slang_Word;
     else return Json::Value();
 }
 

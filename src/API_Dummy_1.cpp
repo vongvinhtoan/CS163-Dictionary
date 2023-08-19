@@ -2,9 +2,9 @@
 
 API_Dummy_1::API_Dummy_1()
 {
-    PersistentTrie datasets[DictionaryId::SIZE];
-    for(int id = 0; id < DictionaryId::SIZE; id++) {
-        datasets[id] = build_trie_from_value(database.get_dataset(static_cast<DictionaryId>(id)));
+    PersistentTrie datasets[Database::DictionaryId::SIZE];
+    for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
+        datasets[id] = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
     }
 }
 
@@ -22,14 +22,14 @@ PersistentTrie API_Dummy_1::build_trie_from_value(Json::Value dictionary)
     return res;
 }
 
-void API_Dummy_1::set_dictionary(DictionaryId id)
+void API_Dummy_1::set_dictionary(Database::DictionaryId id)
 {
 
 }
 
-API::DictionaryId API_Dummy_1::get_dictionary_id()
+Database::DictionaryId API_Dummy_1::get_dictionary_id()
 {
-    return DictionaryId::SIZE;
+    return Database::DictionaryId::SIZE;
 }
 
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
