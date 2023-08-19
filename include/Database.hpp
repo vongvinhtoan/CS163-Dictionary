@@ -2,7 +2,7 @@
 
 #include <json.h>
 #include <fstream>
-#include <API.hpp>
+class API;
 
 class Database {
 private:
