@@ -2,7 +2,6 @@
 
 #include <SceneNode.hpp>
 
-// Inherit from SceneNode and RectangleShape
 class RectangleNode 
 : public SceneNode
 , public sf::RectangleShape

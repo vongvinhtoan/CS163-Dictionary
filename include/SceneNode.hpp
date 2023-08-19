@@ -63,5 +63,6 @@ protected:
     std::function<void(SceneNode&)> mOnClick;
     std::function<void(SceneNode&)> mOnHover;
     std::function<void(SceneNode&)> mOnHold;
+    virtual bool                    contains(const sf::Vector2f& point) const;
 };
 

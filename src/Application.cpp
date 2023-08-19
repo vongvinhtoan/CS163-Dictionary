@@ -29,6 +29,7 @@ Application::Application()
 	mStatisticsText.setFont(mFonts->get(Fonts::DEFAULT));
 	mStatisticsText.setPosition(5.f, 5.f);
 	mStatisticsText.setCharacterSize(10);
+    mStatisticsText.setFillColor(sf::Color(0, 0, 0, 255));
     mWindow.setFramerateLimit(60);
 }
 
@@ -67,7 +68,7 @@ void Application::processInput()
     sf::Event event;
     while(mWindow.pollEvent(event))
     {
-        mActivityStack.handleEvent(event);
+        if(!mIsPaused) mActivityStack.handleEvent(event);
         switch (event.type)
         {
             case sf::Event::Closed:
@@ -84,7 +85,7 @@ void Application::processInput()
                 break;
         }
     }
-    mActivityStack.handleRealtimeInput();
+    if(!mIsPaused) mActivityStack.handleRealtimeInput();
 }
 
 void Application::update(sf::Time dt)

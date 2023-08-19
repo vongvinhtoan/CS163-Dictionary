@@ -125,7 +125,7 @@ void SceneNode::handleEventCurrent(const sf::Event& event, int& command)
     
     if(event.type == sf::Event::MouseButtonPressed)
     {
-        if(getLocalBounds().contains(localMousePosition))
+        if(contains(localMousePosition))
         {
             if(command & (1<<OnHold))
             {
@@ -136,9 +136,9 @@ void SceneNode::handleEventCurrent(const sf::Event& event, int& command)
     }
     else if(event.type == sf::Event::MouseButtonReleased)
     {
-        if(getLocalBounds().contains(localMousePosition))
+        if(contains(localMousePosition))
         {
-            if(mIsPressed)
+            if(isPressed())
             {
                 mIsPressed = false;
                 if(mOnClick && (command & (1<<OnClick)))
@@ -165,12 +165,14 @@ int SceneNode::handleRealtimeInput(int command)
     return command;
 }
 
+#include <iostream>
+
 void SceneNode::handleRealtimeInputCurrent(int& command)
 {
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
     sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
 
-    if(getLocalBounds().contains(localMousePosition))
+    if(contains(localMousePosition))
     {
         if(isPressed())
         {
@@ -183,6 +185,8 @@ void SceneNode::handleRealtimeInputCurrent(int& command)
                 mOnHover(*this), command &= ~(1<<OnHover);
         }
     }
+    if(!(command & (1<<OnHover)))
+        mIsPressed = false;
 }
 
 void SceneNode::handleRealtimeInputChildren(int &command)
@@ -222,4 +226,9 @@ sf::FloatRect SceneNode::getLocalBounds() const
 bool SceneNode::isPressed() const
 {
     return mIsPressed;
+}
+
+bool SceneNode::contains(const sf::Vector2f& point) const
+{
+    return getLocalBounds().contains(point);
 }
