@@ -10,8 +10,7 @@ private:
     int version;
     DictionaryId dictionary_id;
     std::vector<PersistentTrie*> dictionaries;
-    // PersistentTrie *favourites_list;
-    // PersistentTrie *history_list;
+    
 
 private:
     void extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json);

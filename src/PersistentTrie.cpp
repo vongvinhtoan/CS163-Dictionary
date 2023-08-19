@@ -20,28 +20,6 @@ Trie* PersistentTrie::get_version(int version_id)
     return versions[version_id];
 }
 
-// Trie* PersistentTrie::insert(const std::string &word, const std::string &definition, int index)
-// {
-//     if(check(word, definition, index)==true)
-//         return children[index];
-//     Trie* new_trie;
-//     children.push_back(new_trie);
-//     Trie::Node* node=new_trie->root;
-//     Trie::Node* dummy=children[index]->root;   
-//     for(int i=0; i<word.size(); i++){
-//         for(auto x:dummy->children){
-//             if(word[i]!=x.first) node->children[x.first]=x.second;  
-//             else{
-//                 node->children[word[i]]=new Trie::Node();
-//                 node= node->children[word[i]];
-//             }
-//         }         
-//     }
-//     node->isWord=true;
-//     node->definition.push_back(definition);
-//     return new_trie;
-// }
-
 Trie* PersistentTrie::insert_helper(const std::string &word, const std::string &definition)
 {
     assert(versions.size() > 0);

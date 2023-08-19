@@ -22,20 +22,7 @@ int main()
     
     std::ofstream file("database.json");
     file << json;
-    file.close();
-
-    
-        //std::cout<<"Enter a word: ";
-        std::string word;
-        //std::cin>>word;
-        // for(int i=0;i<10;i++){
-        // std::vector<std::string> definitions = api->get_random_words(0);
-        
-        // //std::cout<<"Definitions: \n";
-        // for (auto definition : definitions) {
-        //     std::cout<<definition<<std::endl;
-        // }
-        // }
+    file.close();    
         std::vector<std::string> definitions = api->get_random_word_and_definition();
         
         //std::cout<<"Definitions: \n";

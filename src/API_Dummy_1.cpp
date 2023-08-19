@@ -2,13 +2,13 @@
 #include <iostream>
 
 API_Dummy_1::API_Dummy_1()
-: dictionary_id(DictionaryId(0))
+: dictionary_id(DictionaryId())
 , dictionaries(DictionaryId::SIZE)
 {
     for(auto& dictionary : dictionaries)
         dictionary = new PersistentTrie();
 
-    for(int id = 0; id < 1; ++id) {
+    for(int id = 0; id <1 ; ++id) {
         std::vector<std::pair<std::string, std::string>> values;
         //extract_from_json(values, database.get_dataset( id));
         values.push_back(std::make_pair("word", "nghia"));
@@ -85,6 +85,8 @@ void API_Dummy_1::edit_definition(std::string word, int editID, std::string defi
 
 void API_Dummy_1::delete_word(std::string word)
 {
+    dictionaries[dictionary_id]->delete_word(word);
+    version++;
 }
 
 std::vector<API::VersionDescriptor> API_Dummy_1::get_versions()
@@ -100,7 +102,7 @@ std::vector<std::string> API_Dummy_1::get_random_word_and_definition()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
-    
+    std::cout<<DictionaryId::SIZE<<std::endl;
     for(int i=0;i<4;i++){
         random.push_back(get_random_words(0));
     }
