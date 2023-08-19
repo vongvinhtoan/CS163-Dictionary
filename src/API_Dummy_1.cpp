@@ -10,7 +10,7 @@ API_Dummy_1::API_Dummy_1()
 
     for(int id = 0; id < 1; ++id) {
         std::vector<std::pair<std::string, std::string>> values;
-        // extract_from_json(values, database.get_dictionary(id));
+        //extract_from_json(values, database.get_dataset( id));
         values.push_back(std::make_pair("word", "nghia"));
         values.push_back(std::make_pair("do you love", "yeu em"));
         values.push_back(std::make_pair("application", "ung dung"));
@@ -43,6 +43,7 @@ void API_Dummy_1::set_dictionary(DictionaryId id)
 
 API::DictionaryId API_Dummy_1::get_dictionary_id()
 {
+
     return dictionary_id;
 }
 
@@ -97,38 +98,11 @@ void API_Dummy_1::set_version(int version)
 
 std::vector<std::string> API_Dummy_1::get_random_word_and_definition()
 {
-    //return dictionaries[dictionary_id]->get_version(version)->;
-    //return std::pair<std::string, std::string>();
-    return dictionaries[dictionary_id]->get_version(version)->get_random_word_and_definition();
-}
-
-std::vector<std::string> API_Dummy_1::get_randome_definitions(int count)
-{
-    return std::vector<std::string>();
-}
-
-std::pair<std::string, std::string> API_Dummy_1::get_random_definition_and_word()
-{
-    return std::pair<std::string, std::string>();
-}
-
-std::vector<std::string> API_Dummy_1::get_randome_words(int count)
-{
-    return std::vector<std::string>();
-}
-
-Json::Value API_Dummy_1::to_json()
-{
-    Json::Value json = dictionaries[0]->to_json();
-    return json;
-}
- std::vector<std::string> API_Dummy_1:: quizz_random_words_4_definition()
-{
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
     
     for(int i=0;i<4;i++){
-        random.push_back(dictionaries[0]->get_version(version)->get_random_word_and_definition());
+        random.push_back(get_random_words(0));
     }
    
     for(int i=0;i<4;i++){
@@ -138,6 +112,48 @@ Json::Value API_Dummy_1::to_json()
     }
     result.push_back(random[3][random[3].size()-1]);
     return result;
+    
+}
+
+std::vector<std::string> API_Dummy_1::get_random_definitions(int count)
+{
+
+    return std::vector<std::string>();
+}
+
+std::vector< std::string> API_Dummy_1::get_random_definition_and_word()
+{
+    std::vector<std::vector<std::string>>random;
+    std::vector<std::string> result;
+    
+    for(int i=0;i<4;i++){
+        random.push_back(get_random_words(0));
+    }
+   
+    for(int i=0;i<4;i++){
+        // for(int j=0;j<4;j++){
+        //    if(i!=j) {
+        //     while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
+        //         random[j]=get_random_words(0);
+        //     }
+        //    }
+        // }
+        result.push_back(random[i][random[i].size()-1]);
+        
+    }
+    result.push_back(random[3][0]);
+    return result;
+}
+
+std::vector<std::string> API_Dummy_1::get_random_words(int count)
+{
+    return dictionaries[0]->get_version(version)->get_random_word_and_definition();
+}
+
+Json::Value API_Dummy_1::to_json()
+{
+    Json::Value json = dictionaries[0]->to_json();
+    return json;
 }
 
 std::pair<std::string,std::string> API_Dummy_1:: compare_definiton_word(std::vector<std::string>& str1,std::vector<std::string> str2)
@@ -155,25 +171,3 @@ std::pair<std::string,std::string> API_Dummy_1:: compare_definiton_word(std::vec
     
 }
 
-std::vector<std::string>API_Dummy_1:: quizz_random_definitions_4_word()
-{
-    std::vector<std::vector<std::string>>random;
-    std::vector<std::string> result;
-    
-    for(int i=0;i<4;i++){
-        random.push_back(dictionaries[0]->get_version(version)->get_random_word_and_definition());
-    }
-   
-    for(int i=0;i<4;i++){
-        for(int j=0;j<4;j++){
-           if(i!=j) {
-            while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
-                random[j]=dictionaries[0]->get_version(version)->get_random_word_and_definition();
-            }
-           }
-        }
-        result.push_back(random[i][random[i].size()-1]);
-    }
-    result.push_back(random[3][0]);
-    return result;
-}

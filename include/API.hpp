@@ -10,13 +10,15 @@ public:
     enum DictionaryId {
         VIET_ENG,
         VIET_ENG_FAVOURITE,
+        VIET_ENG_HISTORY,
         ENG_ENG,
         ENG_ENG_FAVOURITE,
+        ENG_ENG_HISTORY,
         ENG_VIET,
         ENG_VIET_FAVOURITE,
+        ENG_VIET_HISTORY,
         EMOJI,
         SLANG_WORD,
-        HISTORY_LIST,
         SIZE
     };
     
@@ -46,11 +48,10 @@ public:
     virtual std::vector<VersionDescriptor> get_versions() = 0;
     virtual void set_version(int version) = 0;
     virtual std::vector<std::string> get_random_word_and_definition() = 0;
-    virtual std::vector<std::string> get_randome_definitions(int count) = 0;
-    virtual std::pair<std::string, std::string> get_random_definition_and_word() = 0;
-    virtual std::vector<std::string> get_randome_words(int count) = 0;
-    virtual std::vector<std::string> quizz_random_words_4_definition()=0;
-    virtual std::vector<std::string> quizz_random_definitions_4_word()=0;
-    virtual std::pair<std::string,std::string> 
-     compare_definiton_word(std::vector<std::string>& str1,std::vector<std::string> str2)=0;
+    virtual std::vector<std::string> get_random_definitions(int count) = 0;
+    virtual std::vector<std::string> get_random_definition_and_word() = 0;
+    virtual std::vector<std::string> get_random_words(int count) = 0;
+    virtual std::pair<std::string,std::string>  compare_definiton_word
+    (std::vector<std::string>& str1,std::vector<std::string> str2)=0;
+
 };

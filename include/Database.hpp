@@ -3,6 +3,7 @@
 #include <json.h>
 #include <fstream>
 
+
 class Database {
 private:
     // Variables
@@ -14,10 +15,11 @@ private:
     Json::Value dataset_Vie_Eng_favourite;
     Json::Value dataset_Emoji;
     Json::Value dataset_history;
+    Json::Value dataset_Slang_Word;
 
 public:
-    Json::Value get_dataset(std::string dataset_name);  
-
+   Json::Value get_dataset(std::string dataset_name);  
+    
 public:
     static Database& get_instance() {
         static Database instance;

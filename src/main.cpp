@@ -28,12 +28,12 @@ int main()
         //std::cout<<"Enter a word: ";
         std::string word;
         //std::cin>>word;
-        std::vector<std::string> definitions = api->quizz_random_definitions_4_word();
+        std::vector<std::string> definitions = api->get_random_words(0);
         std::cout<<"Definitions: \n";
         for (auto definition : definitions) {
             std::cout<<definition<<std::endl;
         }
-        std::cout<<"Enter a word: ";
+        
 
     delete api;
     return 0;

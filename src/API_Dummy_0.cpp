@@ -59,30 +59,21 @@ std::vector<std::string> API_Dummy_0::get_random_word_and_definition()
     return std::vector<std::string>();
 }
 
-std::vector<std::string> API_Dummy_0::get_randome_definitions(int count)
+std::vector<std::string> API_Dummy_0::get_random_definitions(int count)
 {
     return std::vector<std::string>();
 }
 
-std::pair<std::string, std::string> API_Dummy_0::get_random_definition_and_word()
-{
-    return std::pair<std::string, std::string>();
-}
-
-std::vector<std::string> API_Dummy_0::get_randome_words(int count)
+std::vector< std::string> API_Dummy_0::get_random_definition_and_word()
 {
     return std::vector<std::string>();
 }
- std::vector<std::string> API_Dummy_0:: quizz_random_words_4_definition()
+
+std::vector<std::string> API_Dummy_0::get_random_words(int count)
 {
     return std::vector<std::string>();
-
-
 }
-std::vector<std::string>API_Dummy_0 ::quizz_random_definitions_4_word()
-{
- return std::vector<std::string>();
-}
+
 std::pair<std::string,std::string> API_Dummy_0:: 
 compare_definiton_word(std::vector<std::string>& str1,std::vector<std::string> str2)
 {

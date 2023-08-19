@@ -104,27 +104,16 @@ std::vector<std::string> Trie:: get_random_word_and_definition(){
     int y=rand()%(10+1);
     
     for(int i=0;i<y;i++){
-        int n=rand()%(26+1);
-        std::cout<<n<<std::endl;
-        char find_char = 'a' + n;
-        if(!node->children.empty()){
-            while(node->children.find(find_char) == node->children.end()){
-                
-                n=rand()%(26+1);
-                std::cout<<n<<std::endl;
-                find_char = 'a' + n;
-            }
-
-            word.push_back(find_char);
-            node = node->children[find_char];
-        }
-
-        else {
+        if(node->children.empty()){
             word_and_definition=node->definition;
             word_and_definition.push_back(word);   
             return word_and_definition;
         }
-
+        std::map<char, Node*>::iterator it =node->children.begin();
+        std::advance(it, rand() % (node->children.size()));
+        std::cout<<node->children.size()<<std::endl;
+        word.push_back(it->first);
+        node=it->second;
     }
 
     if(node->isWord){
@@ -136,25 +125,16 @@ std::vector<std::string> Trie:: get_random_word_and_definition(){
 
     else{
         while(!node->isWord){
-            int n=rand()%(26+1);
-            char find_char = 'a' + n;
-                while(node->children.find(find_char) == node->children.end()){
-                n=rand()%(26+1);
-                find_char = 'a' + n;
-            }
-            node = node->children[find_char];
-            word.push_back(find_char);
-
-            
-           
+        std::map<char, Node*>::iterator it =node->children.begin();
+        std::advance(it, rand() % (node->children.size()));
+        word.push_back(it->first);
+        node=it->second;     
         }
         word_and_definition=node->definition;
         word_and_definition.push_back(word);
         return word_and_definition;
     }
     return word_and_definition;
-        
-
 }
 
 
