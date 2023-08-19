@@ -11,7 +11,7 @@ namespace Activities
 {
     enum ID
     {
-        NONE,
+        DASHBOARD,
         MENU
     };
 }
@@ -41,7 +41,7 @@ class Activity
         void            requestStackPush(int activityID);
         void            requestStackPop();
         void            requestActivityClear();
-        Context         getContext() const;
+        Context&        getContext();
     private:
         ActivityStack*      mStack;
         Context             mContext;

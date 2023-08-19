@@ -2,9 +2,11 @@
 #include <assert.h>
 #include <algorithm>
 
-SceneNode::SceneNode()
+SceneNode::SceneNode(Activity::Context* context)
 : mChildren()
 , mParent(nullptr)
+, mContext(context)
+, mIsPressed(false)
 {
 }
 
@@ -107,4 +109,117 @@ sf::Vector2f SceneNode::getWorldPosition() const
 {
     getWorldTransform();
     return getWorldTransform() * sf::Vector2f();
+}
+
+int SceneNode::handleEvent(const sf::Event& event, int command)
+{
+    handleEventChildren(event, command);
+    handleEventCurrent(event, command);
+    return command;
+}
+
+void SceneNode::handleEventCurrent(const sf::Event& event, int& command)
+{
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
+    sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
+    
+    if(event.type == sf::Event::MouseButtonPressed)
+    {
+        if(getLocalBounds().contains(localMousePosition))
+        {
+            if(command & (1<<OnHold))
+            {
+                mIsPressed = true;
+                command &= ~(1<<OnHold);
+            }
+        }
+    }
+    else if(event.type == sf::Event::MouseButtonReleased)
+    {
+        if(getLocalBounds().contains(localMousePosition))
+        {
+            if(mIsPressed)
+            {
+                mIsPressed = false;
+                if(mOnClick && (command & (1<<OnClick)))
+                    mOnClick(*this), command &= ~(1<<OnClick);
+            }
+        }
+        mIsPressed = false;
+    }
+}
+
+void SceneNode::handleEventChildren(const sf::Event& event, int& command)
+{
+    for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
+    {
+        Ptr &child = *it;
+        command &= child->handleEvent(event);
+    }
+}
+
+int SceneNode::handleRealtimeInput(int command)
+{
+    handleRealtimeInputChildren(command);
+    handleRealtimeInputCurrent(command);
+    return command;
+}
+
+void SceneNode::handleRealtimeInputCurrent(int& command)
+{
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
+    sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
+
+    if(getLocalBounds().contains(localMousePosition))
+    {
+        if(isPressed())
+        {
+            if(mOnHold && (command & (1<<OnHold)))
+                mOnHold(*this), command &= ~(1<<OnHold);
+        }
+        else
+        {
+            if(mOnHover && (command & (1<<OnHover)))
+                mOnHover(*this), command &= ~(1<<OnHover);
+        }
+    }
+}
+
+void SceneNode::handleRealtimeInputChildren(int &command)
+{
+    for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
+    {
+        Ptr &child = *it;
+        command &= child->handleRealtimeInput();
+    }
+}
+
+void SceneNode::setOnClick(std::function<void(SceneNode&)> onClick)
+{
+    mOnClick = onClick;
+}
+
+void SceneNode::setOnHover(std::function<void(SceneNode&)> onHover)
+{
+    mOnHover = onHover;
+}
+
+void SceneNode::setOnHold(std::function<void(SceneNode&)> onHold)
+{
+    mOnHold = onHold;
+}
+
+Activity::Context* SceneNode::getContext() const
+{
+    return mContext;
+}
+
+sf::FloatRect SceneNode::getLocalBounds() const
+{
+    return sf::FloatRect();
+}
+
+bool SceneNode::isPressed() const
+{
+    return mIsPressed;
 }

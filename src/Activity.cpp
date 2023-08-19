@@ -37,7 +37,7 @@ void Activity::requestActivityClear()
     mStack->clearActivities();
 }
 
-Activity::Context Activity::getContext() const
+Activity::Context& Activity::getContext()
 {
     return mContext;
 }

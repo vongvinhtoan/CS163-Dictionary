@@ -1,6 +1,7 @@
 #include <Application.hpp>
 #include <iostream>
 #include <string>
+#include <ActivityDashboard.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -16,9 +17,13 @@ Application::Application()
 {
     // readJSON();
     mFonts->load(Fonts::DEFAULT, "data/fonts/Sansation.ttf");
+    mTextures->load(Textures::MenuBackground, "data/textures/MenuBackground.png");
+    mTextures->load(Textures::StartingFrameBackground, "data/textures/StartingFrameBackground.png");
+    mTextures->load(Textures::Footer, "data/textures/Footer.png");
+    mTextures->load(Textures::Logo, "data/textures/Logo.png");
     
-    registerStates();
-    // mActivityStack.pushActivity(Activities::MENU);
+    registerActivities();
+    mActivityStack.pushActivity(Activities::DASHBOARD);
     mActivityStack.draw();
 
 	mStatisticsText.setFont(mFonts->get(Fonts::DEFAULT));
@@ -27,9 +32,9 @@ Application::Application()
     mWindow.setFramerateLimit(60);
 }
 
-void Application::registerStates() 
+void Application::registerActivities() 
 {
-
+    mActivityStack.registerActivity<ActivityDashboard>(Activities::DASHBOARD);
 }
 
 void Application::run()
@@ -40,7 +45,7 @@ void Application::run()
 
     while (mWindow.isOpen())
     {
-        // if(mStateStack.isEmpty()) mWindow.close();
+        if(mActivityStack.isEmpty()) mWindow.close();
 
         processInput();
         elapsed = clock.restart();
@@ -62,7 +67,7 @@ void Application::processInput()
     sf::Event event;
     while(mWindow.pollEvent(event))
     {
-        // mStateStack.handleEvent(event);
+        mActivityStack.handleEvent(event);
         switch (event.type)
         {
             case sf::Event::Closed:
@@ -79,18 +84,18 @@ void Application::processInput()
                 break;
         }
     }
-    // mStateStack.handleRealtimeInput();
+    mActivityStack.handleRealtimeInput();
 }
 
 void Application::update(sf::Time dt)
 {
-    // mStateStack.update(dt);
+    mActivityStack.update(dt);
 }
 
 void Application::draw()
 {
     mWindow.clear();
-    // mStateStack.draw();
+    mActivityStack.draw();
     
     mWindow.setView(mWindow.getDefaultView());
     if(mIsShowingStatistics) {

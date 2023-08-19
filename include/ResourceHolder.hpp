@@ -25,6 +25,11 @@ namespace Textures
 {
     enum ID
     {
+        Logo,
+        StartingFrameBackground,
+        DashboardBackground,
+        MenuBackground,
+        Footer,
         NONE
     };  
 } 
