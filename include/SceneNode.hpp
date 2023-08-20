@@ -31,6 +31,7 @@ public:
     void                    setOnClick(std::function<void(SceneNode&)> onClick);
     void                    setOnHover(std::function<void(SceneNode&)> onHover);
     void                    setOnHold(std::function<void(SceneNode&)> onHold);
+    void                    setOnLostHover(std::function<void(SceneNode&)> onLostHover);
     virtual sf::FloatRect   getLocalBounds() const;
     bool                    isPressed() const;
 
@@ -62,6 +63,7 @@ protected:
     bool                            mIsPressed;
     std::function<void(SceneNode&)> mOnClick;
     std::function<void(SceneNode&)> mOnHover;
+    std::function<void(SceneNode&)> mOnLostHover;
     std::function<void(SceneNode&)> mOnHold;
     virtual bool                    contains(const sf::Vector2f& point) const;
 };

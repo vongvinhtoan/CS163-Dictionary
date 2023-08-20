@@ -2,17 +2,17 @@
 #include <Activity.hpp>
 #include <SceneNode.hpp>
 #include <SceneNode\RectangleNode.hpp>
+#include <SceneNode\TextNode.hpp>
+#include <SceneNode\ButtonNode.hpp>
 
-class ActivityDashboard : public Activity
+class ActivityCredit : public Activity
 {
 private:
     enum Layer
     {
         Background,
-        DashboardBackground,
-        Logo,
-        Button,
-        Footer,
+        Title,
+        Names,
         LayerCount
     };
 
@@ -23,7 +23,7 @@ private:
     void   buildScene();
 
 public:
-    ActivityDashboard(ActivityStack& stack, Context context);
+    ActivityCredit(ActivityStack& stack, Context context);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);

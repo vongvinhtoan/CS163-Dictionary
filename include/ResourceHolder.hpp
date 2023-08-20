@@ -30,6 +30,8 @@ namespace Textures
         DashboardBackground,
         MenuBackground,
         Footer,
+        WoodenBackground1,
+        WoodenBackground2,
         NONE
     };  
 } 

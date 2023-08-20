@@ -12,6 +12,7 @@ namespace Activities
     enum ID
     {
         DASHBOARD,
+        CREDIT,
         MENU
     };
 }

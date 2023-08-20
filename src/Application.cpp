@@ -1,7 +1,8 @@
 #include <Application.hpp>
 #include <iostream>
 #include <string>
-#include <ActivityDashboard.hpp>
+#include <Activity/ActivityDashboard.hpp>
+#include <Activity/ActivityCredit.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -16,11 +17,13 @@ Application::Application()
 , mAPI(new API_Dummy_0())
 {
     // readJSON();
-    mFonts->load(Fonts::DEFAULT, "data/fonts/Sansation.ttf");
+    mFonts->load(Fonts::DEFAULT, "data/fonts/Karantina.ttf");
     mTextures->load(Textures::MenuBackground, "data/textures/MenuBackground.png");
     mTextures->load(Textures::StartingFrameBackground, "data/textures/StartingFrameBackground.png");
     mTextures->load(Textures::Footer, "data/textures/Footer.png");
     mTextures->load(Textures::Logo, "data/textures/Logo.png");
+    mTextures->load(Textures::WoodenBackground1, "data/textures/WoodenBackground1.png");
+    mTextures->load(Textures::WoodenBackground2, "data/textures/WoodenBackground2.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);
@@ -28,7 +31,7 @@ Application::Application()
 
 	mStatisticsText.setFont(mFonts->get(Fonts::DEFAULT));
 	mStatisticsText.setPosition(5.f, 5.f);
-	mStatisticsText.setCharacterSize(10);
+	mStatisticsText.setCharacterSize(40);
     mStatisticsText.setFillColor(sf::Color(0, 0, 0, 255));
     mWindow.setFramerateLimit(60);
 }
@@ -36,6 +39,7 @@ Application::Application()
 void Application::registerActivities() 
 {
     mActivityStack.registerActivity<ActivityDashboard>(Activities::DASHBOARD);
+    mActivityStack.registerActivity<ActivityCredit>(Activities::CREDIT);
 }
 
 void Application::run()

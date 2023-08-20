@@ -154,7 +154,7 @@ void SceneNode::handleEventChildren(const sf::Event& event, int& command)
     for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
     {
         Ptr &child = *it;
-        command &= child->handleEvent(event);
+        command &= child->handleEvent(event, command);
     }
 }
 
@@ -172,6 +172,12 @@ void SceneNode::handleRealtimeInputCurrent(int& command)
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
     sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
 
+    if(!contains(localMousePosition) || !(command & (1<<OnHover)))
+    {
+        if(mOnLostHover)
+            mOnLostHover(*this);
+        mIsPressed = false;
+    }
     if(contains(localMousePosition))
     {
         if(isPressed())
@@ -184,9 +190,8 @@ void SceneNode::handleRealtimeInputCurrent(int& command)
             if(mOnHover && (command & (1<<OnHover)))
                 mOnHover(*this), command &= ~(1<<OnHover);
         }
+        command &= ~(1<<OnHover);
     }
-    if(!(command & (1<<OnHover)))
-        mIsPressed = false;
 }
 
 void SceneNode::handleRealtimeInputChildren(int &command)
@@ -194,7 +199,7 @@ void SceneNode::handleRealtimeInputChildren(int &command)
     for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
     {
         Ptr &child = *it;
-        command &= child->handleRealtimeInput();
+        command &= child->handleRealtimeInput(command);
     }
 }
 
@@ -206,6 +211,11 @@ void SceneNode::setOnClick(std::function<void(SceneNode&)> onClick)
 void SceneNode::setOnHover(std::function<void(SceneNode&)> onHover)
 {
     mOnHover = onHover;
+}
+
+void SceneNode::setOnLostHover(std::function<void(SceneNode&)> onLostHover)
+{
+    mOnLostHover = onLostHover;
 }
 
 void SceneNode::setOnHold(std::function<void(SceneNode&)> onHold)
