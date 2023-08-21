@@ -16,6 +16,7 @@ public:
     ButtonNode(Activity::Context* context, const sf::Vector2f& size, const std::string& text, unsigned int characterSize);
     void setSize(const sf::Vector2f& size);
     void setBackgroundColor(const sf::Color& color);
+    void setText(const std::string& text);
     virtual sf::FloatRect   getLocalBounds() const;
 
 private:

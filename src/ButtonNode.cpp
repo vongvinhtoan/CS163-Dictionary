@@ -45,6 +45,11 @@ void ButtonNode::setBackgroundColor(const sf::Color& color)
     }
 }
 
+void ButtonNode::setText(const std::string& text)
+{
+    mText.setString(text);
+}
+
 void ButtonNode::setListeners()
 {
     SceneNode::mOnHover = [](SceneNode& node) {

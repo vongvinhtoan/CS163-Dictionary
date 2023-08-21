@@ -87,6 +87,10 @@ void ActivityDashboard::buildScene()
     SceneNode::Ptr gameButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Game", 50));
     gameButton->setPosition(0, 35 + 40);
+    gameButton->setOnClick([this](SceneNode& node){
+        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPush(Activities::GAME);
+    });
 
     SceneNode::Ptr versionButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Version", 50));

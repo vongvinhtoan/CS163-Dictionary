@@ -32,6 +32,10 @@ namespace Textures
         Footer,
         WoodenBackground1,
         WoodenBackground2,
+        GameBackground,
+        PlayzoneBackground,
+        DefinitionBackground,
+        DefinitionCore,
         NONE
     };  
 } 

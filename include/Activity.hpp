@@ -13,6 +13,9 @@ namespace Activities
     {
         DASHBOARD,
         CREDIT,
+        GAME,
+        GAMETOUR,
+        GAMEOVER,
         MENU
     };
 }

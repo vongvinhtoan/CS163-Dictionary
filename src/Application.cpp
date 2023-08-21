@@ -3,6 +3,7 @@
 #include <string>
 #include <Activity/ActivityDashboard.hpp>
 #include <Activity/ActivityCredit.hpp>
+#include <Activity/ActivityGame.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -24,6 +25,10 @@ Application::Application()
     mTextures->load(Textures::Logo, "data/textures/Logo.png");
     mTextures->load(Textures::WoodenBackground1, "data/textures/WoodenBackground1.png");
     mTextures->load(Textures::WoodenBackground2, "data/textures/WoodenBackground2.png");
+    mTextures->load(Textures::GameBackground, "data/textures/GameBackground.png");
+    mTextures->load(Textures::PlayzoneBackground, "data/textures/PlayzoneBackground.png");
+    mTextures->load(Textures::DefinitionBackground, "data/textures/DefinitionBackground.png");
+    mTextures->load(Textures::DefinitionCore, "data/textures/DefinitionCore.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);
@@ -40,6 +45,7 @@ void Application::registerActivities()
 {
     mActivityStack.registerActivity<ActivityDashboard>(Activities::DASHBOARD);
     mActivityStack.registerActivity<ActivityCredit>(Activities::CREDIT);
+    mActivityStack.registerActivity<ActivityGame>(Activities::GAME);
 }
 
 void Application::run()
