@@ -4,8 +4,10 @@
 ActivityGame::ActivityGame(ActivityStack& stack, Context context)
 : Activity(stack, context)
 , mSceneGraph(new SceneNode(&getContext()))
+, mResultAnnouncer(new SceneNode(&getContext()))
 , mQuestionIndex(1)
 , mScore(0)
+, mIsWatchingResult(NotWatching)
 {
     buildScene();
     loadQuestion();
@@ -91,7 +93,11 @@ void ActivityGame::buildScene()
             sf::Color(0xFFFFFFFF)
         ));
         skipTextButton->setOnClick([this] (SceneNode& node) {
-            nextQuestion();
+            if(mQuestionIndex == 10) {
+                endGame();
+            } else {
+                nextQuestion();
+            }
         });
         skipTextButton->setOnLostHover([this] (SceneNode& node) {
             ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
@@ -300,6 +306,60 @@ void ActivityGame::buildScene()
 
         mSceneLayers[Footer]->attachChild(std::move(footer));
     }
+
+    // Result Announcer
+    {
+        SceneNode::Ptr resultAnnouncerBackground1(new RectangleNode(
+            &getContext(), 
+            sf::Vector2f(350.f, 150.f), 
+            sf::Color(0x606060FF)
+        ));
+        mResultAnnouncer->setPosition(
+            (getContext().window->getSize().x - resultAnnouncerBackground1->getLocalBounds().width) / 2.f,
+            325.f
+        );
+
+        SceneNode::Ptr resultAnnouncerBackground2(new RectangleNode(
+            &getContext(), 
+            sf::Vector2f(320.f, 120.f), 
+            sf::Color(0xFFFFFFFF)
+        ));
+        resultAnnouncerBackground2->setPosition(
+            (resultAnnouncerBackground1->getLocalBounds().width - resultAnnouncerBackground2->getLocalBounds().width) / 2.f,
+            (resultAnnouncerBackground1->getLocalBounds().height - resultAnnouncerBackground2->getLocalBounds().height) / 2.f
+        );
+
+        SceneNode::Ptr resultAnnouncerText(new TextNode(
+            &getContext(), 
+            "Correct!", 
+            getContext().fonts->get(Fonts::DEFAULT), 
+            50,
+            sf::Color(0x000000FF)
+        ));
+
+        mResultIndicator = (TextNode*)resultAnnouncerText.get();
+
+        resultAnnouncerText->setOrigin(
+            resultAnnouncerText->getLocalBounds().width / 2.f + resultAnnouncerText->getLocalBounds().left,
+            resultAnnouncerText->getLocalBounds().height / 2.f + resultAnnouncerText->getLocalBounds().top
+        );
+        resultAnnouncerText->setPosition(
+            resultAnnouncerBackground2->getLocalBounds().width / 2.f,
+            resultAnnouncerBackground2->getLocalBounds().height / 2.f
+        );
+
+        SceneNode::Ptr resultAnnouncerOverlay(new RectangleNode(
+            &getContext(), 
+            sf::Vector2f(350.f, 150.f), 
+            sf::Color(0x0000007F)
+        ));
+        mResultOverlay = (RectangleNode*)resultAnnouncerOverlay.get();
+
+        resultAnnouncerBackground2->attachChild(std::move(resultAnnouncerText));
+        resultAnnouncerBackground1->attachChild(std::move(resultAnnouncerBackground2));
+        mResultAnnouncer->attachChild(std::move(resultAnnouncerBackground1));
+        mResultAnnouncer->attachChild(std::move(resultAnnouncerOverlay));
+    }
 }
 
 void ActivityGame::loadQuestion()
@@ -324,17 +384,24 @@ void ActivityGame::nextQuestion()
 {
     mQuestionIndex++;
     loadQuestion();
+    correctLayout();
 }
 
 void ActivityGame::checkAnswer(int index)
 {
+    mTimeResult = mTimeWaitResult;
+    mAnswerIndex = index;
     if(index == mCorrectAnswerIndex) {
         mScore++;
+        mIsWatchingResult = CorrectResult;
     }
-    if(mQuestionIndex < 10) 
-        nextQuestion();
-    else
-        endGame();
+    else if(index == -1) {
+        mIsWatchingResult = TimeOutResult;
+    }
+    else {
+        mIsWatchingResult = WrongResult;
+    }
+    disfunctionButtons();
 }
 
 void ActivityGame::endGame()
@@ -347,11 +414,49 @@ void ActivityGame::draw()
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
     window.draw(*mSceneGraph);
+    if(mIsWatchingResult != NotWatching) {
+        window.draw(*mResultAnnouncer);
+    }
 }
 
 bool ActivityGame::update(sf::Time dt)
 {
     mSceneGraph->update(dt);
+
+    correctLayout();
+
+    if(mIsWatchingResult == NotWatching)
+    {
+        mTimeLeft -= dt;
+        mTimeIndicator->setString("Time: " + std::to_string((int)mTimeLeft.asSeconds()) + "s");
+
+        if(mTimeLeft <= sf::Time::Zero) {
+            checkAnswer(-1);
+        }
+    }
+    else
+    {
+        mTimeResult -= dt;
+        mResultOverlay->setSize(sf::Vector2f(
+            mResultOverlay->getLocalBounds().width,
+            150.f * (1 - mTimeResult.asSeconds() / mTimeWaitResult.asSeconds())
+        ));
+        if(mTimeResult <= sf::Time::Zero) {
+            mIsWatchingResult = NotWatching;
+            refunctionButtons();
+            if(mQuestionIndex == 10) {
+                endGame();
+            } else {
+                nextQuestion();
+            }
+        }
+    }
+    
+    return false;
+}
+
+void ActivityGame::correctLayout()
+{
     ((RectangleNode*)mDefinitionCore)->setSize(sf::Vector2f(
         mDefinitionCore->getLocalBounds().width,
         mDefinitionText->getLocalBounds().height + mDefinition->getLocalBounds().height +
@@ -383,14 +488,58 @@ bool ActivityGame::update(sf::Time dt)
 
     mScoreIndicator->setString("Correct: " + std::to_string(mScore) + "/10");
 
-    mTimeLeft -= dt;
-    mTimeIndicator->setString("Time: " + std::to_string((int)mTimeLeft.asSeconds()) + "s");
+    mResultIndicator->alignCenter();
+    ((SceneNode*)mResultIndicator)->setPosition(
+        mResultIndicator->getParent()->getLocalBounds().width / 2.f,
+        mResultIndicator->getParent()->getLocalBounds().height / 2.f
+    );
+}
 
-    if(mTimeLeft <= sf::Time::Zero) {
-        checkAnswer(-1);
+void ActivityGame::disfunctionButtons()
+{
+    for(int i=0; i<4; i++) {
+        mOptions[i]->setOnClick([] (SceneNode& node) {});
+        mOptions[i]->setOnLostHover([] (SceneNode& node) {});
+        mOptions[i]->setOnHover([] (SceneNode& node) {});
+        mOptions[i]->setOnHold([] (SceneNode& node) {});
+        mOptions[i]->setBackgroundColor(sf::Color(0xA02C2C7F));
+        mOptions[i]->setTextColor(sf::Color(0xFFFFFF7F));
     }
     
-    return false;
+    if(mIsWatchingResult == CorrectResult) {
+        mOptions[mAnswerIndex]->setBackgroundColor(sf::Color(0x3BC52FFF));
+        mOptions[mAnswerIndex]->setTextColor(sf::Color(0xFFFFFFFF));
+        mResultIndicator->setString("Congratulations!");
+        mResultIndicator->setColor(sf::Color(0x36C22AFF));
+    }
+    else if(mIsWatchingResult == WrongResult) {
+        mOptions[mAnswerIndex]->setBackgroundColor(sf::Color(0xA02C2CFF));
+        mOptions[mAnswerIndex]->setTextColor(sf::Color(0xFFFFFFFF));
+        mOptions[mCorrectAnswerIndex]->setBackgroundColor(sf::Color(0x3BC52FFF));
+        mOptions[mCorrectAnswerIndex]->setTextColor(sf::Color(0xFFFFFFFF));
+        mResultIndicator->setString("Opps! Wrong answer");
+        mResultIndicator->setColor(sf::Color(0xC22A2AFF));
+
+    }
+    else if(mIsWatchingResult == TimeOutResult) {
+        mOptions[mCorrectAnswerIndex]->setBackgroundColor(sf::Color(0x3BC52FFF));
+        mOptions[mCorrectAnswerIndex]->setTextColor(sf::Color(0xFFFFFFFF));
+        mResultIndicator->setString("Time out!");
+        mResultIndicator->setColor(sf::Color(0xC22A2AFF));
+    }
+
+    correctLayout();
+}
+
+void ActivityGame::refunctionButtons()
+{
+    for(int i=0; i<4; i++) {
+        mOptions[i]->setOnClick([this, i] (SceneNode& node) {
+            checkAnswer(i);
+        });
+        mOptions[i]->setListeners();
+        mOptions[i]->setTextColor(sf::Color(0xFFFFFFFF));
+    }
 }
 
 bool ActivityGame::handleEvent(const sf::Event& event)

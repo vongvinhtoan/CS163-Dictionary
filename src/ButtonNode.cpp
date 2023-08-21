@@ -120,3 +120,8 @@ sf::FloatRect ButtonNode::getLocalBounds() const
 {
     return sf::FloatRect(0.f, 0.f, mBackground[5].position.x, mBackground[2].position.y);
 }
+
+void ButtonNode::setTextColor(const sf::Color& color)
+{
+    mText.setFillColor(color);
+}
