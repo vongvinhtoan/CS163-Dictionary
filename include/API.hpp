@@ -7,21 +7,6 @@
 class API
 {
 public:
-    enum DictionaryId {
-        VIET_ENG,
-        VIET_ENG_FAVOURITE,
-        VIET_ENG_HISTORY,
-        ENG_ENG,
-        ENG_ENG_FAVOURITE,
-        ENG_ENG_HISTORY,
-        ENG_VIET,
-        ENG_VIET_FAVOURITE,
-        ENG_VIET_HISTORY,
-        EMOJI,
-        SLANG_WORD,
-        SIZE
-    };
-    
     struct VersionDescriptor
     {
         int version;
@@ -35,8 +20,8 @@ public:
     API() : database(Database::get_instance()) {}
 
 public:
-    virtual void set_dictionary(DictionaryId id) = 0;
-    virtual DictionaryId get_dictionary_id() = 0;
+    virtual void set_dictionary(Database::DictionaryId id);
+    virtual Database::DictionaryId get_dictionary_id(); 
     virtual std::vector<std::string> get_definition_from_word(std::string word) = 0;
     virtual void set_favorite(std::string word, bool favorite) = 0;
     virtual std::vector<std::string> get_favorites() = 0;
@@ -53,5 +38,4 @@ public:
     virtual std::vector<std::string> get_random_words(int count) = 0;
     virtual std::pair<std::string,std::string>  compare_definiton_word
     (std::vector<std::string>& str1,std::vector<std::string> str2)=0;
-
 };

@@ -5,8 +5,8 @@
 class API_Dummy_0 : public API
 {
 public:
-    virtual void set_dictionary(DictionaryId id);
-    virtual DictionaryId get_dictionary_id();
+    virtual void set_dictionary(Database::DictionaryId id);
+    virtual Database::DictionaryId get_dictionary_id();   
     virtual std::vector<std::string> get_definition_from_word(std::string word);
     virtual void set_favorite(std::string word, bool favorite);
     virtual std::vector<std::string> get_favorites();

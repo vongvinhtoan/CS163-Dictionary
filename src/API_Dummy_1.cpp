@@ -1,24 +1,46 @@
 #include <API_Dummy_1.hpp>
 #include <iostream>
 
-API_Dummy_1::API_Dummy_1()
-: dictionary_id(DictionaryId())
-, dictionaries(DictionaryId::SIZE)
-{
-    for(auto& dictionary : dictionaries)
-        dictionary = new PersistentTrie();
+// API_Dummy_1::API_Dummy_1()
+// : dictionary_id(DictionaryId())
+// , dictionaries(DictionaryId::SIZE)
+// {
+//     for(auto& dictionary : dictionaries)
+//         dictionary = new PersistentTrie();
 
-    for(int id = 0; id <1 ; ++id) {
-        std::vector<std::pair<std::string, std::string>> values;
-        //extract_from_json(values, database.get_dataset( id));
-        values.push_back(std::make_pair("word", "nghia"));
-        values.push_back(std::make_pair("do you love", "yeu em"));
-        values.push_back(std::make_pair("application", "ung dung"));
-        values.push_back(std::make_pair("kinny", "vua"));
-        values.push_back(std::make_pair("mouse", "chuot"));
-        values.push_back(std::make_pair("anhaayyo", "xin chao VN"));
-        dictionaries[id]->initialize(values);
+//     for(int id = 0; id <1 ; ++id) {
+//         std::vector<std::pair<std::string, std::string>> values;
+//         //extract_from_json(values, database.get_dataset( id));
+//         values.push_back(std::make_pair("word", "nghia"));
+//         values.push_back(std::make_pair("do you love", "yeu em"));
+//         values.push_back(std::make_pair("application", "ung dung"));
+//         values.push_back(std::make_pair("kinny", "vua"));
+//         values.push_back(std::make_pair("mouse", "chuot"));
+//         values.push_back(std::make_pair("anhaayyo", "xin chao VN"));
+//         dictionaries[id]->initialize(values);
+//     }
+// }
+
+API_Dummy_1::API_Dummy_1()
+{
+    PersistentTrie datasets[Database::DictionaryId::SIZE];
+    for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
+        datasets[id] = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
     }
+}
+
+PersistentTrie API_Dummy_1::build_trie_from_value(Json::Value dictionary)
+{
+    PersistentTrie res;
+    for(Json::Value item: dictionary)
+    {
+        std::string word = item["word"].asString();
+        std::string definition = item["definition"].asString();
+
+        res.insert(word, definition);
+    }
+
+    return res;
 }
 
 void API_Dummy_1::extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json)
@@ -36,20 +58,20 @@ API_Dummy_1::~API_Dummy_1()
         delete dictionary;
 }
 
-void API_Dummy_1::set_dictionary(DictionaryId id)
+void API_Dummy_1::set_dictionary(Database::DictionaryId id)
 {
 
 }
 
-API::DictionaryId API_Dummy_1::get_dictionary_id()
+Database::DictionaryId API_Dummy_1::get_dictionary_id()
 {
 
-    return dictionary_id;
+   return Database::DictionaryId::SIZE;
 }
 
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 {
-    return dictionaries[dictionary_id]->get_version(version)->search(word);
+    return dictionaries[0]->get_version(version)->search(word);
 }
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
@@ -74,7 +96,7 @@ std::vector<std::string> API_Dummy_1::get_history()
 
 void API_Dummy_1::add_definition(std::string word, std::string definition)
 {
-    dictionaries[dictionary_id]->insert(word, definition);
+    dictionaries[0]->insert(word, definition);
     version++;
 }
 
@@ -85,7 +107,7 @@ void API_Dummy_1::edit_definition(std::string word, int editID, std::string defi
 
 void API_Dummy_1::delete_word(std::string word)
 {
-    dictionaries[dictionary_id]->delete_word(word);
+    dictionaries[0]->delete_word(word);
     version++;
 }
 
@@ -102,7 +124,7 @@ std::vector<std::string> API_Dummy_1::get_random_word_and_definition()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
-    std::cout<<DictionaryId::SIZE<<std::endl;
+    std::cout<<Database::DictionaryId::SIZE<<std::endl;
     for(int i=0;i<4;i++){
         random.push_back(get_random_words(0));
     }

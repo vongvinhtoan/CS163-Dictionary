@@ -1,12 +1,13 @@
 #include <API_Dummy_0.hpp>
 
-void API_Dummy_0::set_dictionary(DictionaryId id)
+void API_Dummy_0::set_dictionary(Database::DictionaryId id)
 {
+    
 }
 
-API::DictionaryId API_Dummy_0::get_dictionary_id()
+Database::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return DictionaryId::ENG_ENG;
+    return Database::DictionaryId::SIZE;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
