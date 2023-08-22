@@ -55,7 +55,7 @@ void API_Dummy_0::set_version(int version)
 {
 }
 
-std::vector<std::string> API_Dummy_0::get_random_word_and_definition()
+std::vector<std::string> API_Dummy_0::quizz_1_word_4_definition()
 {
     return std::vector<std::string>();
 }
@@ -65,7 +65,7 @@ std::vector<std::string> API_Dummy_0::get_random_definitions(int count)
     return std::vector<std::string>();
 }
 
-std::vector< std::string> API_Dummy_0::get_random_definition_and_word()
+std::vector< std::string> API_Dummy_0::quizz_1_definition_4_word()
 {
     return std::vector<std::string>();
 }
@@ -75,10 +75,3 @@ std::vector<std::string> API_Dummy_0::get_random_words(int count)
     return std::vector<std::string>();
 }
 
-std::pair<std::string,std::string> API_Dummy_0:: 
-compare_definiton_word(std::vector<std::string>& str1,std::vector<std::string> str2)
-{
-    
-
-    return std::pair<std::string,std::string>();
-}

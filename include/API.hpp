@@ -18,7 +18,7 @@ protected:
 
 public:
     API() : database(Database::get_instance()) {}
-
+    
 public:
     virtual void set_dictionary(Database::DictionaryId id) = 0;
     virtual Database::DictionaryId get_dictionary_id() = 0; 
@@ -32,10 +32,10 @@ public:
     virtual void delete_word(std::string word) = 0;
     virtual std::vector<VersionDescriptor> get_versions() = 0;
     virtual void set_version(int version) = 0;
-    virtual std::vector<std::string> get_random_word_and_definition() = 0;
+    virtual std::vector<std::string> quizz_1_word_4_definition() = 0;
     virtual std::vector<std::string> get_random_definitions(int count) = 0;
-    virtual std::vector<std::string> get_random_definition_and_word() = 0;
+    virtual std::vector<std::string> quizz_1_definition_4_word() = 0;
     virtual std::vector<std::string> get_random_words(int count) = 0;
-    virtual std::pair<std::string,std::string>  compare_definiton_word
-    (std::vector<std::string>& str1,std::vector<std::string> str2)=0;
+    
+
 };

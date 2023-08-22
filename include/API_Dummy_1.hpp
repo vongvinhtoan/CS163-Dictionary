@@ -33,13 +33,10 @@ public:
     virtual void delete_word(std::string word);
     virtual std::vector<VersionDescriptor> get_versions();
     virtual void set_version(int version);
-    virtual std::vector<std::string> get_random_word_and_definition();
+    virtual std::vector<std::string> quizz_1_word_4_definition();
     virtual std::vector<std::string> get_random_definitions(int count);
-    virtual std::vector<std::string> get_random_definition_and_word();
+    virtual std::vector<std::string> quizz_1_definition_4_word();
     virtual std::vector<std::string> get_random_words(int count);
-
-    virtual std::pair<std::string,std::string>  compare_definiton_word
-    (std::vector<std::string>& str1,std::vector<std::string> str2);
     Json::Value to_json();
     
 };

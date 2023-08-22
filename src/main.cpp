@@ -22,13 +22,19 @@ int main()
     std::ofstream file("database.json");
     file << json;
     file.close();    
-        std::vector<std::string> definitions = api->get_random_word_and_definition();
+    while (true){
+        std::string word;
+        std::cout<<"Enter word: ";
+        std:: cin>>word;
+        std::vector<std::string> definitions = api->get_definition_from_word( word);
         
         //std::cout<<"Definitions: \n";
         for (auto definition : definitions) {
             std::cout<<"---------------------\n";
             std::cout<<definition<<std::endl;
         }
+    }
+        
         
 
     delete api;
