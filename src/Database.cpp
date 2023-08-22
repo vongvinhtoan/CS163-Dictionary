@@ -46,9 +46,6 @@ Json::Value Database::get_dataset(DictionaryId id){
     else if(id == DictionaryId::ENG_VIET) return dataset_Eng_Vie;
     else if(id == DictionaryId::VIET_ENG) return dataset_Vie_Eng;
     else if(id == DictionaryId::SLANG_WORD) return dataset_Slang_Word;
-    else if(id==DictionaryId::ENG_ENG_HISTORY) return dataset_Eng_Eng_history;
-    else if(id==DictionaryId::ENG_VIET_HISTORY) return dataset_Eng_Vie_history;
-    else if(id==DictionaryId::VIET_ENG_HISTORY) return dataset_Vie_Eng_history;
     else if(id == DictionaryId::ENG_ENG_FAVOURITE) return dataset_Eng_Eng_favourite;
     else if(id == DictionaryId::ENG_VIET_FAVOURITE) return dataset_Eng_Vie_favourite;
     else if(id == DictionaryId::VIET_ENG_FAVOURITE) return dataset_Vie_Eng_favourite;

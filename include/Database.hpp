@@ -10,15 +10,14 @@ class Database {
     enum DictionaryId {
         VIET_ENG,
         VIET_ENG_FAVOURITE,
-        VIET_ENG_HISTORY,
         ENG_ENG,
         ENG_ENG_FAVOURITE,
-        ENG_ENG_HISTORY,
         ENG_VIET,
         ENG_VIET_FAVOURITE,
-        ENG_VIET_HISTORY,
         EMOJI,
+        EMOJI_FAVOURITE,
         SLANG_WORD,
+        SLANG_WORD_FAVOURITE,
         SIZE
     };
 

@@ -15,9 +15,8 @@ int main()
     // }
     srand((unsigned)time(NULL));
     API* api = new API_Dummy_1();
-
-    api->add_definition("fuck", "concu");
-    api->add_definition("australia","hi hi");
+    api->set_dictionary(Database::DictionaryId::ENG_ENG);
+   
     Json::Value json = ((API_Dummy_1*)api)->to_json();
     
     std::ofstream file("database.json");
@@ -27,6 +26,7 @@ int main()
         
         //std::cout<<"Definitions: \n";
         for (auto definition : definitions) {
+            std::cout<<"---------------------\n";
             std::cout<<definition<<std::endl;
         }
         

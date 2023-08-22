@@ -8,12 +8,13 @@ class API_Dummy_1 : public API
 {
 private:
     int version;
+    Database::DictionaryId dictionary_id;
     std::vector<PersistentTrie*> dictionaries;
     
 
 private:
     void extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json);
-    PersistentTrie build_trie_from_value(Json::Value dictionary);
+    PersistentTrie* build_trie_from_value(Json::Value dictionary);
 
 public:
     API_Dummy_1();

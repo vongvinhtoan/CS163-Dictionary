@@ -20,25 +20,23 @@
 //         dictionaries[id]->initialize(values);
 //     }
 // }
-
+int holder=2;
 API_Dummy_1::API_Dummy_1()
+: dictionary_id(Database::DictionaryId::ENG_ENG)
+, dictionaries(Database::DictionaryId::SIZE)
+, version(0)
 {
-    PersistentTrie datasets[Database::DictionaryId::SIZE];
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
-        datasets[id] = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
+        dictionaries[id] = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
     }
 }
 
-PersistentTrie API_Dummy_1::build_trie_from_value(Json::Value dictionary)
+PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
 {
-    PersistentTrie res;
-    for(Json::Value item: dictionary)
-    {
-        std::string word = item["word"].asString();
-        std::string definition = item["definition"].asString();
-
-        res.insert(word, definition);
-    }
+    PersistentTrie* res = new PersistentTrie();
+    std::vector<std::pair<std::string, std::string>> values;
+    extract_from_json(values, dictionary);
+    res->initialize(values);
 
     return res;
 }
@@ -60,7 +58,7 @@ API_Dummy_1::~API_Dummy_1()
 
 void API_Dummy_1::set_dictionary(Database::DictionaryId id)
 {
-
+    dictionary_id = id;
 }
 
 Database::DictionaryId API_Dummy_1::get_dictionary_id()
@@ -71,7 +69,7 @@ Database::DictionaryId API_Dummy_1::get_dictionary_id()
 
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 {
-    return dictionaries[0]->get_version(version)->search(word);
+    return dictionaries[Database::DictionaryId::ENG_ENG]->get_version(version)->search(word);
 }
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
@@ -124,11 +122,9 @@ std::vector<std::string> API_Dummy_1::get_random_word_and_definition()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
-    std::cout<<Database::DictionaryId::SIZE<<std::endl;
     for(int i=0;i<4;i++){
         random.push_back(get_random_words(0));
     }
-   
      for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
            if(i!=j) {
@@ -177,12 +173,12 @@ std::vector< std::string> API_Dummy_1::get_random_definition_and_word()
 
 std::vector<std::string> API_Dummy_1::get_random_words(int count)
 {
-    return dictionaries[0]->get_version(version)->get_random_word();
+    return dictionaries[dictionary_id]->get_version(version)->get_random_word();
 }
 
 Json::Value API_Dummy_1::to_json()
 {
-    Json::Value json = dictionaries[0]->to_json();
+    Json::Value json = dictionaries[dictionary_id]->to_json();
     return json;
 }
 

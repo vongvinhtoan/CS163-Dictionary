@@ -11,7 +11,7 @@ Trie::Node::Node()
 , definition()
 , id(id_counter++)
 {
-    std::cout<<"Node "<<id<<" created\n";
+    
 }
 
 Trie::Node::~Node()
