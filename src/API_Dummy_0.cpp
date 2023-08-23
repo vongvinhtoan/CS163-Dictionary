@@ -24,9 +24,9 @@ std::vector<std::string> API_Dummy_0::get_favorites()
     return std::vector<std::string>();
 }
 
-std::string API_Dummy_0::get_word_from_definition(std::string definition)
+std::vector<std::string> API_Dummy_0::get_word_from_definition(std::string definition)
 {
-    return "";
+    return std::vector<std::string>();
 }
 
 std::vector<std::string> API_Dummy_0::get_history()
