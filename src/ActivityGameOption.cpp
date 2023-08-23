@@ -1,14 +1,14 @@
 #include <iostream>
-#include <Activity/ActivityDashboard.hpp>
+#include <Activity/ActivityGameOption.hpp>
 
-ActivityDashboard::ActivityDashboard(ActivityStack& stack, Context context)
+ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context)
 : Activity(stack, context)
 , mSceneGraph(new SceneNode(&getContext()))
 {
     buildScene();
 }
 
-void ActivityDashboard::buildScene()
+void ActivityGameOption::buildScene()
 {
     // Initialize the different layers
     for (std::size_t i = 0; i < LayerCount; ++i)
@@ -69,39 +69,33 @@ void ActivityDashboard::buildScene()
     mSceneLayers[Logo]->attachChild(std::move(logo));
 
     // Button layer
-    SceneNode::Ptr startButton(
-        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Start", 50));
+    SceneNode::Ptr wordButton(
+        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Word", 50));
+    wordButton->setOnClick([this](SceneNode& node){
+        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPush(Activities::GAMEWORD);
+    });
 
-    SceneNode::Ptr historyButton(
-        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "History", 50));
-    historyButton->setPosition(0, 35 + 40);
+    SceneNode::Ptr definitionButton(
+        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Definition", 50));
+    definitionButton->setPosition(0, 35 + 40);
+    definitionButton->setOnClick([this](SceneNode& node){
+        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPush(Activities::GAMEDEFINITION);
+    });
     
-    SceneNode::Ptr creditButton(
-        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Credit", 50));
-    creditButton->setPosition(0, 35 + 40);
-    creditButton->setOnClick([this](SceneNode& node){
+    SceneNode::Ptr backButton(
+        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Back", 50));
+    backButton->setPosition(0, 35 + 40);
+    backButton->setOnClick([this](SceneNode& node){
         ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
-        requestStackPush(Activities::CREDIT);
+        requestStackPop();
     });
 
-    SceneNode::Ptr gameButton(
-        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Game", 50));
-    gameButton->setPosition(0, 35 + 40);
-    gameButton->setOnClick([this](SceneNode& node){
-        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
-        requestStackPush(Activities::GAMEOPTIONS);
-    });
+    definitionButton->attachChild(std::move(backButton));
+    wordButton->attachChild(std::move(definitionButton));
 
-    SceneNode::Ptr versionButton(
-        new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Version", 50));
-    versionButton->setPosition(0, 35 + 40);
-
-    gameButton->attachChild(std::move(versionButton));
-    creditButton->attachChild(std::move(gameButton));
-    historyButton->attachChild(std::move(creditButton));
-    startButton->attachChild(std::move(historyButton));
-
-    mSceneLayers[Button]->attachChild(std::move(startButton));
+    mSceneLayers[Button]->attachChild(std::move(wordButton));
 
     // Footer layer
     SceneNode::Ptr footer(
@@ -131,27 +125,27 @@ void ActivityDashboard::buildScene()
     mSceneLayers[Footer]->attachChild(std::move(footer));
 }
 
-void ActivityDashboard::draw()
+void ActivityGameOption::draw()
 {
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
     window.draw(*mSceneGraph);
 }
 
-bool ActivityDashboard::update(sf::Time dt)
+bool ActivityGameOption::update(sf::Time dt)
 {
     mSceneGraph->update(dt);
-    return true;
+    return false;
 }
 
-bool ActivityDashboard::handleEvent(const sf::Event& event)
+bool ActivityGameOption::handleEvent(const sf::Event& event)
 {
     mSceneGraph->handleEvent(event);
-    return true;
+    return false;
 }
 
-bool ActivityDashboard::handleRealtimeInput()
+bool ActivityGameOption::handleRealtimeInput()
 {
     mSceneGraph->handleRealtimeInput();
-    return true;
+    return false;
 }

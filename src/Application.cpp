@@ -3,7 +3,8 @@
 #include <string>
 #include <Activity/ActivityDashboard.hpp>
 #include <Activity/ActivityCredit.hpp>
-#include <Activity/ActivityGame.hpp>
+#include <Activity/ActivityGameOption.hpp>
+#include <Activity/ActivityGameDefinition.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -45,7 +46,8 @@ void Application::registerActivities()
 {
     mActivityStack.registerActivity<ActivityDashboard>(Activities::DASHBOARD);
     mActivityStack.registerActivity<ActivityCredit>(Activities::CREDIT);
-    mActivityStack.registerActivity<ActivityGame>(Activities::GAME);
+    mActivityStack.registerActivity<ActivityGameOption>(Activities::GAMEOPTIONS);
+    mActivityStack.registerActivity<ActivityGameDefinition>(Activities::GAMEDEFINITION);
 }
 
 void Application::run()

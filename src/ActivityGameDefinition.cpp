@@ -1,7 +1,7 @@
 #include <iostream>
-#include <Activity/ActivityGame.hpp>
+#include <Activity/ActivityGameDefinition.hpp>
 
-ActivityGame::ActivityGame(ActivityStack& stack, Context context)
+ActivityGameDefinition::ActivityGameDefinition(ActivityStack& stack, Context context)
 : Activity(stack, context)
 , mSceneGraph(new SceneNode(&getContext()))
 , mResultAnnouncer(new SceneNode(&getContext()))
@@ -13,7 +13,7 @@ ActivityGame::ActivityGame(ActivityStack& stack, Context context)
     loadQuestion();
 }
 
-void ActivityGame::buildScene()
+void ActivityGameDefinition::buildScene()
 {
     // Initialize layers
     for (std::size_t i = 0; i < LayerCount; ++i)
@@ -68,7 +68,7 @@ void ActivityGame::buildScene()
         ));
         tutorialTextButton->setOnClick([this] (SceneNode& node) {
             ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
-            requestStackPush(Activities::GAMETOUR);
+            requestStackPush(Activities::GAMEDEFINITIONTOUR);
         });
         tutorialTextButton->setOnLostHover([this] (SceneNode& node) {
             ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
@@ -362,7 +362,7 @@ void ActivityGame::buildScene()
     }
 }
 
-void ActivityGame::loadQuestion()
+void ActivityGameDefinition::loadQuestion()
 {
     mTimeLeft = mTimePerQuestion;
     Randomizer& randomizer = Randomizer::getInstance();
@@ -380,14 +380,14 @@ void ActivityGame::loadQuestion()
     }
 }
 
-void ActivityGame::nextQuestion()
+void ActivityGameDefinition::nextQuestion()
 {
     mQuestionIndex++;
     loadQuestion();
     correctLayout();
 }
 
-void ActivityGame::checkAnswer(int index)
+void ActivityGameDefinition::checkAnswer(int index)
 {
     mTimeResult = mTimeWaitResult;
     mAnswerIndex = index;
@@ -404,12 +404,12 @@ void ActivityGame::checkAnswer(int index)
     disfunctionButtons();
 }
 
-void ActivityGame::endGame()
+void ActivityGameDefinition::endGame()
 {
     requestStackPush(Activities::GAMEOVER);
 }
 
-void ActivityGame::draw()
+void ActivityGameDefinition::draw()
 {
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
@@ -419,7 +419,7 @@ void ActivityGame::draw()
     }
 }
 
-bool ActivityGame::update(sf::Time dt)
+bool ActivityGameDefinition::update(sf::Time dt)
 {
     mSceneGraph->update(dt);
 
@@ -455,7 +455,7 @@ bool ActivityGame::update(sf::Time dt)
     return false;
 }
 
-void ActivityGame::correctLayout()
+void ActivityGameDefinition::correctLayout()
 {
     ((RectangleNode*)mDefinitionCore)->setSize(sf::Vector2f(
         mDefinitionCore->getLocalBounds().width,
@@ -495,7 +495,7 @@ void ActivityGame::correctLayout()
     );
 }
 
-void ActivityGame::disfunctionButtons()
+void ActivityGameDefinition::disfunctionButtons()
 {
     for(int i=0; i<4; i++) {
         mOptions[i]->setOnClick([] (SceneNode& node) {});
@@ -531,7 +531,7 @@ void ActivityGame::disfunctionButtons()
     correctLayout();
 }
 
-void ActivityGame::refunctionButtons()
+void ActivityGameDefinition::refunctionButtons()
 {
     for(int i=0; i<4; i++) {
         mOptions[i]->setOnClick([this, i] (SceneNode& node) {
@@ -542,13 +542,13 @@ void ActivityGame::refunctionButtons()
     }
 }
 
-bool ActivityGame::handleEvent(const sf::Event& event)
+bool ActivityGameDefinition::handleEvent(const sf::Event& event)
 {
     mSceneGraph->handleEvent(event);
     return false;
 }
 
-bool ActivityGame::handleRealtimeInput()
+bool ActivityGameDefinition::handleRealtimeInput()
 {
     mSceneGraph->handleRealtimeInput();
     return false;

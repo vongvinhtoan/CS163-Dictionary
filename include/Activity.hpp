@@ -13,8 +13,11 @@ namespace Activities
     {
         DASHBOARD,
         CREDIT,
-        GAME,
-        GAMETOUR,
+        GAMEOPTIONS,
+        GAMEDEFINITION,
+        GAMEDEFINITIONTOUR,
+        GAMEWORD,
+        GAMEWORDTOUR,
         GAMEOVER,
         MENU
     };
@@ -22,31 +25,31 @@ namespace Activities
 
 class Activity
 {
-    public:
-        typedef std::unique_ptr<Activity> Ptr;
-        struct Context 
-        {
-            Context(sf::RenderWindow& window,
-                    TextureHolder& textures,
-                    FontHolder& fonts,
-                    Json::Value& data);
-            sf::RenderWindow*  window;
-            TextureHolder*     textures;
-            FontHolder*        fonts;
-            Json::Value*       data;
-        };
-                        Activity(ActivityStack& stack, Context context);
-        virtual         ~Activity();
-        virtual void    draw() = 0;
-        virtual bool    update(sf::Time dt) = 0;
-        virtual bool    handleEvent(const sf::Event& event) = 0;
-        virtual bool    handleRealtimeInput() = 0;
-    protected: 
-        void            requestStackPush(int activityID);
-        void            requestStackPop();
-        void            requestActivityClear();
-        Context&        getContext();
-    private:
-        ActivityStack*      mStack;
-        Context             mContext;
+public:
+    typedef std::unique_ptr<Activity> Ptr;
+    struct Context 
+    {
+        Context(sf::RenderWindow& window,
+                TextureHolder& textures,
+                FontHolder& fonts,
+                Json::Value& data);
+        sf::RenderWindow*  window;
+        TextureHolder*     textures;
+        FontHolder*        fonts;
+        Json::Value*       data;
+    };
+                    Activity(ActivityStack& stack, Context context);
+    virtual         ~Activity();
+    virtual void    draw() = 0;
+    virtual bool    update(sf::Time dt) = 0;
+    virtual bool    handleEvent(const sf::Event& event) = 0;
+    virtual bool    handleRealtimeInput() = 0;
+protected: 
+    void            requestStackPush(int activityID);
+    void            requestStackPop();
+    void            requestActivityClear();
+    Context&        getContext();
+private:
+    ActivityStack*      mStack;
+    Context             mContext;
 };

@@ -6,7 +6,7 @@
 #include <SceneNode\TextNode.hpp>
 #include <SceneNode\ButtonNode.hpp>
 
-class ActivityGame : public Activity
+class ActivityGameDefinition : public Activity
 {
 private:
     enum Layer
@@ -27,7 +27,7 @@ private:
     void   buildScene();
 
 public:
-    ActivityGame(ActivityStack& stack, Context context);
+    ActivityGameDefinition(ActivityStack& stack, Context context);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);
