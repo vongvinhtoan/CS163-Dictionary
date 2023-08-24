@@ -10,6 +10,8 @@ public:
     virtual std::vector<std::string> get_definition_from_word(std::string word);
     virtual void set_favorite(std::string word, bool favorite);
     virtual std::vector<std::string> get_favorites();
+     virtual void add_favorite(std::string word);
+    virtual void delete_favorite(std::string word);
     virtual std::vector<std::string> get_word_from_definition(std::string definition);
     virtual std::vector<std::string> get_history();
     virtual void add_definition(std::string word, std::string definition);

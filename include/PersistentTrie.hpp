@@ -22,7 +22,9 @@ public:
     bool delete_word(const std::string &word);
     bool delete_definition(const std::string &word, const std::string &definition);
     void initialize(std::vector<std::pair<std::string, std::string>> &words);
+    void clone();
     Json::Value to_json();
+    std::vector<std::string> dfs();
 };
 
 

@@ -25,6 +25,8 @@ public:
     virtual std::vector<std::string> get_definition_from_word(std::string word) = 0;
     virtual void set_favorite(std::string word, bool favorite) = 0;
     virtual std::vector<std::string> get_favorites() = 0;
+    virtual void add_favorite(std::string word)=0;
+    virtual void delete_favorite(std::string word)=0;
     virtual std::vector<std::string> get_word_from_definition(std::string definition) = 0;
     virtual std::vector<std::string> get_history() = 0;
     virtual void add_definition(std::string word, std::string definition) = 0;

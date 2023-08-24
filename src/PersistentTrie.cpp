@@ -201,3 +201,12 @@ Json::Value PersistentTrie::to_json()
     }
     return root;
 }
+
+void PersistentTrie::clone()
+{
+    versions.push_back(versions.back());
+}
+std::vector<std::string> PersistentTrie::dfs()
+{
+    return versions.back()->dfs();
+}

@@ -134,4 +134,20 @@ std::vector<std::string> Trie:: get_random_word(){
         return word_and_definition;
     }
     return word_and_definition;
+
+}
+std::vector<std::string> Trie::dfs(){
+   Node* node=root;
+   std::vector<std::string> data;
+   std::string word;
+   return dfs_helper(node,data,word); 
+}
+std::vector<std::string> Trie:: dfs_helper(Node* node,std::vector<std::string> data,std::string word){
+    if(node->isWord){
+        data.push_back(word);
+    }
+    for(auto& child: node->children){
+        dfs_helper(child.second,data,word+child.first);
+    }
+    return data;
 }
