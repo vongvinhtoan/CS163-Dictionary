@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Activity/ActivityGameOption.hpp>
 
-ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context)
-: Activity(stack, context)
+ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context, Intent::Ptr intent)
+: Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 {
     buildScene();
@@ -73,6 +73,7 @@ void ActivityGameOption::buildScene()
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Word", 50));
     wordButton->setOnClick([this](SceneNode& node){
         ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPop();
         requestStackPush(Activities::GAMEWORD);
     });
 
@@ -81,6 +82,7 @@ void ActivityGameOption::buildScene()
     definitionButton->setPosition(0, 35 + 40);
     definitionButton->setOnClick([this](SceneNode& node){
         ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPop();
         requestStackPush(Activities::GAMEDEFINITION);
     });
     

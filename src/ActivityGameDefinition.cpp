@@ -1,13 +1,15 @@
 #include <iostream>
 #include <Activity/ActivityGameDefinition.hpp>
 
-ActivityGameDefinition::ActivityGameDefinition(ActivityStack& stack, Context context)
-: Activity(stack, context)
+ActivityGameDefinition::ActivityGameDefinition(ActivityStack& stack, Context context, Intent::Ptr intent)
+: Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 , mResultAnnouncer(new SceneNode(&getContext()))
 , mQuestionIndex(1)
 , mScore(0)
 , mIsWatchingResult(NotWatching)
+, mTotalTime(sf::Time::Zero)
+, mWrongAnswers()
 {
     buildScene();
     loadQuestion();
@@ -399,6 +401,7 @@ void ActivityGameDefinition::checkAnswer(int index)
         mIsWatchingResult = TimeOutResult;
     }
     else {
+        mWrongAnswers.push_back(mOptions[index]->getText());
         mIsWatchingResult = WrongResult;
     }
     disfunctionButtons();
@@ -406,7 +409,14 @@ void ActivityGameDefinition::checkAnswer(int index)
 
 void ActivityGameDefinition::endGame()
 {
-    requestStackPush(Activities::GAMEOVER);
+    Intent::Ptr intent(new Intent());
+
+    intent->putExtra("score", mScore);
+    intent->putExtra("wrongAnswers", mWrongAnswers);
+    intent->putExtra("totalTime", mTotalTime);
+
+    requestStackPop();
+    requestStackPush(Activities::GAMEOVER, std::move(intent));
 }
 
 void ActivityGameDefinition::draw()

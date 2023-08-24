@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Activity/ActivityDashboard.hpp>
 
-ActivityDashboard::ActivityDashboard(ActivityStack& stack, Context context)
-: Activity(stack, context)
+ActivityDashboard::ActivityDashboard(ActivityStack& stack, Context context, Intent::Ptr intent)
+: Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 {
     buildScene();

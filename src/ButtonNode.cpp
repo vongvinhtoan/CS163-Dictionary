@@ -77,6 +77,11 @@ void ButtonNode::setSize(const sf::Vector2f& size)
     mBackground[5] = sf::Vertex(sf::Vector2f(w, h/2), sf::Color(0xA02C2CFF));
 }
 
+std::string ButtonNode::getText() const
+{
+    return mText.getString();
+}
+
 void ButtonNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(mBackground, states);

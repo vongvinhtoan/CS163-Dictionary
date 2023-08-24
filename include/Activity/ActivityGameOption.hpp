@@ -25,7 +25,7 @@ private:
     void   buildScene();
 
 public:
-    ActivityGameOption(ActivityStack& stack, Context context);
+    ActivityGameOption(ActivityStack& stack, Context context, Intent::Ptr intent);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);

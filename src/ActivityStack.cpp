@@ -49,9 +49,9 @@ void ActivityStack::handleRealtimeInput()
     applyPendingChanges();
 }
 
-void ActivityStack::pushActivity(int activityID)
+void ActivityStack::pushActivity(int activityID, Activity::Intent::Ptr intent)
 {
-    mPendingList.push_back(PendingChange(Push, activityID));
+    mPendingList.push_back(PendingChange(Push, activityID, std::move(intent)));
 }
 
 void ActivityStack::popActivity()
@@ -69,12 +69,12 @@ bool ActivityStack::isEmpty() const
     return mStack.empty();
 }
 
-Activity::Ptr ActivityStack::createActivity(int activityID)
+Activity::Ptr ActivityStack::createActivity(int activityID, Activity::Intent::Ptr intent)
 {
     auto found = mFactories.find(activityID);
     assert(found != mFactories.end());
 
-    return found->second();
+    return (found->second)(std::move(intent));
 }
 
 void ActivityStack::applyPendingChanges()
@@ -84,7 +84,7 @@ void ActivityStack::applyPendingChanges()
         switch (change.action)
         {
             case Push:
-                mStack.push_back(createActivity(change.activityID));
+                mStack.push_back(createActivity(change.activityID, std::move(change.intent)));
                 break;
 
             case Pop:
@@ -100,8 +100,9 @@ void ActivityStack::applyPendingChanges()
     mPendingList.clear();
 }
 
-ActivityStack::PendingChange::PendingChange(Action action, int activityID)
+ActivityStack::PendingChange::PendingChange(Action action, int activityID, Activity::Intent::Ptr intent)
 : action(action)
 , activityID(activityID)
+, intent(std::move(intent))
 {
 }

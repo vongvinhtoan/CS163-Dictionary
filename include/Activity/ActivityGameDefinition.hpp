@@ -27,7 +27,7 @@ private:
     void   buildScene();
 
 public:
-    ActivityGameDefinition(ActivityStack& stack, Context context);
+    ActivityGameDefinition(ActivityStack& stack, Context context, Intent::Ptr intent);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);
@@ -61,14 +61,16 @@ protected:
         TimeOutResult
     };
 
-    const sf::Time  mTimePerQuestion = sf::seconds(10);
-    const sf::Time  mTimeWaitResult = sf::seconds(1.25f);
-    sf::Time        mTimeLeft;
-    sf::Time        mTimeResult;
-    int             mQuestionIndex;
-    int             mScore;
-    int             mCorrectAnswerIndex;
-    int             mAnswerIndex;
-    int             mIsWatchingResult;
-    std::string     mOptionTexts[4];
+    const sf::Time              mTimePerQuestion = sf::seconds(10);
+    const sf::Time              mTimeWaitResult = sf::seconds(1.25f);
+    sf::Time                    mTimeLeft;
+    sf::Time                    mTimeResult;
+    int                         mQuestionIndex;
+    int                         mScore;
+    int                         mCorrectAnswerIndex;
+    int                         mAnswerIndex;
+    int                         mIsWatchingResult;
+    std::string                 mOptionTexts[4];
+    std::vector<std::string>    mWrongAnswers;
+    sf::Time                    mTotalTime;
 };

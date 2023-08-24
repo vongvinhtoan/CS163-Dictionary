@@ -5,14 +5,16 @@
 #include <SceneNode\TextNode.hpp>
 #include <SceneNode\ButtonNode.hpp>
 
-class ActivityCredit : public Activity
+class ActivityGameOver : public Activity
 {
 private:
     enum Layer
     {
         Background,
         Title,
-        Names,
+        Grading,
+        Timing,
+        WrongAnswers,
         LayerCount
     };
 
@@ -20,12 +22,18 @@ private:
     std::array<SceneNode*, LayerCount> mSceneLayers;
 
 private:
-    void   buildScene();
+    void        buildScene();
+    std::string getRank(int score);
 
 public:
-    ActivityCredit(ActivityStack& stack, Context context, Intent::Ptr intent);
+    ActivityGameOver(ActivityStack& stack, Context context, Intent::Ptr intent);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);
     virtual bool    handleRealtimeInput();
+
+private:
+    int                         mScore;
+    std::vector<std::string>    mWrongAnswers;
+    sf::Time                    mTime;
 };

@@ -5,6 +5,7 @@
 #include <Activity/ActivityCredit.hpp>
 #include <Activity/ActivityGameOption.hpp>
 #include <Activity/ActivityGameDefinition.hpp>
+#include <Activity/ActivityGameOver.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -30,6 +31,7 @@ Application::Application()
     mTextures->load(Textures::PlayzoneBackground, "data/textures/PlayzoneBackground.png");
     mTextures->load(Textures::DefinitionBackground, "data/textures/DefinitionBackground.png");
     mTextures->load(Textures::DefinitionCore, "data/textures/DefinitionCore.png");
+    mTextures->load(Textures::GameOverBackground, "data/textures/GameOverBackground.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);
@@ -48,6 +50,7 @@ void Application::registerActivities()
     mActivityStack.registerActivity<ActivityCredit>(Activities::CREDIT);
     mActivityStack.registerActivity<ActivityGameOption>(Activities::GAMEOPTIONS);
     mActivityStack.registerActivity<ActivityGameDefinition>(Activities::GAMEDEFINITION);
+    mActivityStack.registerActivity<ActivityGameOver>(Activities::GAMEOVER);
 }
 
 void Application::run()

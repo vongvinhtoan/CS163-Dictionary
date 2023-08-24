@@ -12,10 +12,10 @@ Activity::Context::Context(sf::RenderWindow& window,
 {
 }
 
-Activity::Activity(ActivityStack& stack, Context context, Intent intent)
+Activity::Activity(ActivityStack& stack, Context context, Intent::Ptr intent)
 : mStack(&stack)
 , mContext(context)
-, mIntent(intent)
+, mIntent(std::move(intent))
 {
 }
 
@@ -23,9 +23,9 @@ Activity::~Activity()
 {
 }
 
-void Activity::requestStackPush(int activityID)
+void Activity::requestStackPush(int activityID, Intent::Ptr intent)
 {
-    mStack->pushActivity(activityID);
+    mStack->pushActivity(activityID, std::move(intent));
 }
 
 void Activity::requestStackPop()
@@ -41,4 +41,9 @@ void Activity::requestActivityClear()
 Activity::Context& Activity::getContext()
 {
     return mContext;
+}
+
+Activity::Intent* Activity::getIntent()
+{
+    return mIntent.get();
 }

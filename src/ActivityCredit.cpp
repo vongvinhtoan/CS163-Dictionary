@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Activity/ActivityCredit.hpp>
 
-ActivityCredit::ActivityCredit(ActivityStack& stack, Context context)
-: Activity(stack, context)
+ActivityCredit::ActivityCredit(ActivityStack& stack, Context context, Intent::Ptr intent)
+: Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 {
     buildScene();

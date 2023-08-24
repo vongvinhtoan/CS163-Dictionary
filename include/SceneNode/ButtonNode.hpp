@@ -20,6 +20,7 @@ public:
     void setTextColor(const sf::Color& color);
     virtual sf::FloatRect   getLocalBounds() const;
     void setListeners();
+    std::string getText() const;
 
 private:
     virtual bool            contains(const sf::Vector2f& point) const;

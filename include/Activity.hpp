@@ -46,6 +46,7 @@ public:
         std::unordered_map<std::string, std::any> mExtras;
 
     public:
+        typedef std::unique_ptr<Intent> Ptr;
         Intent() = default;
         Intent(const Intent&) = default;
         Intent(Intent&&) = default;
@@ -62,23 +63,27 @@ public:
         template<typename T>
         T getExtra(const std::string& key)
         {
-            return std::any_cast<T>(mExtras[key]);
+            auto found = mExtras.find(key);
+            if (found == mExtras.end())
+                throw std::runtime_error("Key not found");
+            return std::any_cast<T>(found->second);
         }
     };
 
-                    Activity(ActivityStack& stack, Context context, Intent intent = Intent());
+                    Activity(ActivityStack& stack, Context context, Intent::Ptr intent = nullptr);
     virtual         ~Activity();
     virtual void    draw() = 0;
     virtual bool    update(sf::Time dt) = 0;
     virtual bool    handleEvent(const sf::Event& event) = 0;
     virtual bool    handleRealtimeInput() = 0;
 protected: 
-    void            requestStackPush(int activityID);
+    void            requestStackPush(int activityID, Intent::Ptr intent = nullptr);
     void            requestStackPop();
     void            requestActivityClear();
     Context&        getContext();
+    Intent*         getIntent();
 private:
     ActivityStack*      mStack;
     Context             mContext;
-    Intent              mIntent;
+    Intent::Ptr         mIntent;
 };

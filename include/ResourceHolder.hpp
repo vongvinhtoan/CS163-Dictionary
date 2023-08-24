@@ -36,6 +36,7 @@ namespace Textures
         PlayzoneBackground,
         DefinitionBackground,
         DefinitionCore,
+        GameOverBackground,
         NONE
     };  
 } 
