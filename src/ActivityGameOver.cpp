@@ -5,9 +5,11 @@ ActivityGameOver::ActivityGameOver(ActivityStack& stack, Context context, Intent
 : Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 // , mPager(new Pager(&getContext(), intent->getExtra<std::vector<std::string>>("wrongAnswers")))
+, mPager(nullptr)
 {
     mScore = getIntent()->getExtra<int>("score");
     mTime = getIntent()->getExtra<sf::Time>("totalTime");
+    mPager = std::unique_ptr<Pager>(new Pager(&getContext(), getIntent()->getExtra<std::vector<std::string>>("wrongAnswers")));
 
     buildScene();
 }
@@ -164,24 +166,27 @@ void ActivityGameOver::draw()
     sf::RenderWindow& window = *getContext().window;
     window.setView(window.getDefaultView());
     window.draw(*mSceneGraph);
-    // window.draw(*mPager);
+    window.draw(*mPager);
 }
 
 bool ActivityGameOver::update(sf::Time dt)
 {
     mSceneGraph->update(dt);
+    mPager->update(dt);
     return false;
 }
 
 bool ActivityGameOver::handleEvent(const sf::Event& event)
 {
     mSceneGraph->handleEvent(event);
+    mPager->handleEvent(event);
     return false;
 }
 
 bool ActivityGameOver::handleRealtimeInput()
 {
     mSceneGraph->handleRealtimeInput();
+    mPager->handleRealtimeInput();
     return false;
 }
 
@@ -213,7 +218,7 @@ ActivityGameOver::Pager::Pager(Context* context, const std::vector<std::string>&
             pageTexts[i],
             context->fonts->get(Fonts::DEFAULT),
             50,
-            sf::Color(0xFFFFFFFF)
+            sf::Color(0xEF2424FF)
         )));
         fixPosition(i);
     }
@@ -262,14 +267,14 @@ ActivityGameOver::Pager::Pager(Context* context, const std::vector<std::string>&
 
     mPageIndicator = TextNode::Ptr(new TextNode(
         context,
-        std::to_string(mIndex+1) + "/" + std::to_string((pageTexts.size() / 9) + 1),
+        std::to_string(mIndex+1) + "/" + std::to_string(((pageTexts.size()-1) / 9) + 1),
         context->fonts->get(Fonts::DEFAULT),
         50,
         sf::Color(0xFFFFFFFF)
     ));
     ((TextNode*)mPageIndicator.get())->alignCenter();
 
-    fixPageIndicatorPosition();
+    setPagerIndex(mIndex);
 }
 
 void ActivityGameOver::Pager::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
@@ -285,7 +290,7 @@ void ActivityGameOver::Pager::drawCurrent(sf::RenderTarget& target, sf::RenderSt
     target.draw(*mPageIndicator, states);
 }
 
-bool ActivityGameOver::Pager::handleEventCurrent(const sf::Event& event)
+void ActivityGameOver::Pager::handleEventCurrent(const sf::Event& event, int& command)
 {
     for(int i=9*mIndex; i<9*(mIndex+1); i++) 
     {
@@ -295,10 +300,9 @@ bool ActivityGameOver::Pager::handleEventCurrent(const sf::Event& event)
     }
     prevButton->handleEvent(event);
     nextButton->handleEvent(event);
-    return false;
 }
 
-bool ActivityGameOver::Pager::handleRealtimeInputCurrent()
+void ActivityGameOver::Pager::handleRealtimeInputCurrent(int& command)
 {
     for(int i=9*mIndex; i<9*(mIndex+1); i++) 
     {
@@ -308,7 +312,6 @@ bool ActivityGameOver::Pager::handleRealtimeInputCurrent()
     }
     prevButton->handleRealtimeInput();
     nextButton->handleRealtimeInput();
-    return false;
 }
 
 void ActivityGameOver::Pager::nextPage()
@@ -347,7 +350,7 @@ void ActivityGameOver::Pager::setPagerIndex(int index)
         });
     }
 
-    if(index == (mPageTexts.size() / 9)) {
+    if(index == ((mPageTexts.size()-1) / 9)) {
         nextButton->setOnClick([] (SceneNode& node) {});
         nextButton->setOnLostHover([] (SceneNode& node) {    
             ((TextNode*)&node)->setColor(sf::Color(0xFFFFFF7F));
@@ -362,14 +365,14 @@ void ActivityGameOver::Pager::setPagerIndex(int index)
         });
     }
 
-    ((TextNode*)mPageIndicator.get())->setString(std::to_string(mIndex+1) + "/" + std::to_string((mPageTexts.size() / 9) + 1));
+    ((TextNode*)mPageIndicator.get())->setString(std::to_string(mIndex+1) + "/" + std::to_string(((mPageTexts.size()-1) / 9) + 1));
     fixPageIndicatorPosition();
 }
 
 void ActivityGameOver::Pager::fixPosition(int index)
 {
-    int x = index % 3;
-    int y = index / 3;
+    int x = index % 9 % 3;
+    int y = index % 9 / 3;
     SceneNode* node = (TextNode*)mPages[index].get();
     if(x == 0) {
         node->setOrigin(
@@ -378,7 +381,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             61.f,
-            26.f + (117.f - 26.f) * y
+            26.f + (117.f - 26.f) * y + 481.f
         );
     }
     else if(x == 1) {
@@ -388,7 +391,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             500.f,
-            26.f + (117.f - 26.f) * y
+            26.f + (117.f - 26.f) * y + 481.f
         );
     }
     else if(x == 2) {
@@ -398,7 +401,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             1000.f - 61.f,
-            26.f + (117.f - 26.f) * y
+            26.f + (117.f - 26.f) * y + 481.f
         );
     }
 }
@@ -406,16 +409,17 @@ void ActivityGameOver::Pager::fixPosition(int index)
 void ActivityGameOver::Pager::fixPageIndicatorPosition()
 {
     const float beyond = 50.f;
+    const float space = 20.f;
     ((TextNode*)mPageIndicator.get())->alignCenter();
     mPageIndicator->setPosition(500.f, 800.f - (beyond));
 
     prevButton->setPosition(
-        mPageIndicator->getPosition().x - ((TextNode*)mPageIndicator.get())->getLocalBounds().width / 2.f  - 10.f,
+        mPageIndicator->getPosition().x - ((TextNode*)mPageIndicator.get())->getLocalBounds().width / 2.f  - space,
         800.f - (beyond)
     );
 
     nextButton->setPosition(
-        mPageIndicator->getPosition().x + ((TextNode*)mPageIndicator.get())->getLocalBounds().width / 2.f  + 10.f,
+        mPageIndicator->getPosition().x + ((TextNode*)mPageIndicator.get())->getLocalBounds().width / 2.f  + space,
         800.f - (beyond)
     );
 }

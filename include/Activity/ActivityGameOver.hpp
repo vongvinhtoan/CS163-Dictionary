@@ -52,13 +52,13 @@ private:
 
     private:
         virtual void    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-        virtual bool    handleEventCurrent(const sf::Event& event);
-        virtual bool    handleRealtimeInputCurrent();
+        virtual void    handleEventCurrent(const sf::Event& event, int& command);
+        virtual void    handleRealtimeInputCurrent(int& command);
         void            nextPage();
         void            prevPage();
         void            setPagerIndex(int index);
         void            fixPosition(int index);
         void            fixPageIndicatorPosition();
     };
-    // std::unique_ptr<Pager>      mPager;
+    std::unique_ptr<Pager>      mPager;
 };

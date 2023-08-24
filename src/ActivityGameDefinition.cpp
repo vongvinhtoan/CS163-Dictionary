@@ -96,10 +96,13 @@ void ActivityGameDefinition::buildScene()
         ));
         skipTextButton->setOnClick([this] (SceneNode& node) {
             if(mQuestionIndex == 10) {
+                checkAnswer(-2);
                 endGame();
             } else {
-                if(mIsWatchingResult == NotWatching)
+                if(mIsWatchingResult == NotWatching) {
+                    checkAnswer(-2);
                     nextQuestion();
+                }
                 else{
                     mTimeResult = sf::Time::Zero;
                 }
@@ -402,10 +405,15 @@ void ActivityGameDefinition::checkAnswer(int index)
         mIsWatchingResult = CorrectResult;
     }
     else if(index == -1) {
+        mWrongAnswers.push_back(mOptions[mCorrectAnswerIndex]->getText());
         mIsWatchingResult = TimeOutResult;
     }
+    else if(index == -2) {
+        mWrongAnswers.push_back(mOptions[mCorrectAnswerIndex]->getText());
+        return;
+    }
     else {
-        mWrongAnswers.push_back(mOptions[index]->getText());
+        mWrongAnswers.push_back(mOptions[mCorrectAnswerIndex]->getText());
         mIsWatchingResult = WrongResult;
     }
     disfunctionButtons();

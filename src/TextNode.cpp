@@ -50,5 +50,4 @@ void TextNode::alignCenter()
 void TextNode::setString(const std::string& text)
 {
     Text::setString(text);
-    alignCenter();
 }
