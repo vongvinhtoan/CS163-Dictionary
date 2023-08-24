@@ -10,6 +10,7 @@ API_Dummy_1::API_Dummy_1()
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
         datasets[id].dictionary = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
+        datasets[id].favorite = new PersistentTrie();
     }
 }
 
@@ -65,7 +66,7 @@ void API_Dummy_1::set_favorite(std::string word, bool favorite)
 
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
-    return std::vector<std::string>();
+     return datasets[holder].favorite->get_version(version)->dfs();
 }
 
 std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string definition)
@@ -158,7 +159,13 @@ std::vector< std::string> API_Dummy_1::quizz_1_definition_4_word()
 
 std::vector<std::string> API_Dummy_1::get_random_words(int count)
 {
-    return datasets[holder].dictionary->get_version(version)->get_random_word();
+    std::vector<std::string> word_and_definition;
+    for(int i=0;i<count;i++){
+        word_and_definition.insert(word_and_definition.end()
+        ,datasets[holder].dictionary->get_version(version)->get_random_word().begin()
+        ,datasets[holder].dictionary->get_version(version)->get_random_word().end());
+    }
+    return word_and_definition;
 }
 
 Json::Value API_Dummy_1::to_json()

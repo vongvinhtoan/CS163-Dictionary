@@ -38,6 +38,7 @@ public:
     virtual std::vector<std::string> get_random_definitions(int count) = 0;
     virtual std::vector<std::string> quizz_1_definition_4_word() = 0;
     virtual std::vector<std::string> get_random_words(int count) = 0;
+
     
 
 };
