@@ -12,9 +12,10 @@ Activity::Context::Context(sf::RenderWindow& window,
 {
 }
 
-Activity::Activity(ActivityStack& stack, Context context)
+Activity::Activity(ActivityStack& stack, Context context, Intent intent)
 : mStack(&stack)
 , mContext(context)
+, mIntent(intent)
 {
 }
 
