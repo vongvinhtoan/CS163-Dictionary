@@ -46,3 +46,9 @@ void TextNode::alignCenter()
     sf::FloatRect bounds = getLocalBounds();
     SceneNode::setOrigin(bounds.left + bounds.width / 2.f, bounds.top + bounds.height / 2.f);
 }
+
+void TextNode::setString(const std::string& text)
+{
+    Text::setString(text);
+    alignCenter();
+}

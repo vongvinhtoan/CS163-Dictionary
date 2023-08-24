@@ -32,6 +32,7 @@ Application::Application()
     mTextures->load(Textures::DefinitionBackground, "data/textures/DefinitionBackground.png");
     mTextures->load(Textures::DefinitionCore, "data/textures/DefinitionCore.png");
     mTextures->load(Textures::GameOverBackground, "data/textures/GameOverBackground.png");
+    mTextures->load(Textures::WrongAnswersBackground, "data/textures/WrongAnswersBackground.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);

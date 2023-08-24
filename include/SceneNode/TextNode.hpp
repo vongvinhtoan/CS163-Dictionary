@@ -13,6 +13,7 @@ public:
     TextNode(Activity::Context* context, const std::string& text, const sf::Font& font, unsigned int characterSize);
     TextNode(Activity::Context* context, const std::string& text, const sf::Font& font, unsigned int characterSize, const sf::Color& color);
     virtual sf::FloatRect getLocalBounds() const;
+    void setString(const std::string& text);
     void alignCenter();
 
 private:

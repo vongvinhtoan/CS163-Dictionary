@@ -98,7 +98,11 @@ void ActivityGameDefinition::buildScene()
             if(mQuestionIndex == 10) {
                 endGame();
             } else {
-                nextQuestion();
+                if(mIsWatchingResult == NotWatching)
+                    nextQuestion();
+                else{
+                    mTimeResult = sf::Time::Zero;
+                }
             }
         });
         skipTextButton->setOnLostHover([this] (SceneNode& node) {
@@ -438,6 +442,7 @@ bool ActivityGameDefinition::update(sf::Time dt)
     if(mIsWatchingResult == NotWatching)
     {
         mTimeLeft -= dt;
+        mTotalTime += dt;
         mTimeIndicator->setString("Time: " + std::to_string((int)mTimeLeft.asSeconds()) + "s");
 
         if(mTimeLeft <= sf::Time::Zero) {

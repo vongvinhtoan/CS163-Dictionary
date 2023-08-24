@@ -34,6 +34,31 @@ public:
 
 private:
     int                         mScore;
-    std::vector<std::string>    mWrongAnswers;
     sf::Time                    mTime;
+
+private:
+    class Pager : public SceneNode
+    {
+    private:
+        std::vector<SceneNode::Ptr> mPages;
+        std::vector<std::string>    mPageTexts;
+        int                         mIndex;
+        SceneNode::Ptr              prevButton;
+        SceneNode::Ptr              nextButton;
+        SceneNode::Ptr              mPageIndicator;
+        
+    public:
+        Pager(Context* context, const std::vector<std::string>& pageTexts);
+
+    private:
+        virtual void    drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual bool    handleEventCurrent(const sf::Event& event);
+        virtual bool    handleRealtimeInputCurrent();
+        void            nextPage();
+        void            prevPage();
+        void            setPagerIndex(int index);
+        void            fixPosition(int index);
+        void            fixPageIndicatorPosition();
+    };
+    // std::unique_ptr<Pager>      mPager;
 };

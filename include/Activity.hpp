@@ -55,9 +55,9 @@ public:
         ~Intent() = default;
 
         template<typename T>
-        void putExtra(const std::string& key, T&& value)
+        void putExtra(const std::string& key, T value)
         {
-            mExtras[key] = std::forward<T>(value);
+            mExtras[key] = value;
         }
 
         template<typename T>

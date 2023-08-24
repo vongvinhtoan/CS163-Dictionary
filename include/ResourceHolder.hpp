@@ -37,6 +37,7 @@ namespace Textures
         DefinitionBackground,
         DefinitionCore,
         GameOverBackground,
+        WrongAnswersBackground,
         NONE
     };  
 } 
