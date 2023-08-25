@@ -4,6 +4,16 @@
 #include <fstream>
 
 class Database {
+public:
+    enum DictionaryId {
+        VIET_ENG,
+        ENG_ENG,
+        ENG_VIET,
+        EMOJI,
+        SLANG_WORD,
+        SIZE
+    };
+
 private:
     // Variables
     Json::Value dataset_Eng_Eng;
@@ -12,7 +22,7 @@ private:
     Json::Value dataset_Emoji;
     Json::Value dataset_Slang_Word;
 public:
-    Json::Value get_dataset(std::string dataset_name);  
+    Json::Value get_dataset(DictionaryId id);
 
 public:
     static Database& get_instance() {

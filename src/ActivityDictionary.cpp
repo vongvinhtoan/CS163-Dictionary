@@ -26,7 +26,28 @@ void ActivityDictionary::buildScene()
             getContext().textures->get(Textures::DictionaryBackground)
         ));
 
-        
+        const std::vector<std::string> dictName = {
+            "VIET-ENG",
+            "ENG-ENG",
+            "ENG-VIET",
+            "SLANG",
+            "EMOJI"
+        };
+        const float width = 180.f;
+        const float height = 40.f;
+        const float spacing = 13.f;
+        const float offset = getContext().window->getSize().x / 2.f - width * dictName.size() / 2.f - spacing * (dictName.size() - 1) / 2.f;
+        for(int i = 0; i < dictName.size(); i++) {
+            SceneNode::Ptr dictButton(new ButtonNode(
+                &getContext(),
+                sf::Vector2f(width, height),
+                dictName[i],
+                50
+            ));
+            dictButton->setPosition(offset + (width + spacing) * i, 177.f);
+            mDictionaryOptionsButton[i] = dictButton.get();
+            mSceneLayers[Background]->attachChild(std::move(dictButton));
+        }
 
         mSceneLayers[Background]->attachChild(std::move(backgroundLayer));
     }

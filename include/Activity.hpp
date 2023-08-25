@@ -6,6 +6,7 @@
 #include <json.h>
 #include <any>
 #include <unordered_map>
+#include <Database.hpp>
 
 class ActivityStack;
 
