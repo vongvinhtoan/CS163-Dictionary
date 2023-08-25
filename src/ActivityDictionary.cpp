@@ -423,7 +423,7 @@ void ActivityDictionary::loadDefinitions()
         ));
         ((TextNode*)page.get())->setWidth(944.f - margin * 2.f);
         ((TextNode*)page.get())->setHeight(378.f - margin * 2.f);
-        page->setPosition(29.f + margin, 109.f + margin);
+        page->setPosition(29.f + margin, 99.f + margin);
         page->disable();
         mPages.push_back(page.get());
 
