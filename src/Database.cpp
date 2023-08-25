@@ -16,21 +16,13 @@ Database::Database()
     reader.parse(dataset_Slang_Word_file,dataset_Slang_Word);
 }
 
-Json::Value Database::get_dataset(std:: string dataset_name){
-    Json::Value dataset;
-    if(dataset_name == "Eng_Eng"){
-        dataset = dataset_Eng_Eng;
-    }else if(dataset_name == "Eng_Vie"){
-        dataset = dataset_Eng_Vie;
-    }else if(dataset_name == "Vie_Eng"){
-        dataset = dataset_Vie_Eng;
-    }else if(dataset_name == "Emoji"){
-        dataset = dataset_Emoji;
-    }else if(dataset_name == "Slang_Word"){
-        dataset= dataset_Slang_Word;
-    }
-
-    return dataset;
+Json::Value Database::get_dataset(DictionaryId id){
+    if(id == DictionaryId::EMOJI) return dataset_Emoji;
+    else if(id == DictionaryId::ENG_ENG) return dataset_Eng_Eng;
+    else if(id == DictionaryId::ENG_VIET) return dataset_Eng_Vie;
+    else if(id == DictionaryId::VIET_ENG) return dataset_Vie_Eng;
+    else if(id == DictionaryId::SLANG_WORD) return dataset_Slang_Word;
+    else return Json::Value();
 }
 
 Database::~Database()

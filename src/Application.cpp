@@ -36,6 +36,9 @@ Application::Application()
     mTextures->load(Textures::WrongAnswersBackground, "data/textures/WrongAnswersBackground.png");
     mTextures->load(Textures::DictionaryBackground, "data/textures/DictionaryBackground.png");
     mTextures->load(Textures::DefinitionWoodenBackground, "data/textures/DefinitionWoodenBackground.png");
+    mTextures->load(Textures::FavoriteStar, "data/textures/FavoriteStar.png");
+    mTextures->load(Textures::FavoriteStarFilled, "data/textures/FavoriteStarFilled.png");
+    mTextures->load(Textures::DefinitionFrame, "data/textures/DefinitionFrame.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);

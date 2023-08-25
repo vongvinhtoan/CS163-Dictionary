@@ -15,7 +15,11 @@ public:
     virtual sf::FloatRect getLocalBounds() const;
     void setString(const std::string& text);
     void alignCenter();
+    void setWidth(int width);
+    void setHeight(int height);
 
 private:
+    int width;
+    int height;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
 };

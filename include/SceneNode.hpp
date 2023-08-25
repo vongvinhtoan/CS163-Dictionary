@@ -34,6 +34,9 @@ public:
     void                    setOnLostHover(std::function<void(SceneNode&)> onLostHover);
     virtual sf::FloatRect   getLocalBounds() const;
     bool                    isPressed() const;
+    void                    enable();
+    void                    disable();
+    bool                    isEnabled() const;
 
 protected:
     virtual void        draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -57,6 +60,7 @@ protected:
     };
 
 protected:
+    bool                            mIsEnabled;
     Activity::Context*              mContext;
     std::vector<Ptr>                mChildren;
     SceneNode*                      mParent;

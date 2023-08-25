@@ -7,6 +7,7 @@ SceneNode::SceneNode(Activity::Context* context)
 , mParent(nullptr)
 , mContext(context)
 , mIsPressed(false)
+, mIsEnabled(true)
 {
 }
 
@@ -60,7 +61,7 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
 
-    drawCurrent(target, states);
+    if(mIsEnabled) drawCurrent(target, states);
 
     drawChildren(target, states);
 }
@@ -80,7 +81,7 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) 
 
 void SceneNode::update(sf::Time dt)
 {
-    updateCurrent(dt);
+    if(mIsEnabled) updateCurrent(dt);
     updateChildren(dt);
 }
 
@@ -169,6 +170,7 @@ int SceneNode::handleRealtimeInput(int command)
 
 void SceneNode::handleRealtimeInputCurrent(int& command)
 {
+    if(!mIsEnabled) return;
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
     sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
 
@@ -196,6 +198,7 @@ void SceneNode::handleRealtimeInputCurrent(int& command)
 
 void SceneNode::handleRealtimeInputChildren(int &command)
 {
+    if(!mIsEnabled) return;
     for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
     {
         Ptr &child = *it;
@@ -241,4 +244,19 @@ bool SceneNode::isPressed() const
 bool SceneNode::contains(const sf::Vector2f& point) const
 {
     return getLocalBounds().contains(point);
+}
+
+void SceneNode::enable()
+{
+    mIsEnabled = true;
+}
+
+void SceneNode::disable()
+{
+    mIsEnabled = false;
+}
+
+bool SceneNode::isEnabled() const
+{
+    return mIsEnabled;
 }

@@ -40,6 +40,9 @@ namespace Textures
         DefinitionCore,
         GameOverBackground,
         WrongAnswersBackground,
+        FavoriteStar,
+        FavoriteStarFilled,
+        DefinitionFrame,
         NONE
     };  
 } 

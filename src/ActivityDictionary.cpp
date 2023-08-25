@@ -4,7 +4,18 @@
 ActivityDictionary::ActivityDictionary(ActivityStack& stack, Context context, Intent::Ptr intent)
 : Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
+, mDictionaryId(Database::DictionaryId::VIET_ENG)
+, mIsFavorite(false)
+, mPagerIndex(0)
 {
+    mDefinitions = {
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "ccccccccccccccccccccccccccccccccc",
+        "ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd d",
+        "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    };
+
     buildScene();
 }
 
@@ -25,6 +36,7 @@ void ActivityDictionary::buildScene()
             sf::Vector2f(getContext().window->getSize().x, 250.f),
             getContext().textures->get(Textures::DictionaryBackground)
         ));
+        mSceneLayers[Background]->attachChild(std::move(backgroundLayer));
 
         const std::vector<std::string> dictName = {
             "VIET-ENG",
@@ -45,11 +57,13 @@ void ActivityDictionary::buildScene()
                 50
             ));
             dictButton->setPosition(offset + (width + spacing) * i, 177.f);
+            dictButton->setOnClick([this, i] (SceneNode& node) {
+                if(mDictionaryId == i) return;
+                mDictionaryId = i;
+            });
             mDictionaryOptionsButton[i] = dictButton.get();
             mSceneLayers[Background]->attachChild(std::move(dictButton));
         }
-
-        mSceneLayers[Background]->attachChild(std::move(backgroundLayer));
     }
 
     // Taskbar
@@ -168,8 +182,114 @@ void ActivityDictionary::buildScene()
         ));
         definitionCore->setPosition(13.f, 11.f);
 
+        SceneNode::Ptr wordText(new TextNode(
+            &getContext(), 
+            "abandonnnnnn", 
+            getContext().fonts->get(Fonts::DEFAULT), 
+            65,
+            sf::Color(0xFFFFFFFF)
+        ));
+        wordText->setOrigin(
+            0,
+            wordText->getLocalBounds().top
+        );
+        wordText->setPosition(39.f, 39.f);
+        mWordIndicator = wordText.get();
+
+        mFavoriteStateTexture[0] = getContext().textures->get(Textures::FavoriteStar);
+        mFavoriteStateTexture[1] = getContext().textures->get(Textures::FavoriteStarFilled);
+
+        SceneNode::Ptr favoriteStar(new RectangleNode(
+            &getContext(),
+            sf::Vector2f(40.f, 40.f),
+            mFavoriteStateTexture[0]
+        ));
+        favoriteStar->setPosition(59.f + mWordIndicator->getLocalBounds().width, 44.f);
+        favoriteStar->setOnClick([this] (SceneNode& node) {
+            mIsFavorite = !mIsFavorite;
+            ((RectangleNode*)&node)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
+        });
+        mFavoriteIndicator = favoriteStar.get();
+
+        SceneNode::Ptr definitionFrame(new RectangleNode(
+            &getContext(),
+            sf::Vector2f(944.f, 378.f),
+            getContext().textures->get(Textures::DefinitionFrame)
+        ));
+
+        definitionFrame->setPosition(29.f, 109.f);
+
+
+        SceneNode::Ptr definitionIdText(new TextNode(
+            &getContext(), 
+            std::to_string(mPagerIndex + 1) + "/" + std::to_string(mDefinitions.size()),
+            getContext().fonts->get(Fonts::DEFAULT), 
+            50,
+            sf::Color(0xFFFFFFFF)
+        ));
+        ((TextNode*)definitionIdText.get())->alignCenter();
+        mDefinitionIdIndicator = definitionIdText.get();
+
+        SceneNode::Ptr prevButton(new TextNode(
+            &getContext(),
+            "<",
+            getContext().fonts->get(Fonts::DEFAULT),
+            50,
+            sf::Color(0xFFFFFFFF)
+        ));
+        prevButton->setOnClick([this] (SceneNode& node) {
+            prevPage();
+        });
+        prevButton->setOnLostHover([this] (SceneNode& node) {
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
+        });
+        prevButton->setOnHover([this] (SceneNode& node) {
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFF7F));
+        });
+        prevButton->setOrigin(
+            prevButton->getLocalBounds().left + prevButton->getLocalBounds().width,
+            prevButton->getLocalBounds().top + prevButton->getLocalBounds().height / 2
+        );
+        mPrevButton = prevButton.get();
+
+        SceneNode::Ptr nextButton(new TextNode(
+            &getContext(),
+            ">",
+            getContext().fonts->get(Fonts::DEFAULT),
+            50,
+            sf::Color(0xFFFFFFFF)
+        ));
+        nextButton->setOnClick([this] (SceneNode& node) {
+            nextPage();
+        });
+        nextButton->setOnLostHover([this] (SceneNode& node) {
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
+        });
+        nextButton->setOnHover([this] (SceneNode& node) {
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFF7F));
+        });
+        nextButton->setOrigin(
+            nextButton->getLocalBounds().left,
+            nextButton->getLocalBounds().top + nextButton->getLocalBounds().height / 2
+        );
+        mNextButton = nextButton.get();
+
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionBackground));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionCore));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(wordText));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(favoriteStar));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionFrame));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionIdText));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(prevButton));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(nextButton));
+
+        fixPageIndicatorPosition();
+    }
+
+    // Definition Page
+    {
+        mSceneLayers[DefinitionPage]->setPosition(0, 250.f);
+        loadDefinitions();
     }
 
     // Footer
@@ -221,6 +341,15 @@ void ActivityDictionary::draw()
 
 bool ActivityDictionary::update(sf::Time dt)
 {
+    for(int i = 0; i < Database::DictionaryId::SIZE; i++) {
+        mDictionaryOptionsButton[i]->setOnLostHover([this] (SceneNode& node) {
+            ((ButtonNode&)node).setBackgroundColor(sf::Color(0xA02C2CFF));
+        });
+    }
+    mDictionaryOptionsButton[mDictionaryId]->setOnLostHover([this] (SceneNode& node) {
+        ((ButtonNode&)node).setBackgroundColor(sf::Color(0x5A5A5AFF));
+    });
+
     mSceneGraph->update(dt);
     return false;
 }
@@ -235,4 +364,70 @@ bool ActivityDictionary::handleRealtimeInput()
 {
     mSceneGraph->handleRealtimeInput();
     return false;
+}
+
+void ActivityDictionary::fixPageIndicatorPosition()
+{
+    const float beyond = 23.f + 15.f;
+    const float space = 20.f;
+    float posHeight = 550 - beyond;
+    ((TextNode*)mDefinitionIdIndicator)->alignCenter();
+    mDefinitionIdIndicator->setPosition(500.f, posHeight);
+
+    mPrevButton->setPosition(
+        mDefinitionIdIndicator->getPosition().x - ((TextNode*)mDefinitionIdIndicator)->getLocalBounds().width / 2.f  - space,
+        posHeight
+    );
+
+    mNextButton->setPosition(
+        mDefinitionIdIndicator->getPosition().x + ((TextNode*)mDefinitionIdIndicator)->getLocalBounds().width / 2.f  + space,
+        posHeight
+    );
+}
+
+void ActivityDictionary::nextPage()
+{
+    setPagerIndex(mPagerIndex + 1);
+}
+
+void ActivityDictionary::prevPage()
+{
+    setPagerIndex(mPagerIndex - 1);
+}
+
+void ActivityDictionary::setPagerIndex(int index)
+{
+    mPages[mPagerIndex]->disable();
+    mPagerIndex = index;
+    if(mPagerIndex < 0) mPagerIndex = mDefinitions.size() - 1;
+    if(mPagerIndex >= mDefinitions.size()) mPagerIndex = 0;
+
+    mPages[mPagerIndex]->enable();
+    ((TextNode*)mDefinitionIdIndicator)->setString(std::to_string(mPagerIndex + 1) + "/" + std::to_string(mDefinitions.size()));
+    fixPageIndicatorPosition();
+}
+
+void ActivityDictionary::loadDefinitions()
+{
+    const float margin = 30.f;
+    mPages.clear();
+    mSceneLayers[DefinitionPage]->clearChildren();
+
+    for(int i = 0; i < mDefinitions.size(); i++) {
+        SceneNode::Ptr page(new TextNode(
+            &getContext(), 
+            mDefinitions[i], 
+            getContext().fonts->get(Fonts::DEFAULT), 
+            40,
+            sf::Color(0xFFFFFFFF)
+        ));
+        ((TextNode*)page.get())->setWidth(944.f - margin * 2.f);
+        ((TextNode*)page.get())->setHeight(378.f - margin * 2.f);
+        page->setPosition(29.f + margin, 109.f + margin);
+        page->disable();
+        mPages.push_back(page.get());
+
+        mSceneLayers[DefinitionPage]->attachChild(std::move(page));
+    }
+    setPagerIndex(0);
 }

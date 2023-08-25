@@ -13,6 +13,7 @@ private:
         Background,
         Taskbar,
         DefinitionBackground,
+        DefinitionPage,
         Footer,
         LayerCount
     };
@@ -32,5 +33,23 @@ public:
     virtual bool    handleRealtimeInput();
 
 private:
-    SceneNode*      mDictionaryOptionsButton[Database::DictionaryId::SIZE];
+    SceneNode*                  mDictionaryOptionsButton[Database::DictionaryId::SIZE];
+    SceneNode*                  mWordIndicator;
+    SceneNode*                  mFavoriteIndicator;
+    SceneNode*                  mNextButton;
+    SceneNode*                  mPrevButton;
+    SceneNode*                  mDefinitionIdIndicator;
+    bool                        mIsFavorite;
+    int                         mPagerIndex;
+    sf::Texture                 mFavoriteStateTexture[2];
+    std::size_t                 mDictionaryId;
+    std::vector<std::string>    mDefinitions;
+    std::vector<SceneNode*>     mPages;
+
+private:
+    void fixPageIndicatorPosition();
+    void nextPage();
+    void prevPage();
+    void setPagerIndex(int index);
+    void loadDefinitions();
 };
