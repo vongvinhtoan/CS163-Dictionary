@@ -71,6 +71,10 @@ void ActivityDashboard::buildScene()
     // Button layer
     SceneNode::Ptr startButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Start", 50));
+    startButton->setOnClick([this](SceneNode& node){
+        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPush(Activities::DICTIONARY);
+    });
 
     SceneNode::Ptr historyButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "History", 50));

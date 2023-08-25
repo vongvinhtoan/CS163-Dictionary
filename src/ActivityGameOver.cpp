@@ -137,7 +137,7 @@ void ActivityGameOver::buildScene()
     mSceneLayers[Timing]->attachChild(std::move(averageTimeText));
 
     // Wrong answers
-    mSceneLayers[WrongAnswers]->setPosition(26.f, 481.f);
+    mSceneLayers[WrongAnswers]->setPosition(26.f, 481.f-50.f);
     SceneNode::Ptr wrongAnswersText(new RectangleNode(
         &getContext(), 
         sf::Vector2f(944.f, 287.f),
@@ -381,7 +381,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             61.f,
-            26.f + (117.f - 26.f) * y + 481.f
+            26.f + (117.f - 26.f) * y + 481.f - 50.f + 10.f
         );
     }
     else if(x == 1) {
@@ -391,7 +391,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             500.f,
-            26.f + (117.f - 26.f) * y + 481.f
+            26.f + (117.f - 26.f) * y + 481.f - 50.f + 10.f
         );
     }
     else if(x == 2) {
@@ -401,7 +401,7 @@ void ActivityGameOver::Pager::fixPosition(int index)
         );
         node->setPosition(
             1000.f - 61.f,
-            26.f + (117.f - 26.f) * y + 481.f
+            26.f + (117.f - 26.f) * y + 481.f - 50.f + 10.f
         );
     }
 }

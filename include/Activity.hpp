@@ -21,6 +21,7 @@ namespace Activities
         GAMEWORD,
         GAMEWORDTOUR,
         GAMEOVER,
+        DICTIONARY,
         MENU
     };
 }

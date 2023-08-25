@@ -35,6 +35,8 @@ namespace Textures
         GameBackground,
         PlayzoneBackground,
         DefinitionBackground,
+        DictionaryBackground,
+        DefinitionWoodenBackground,
         DefinitionCore,
         GameOverBackground,
         WrongAnswersBackground,
