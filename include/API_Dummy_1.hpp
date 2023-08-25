@@ -74,7 +74,7 @@ private:
     PersistentTrie* build_trie_from_value(Json::Value dictionary);
     void add_favorite(std::string word);
     void delete_favorite(std::string word);
-
+    std::vector<std::string> get_random_words_and_definition();
 public:
     API_Dummy_1();
     ~API_Dummy_1();
@@ -85,8 +85,6 @@ public:
     virtual std::vector<std::string> get_definition_from_word(std::string word);
     virtual void set_favorite(std::string word, bool is_favorite);
     virtual std::vector<std::string> get_favorites();
-    // virtual void add_favorite(std::string word);
-    // virtual void delete_favorite(std::string word);
     virtual std::vector<std::string> get_word_from_definition(std::string definition);
     virtual std::vector<std::string> get_history();
     virtual void add_definition(std::string word, std::string definition);
@@ -103,5 +101,5 @@ public:
     // virtual void deserialize(std::string path);
     virtual bool is_favorite(std::string word);
     virtual std::vector<std::string> get_favorites_list();
-    virtual std::vector<std::string> get_random_words_and_definition();
+    
 };

@@ -78,7 +78,8 @@ void API_Dummy_1::delete_favorite(std::string word)
 
 void API_Dummy_1::add_favorite(std::string word)
 {
-    // Code here
+     if(datasets[holder].dictionary->get_version(version)->check_exist(word)) return;
+    datasets[holder].add_favorite(word);
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()
