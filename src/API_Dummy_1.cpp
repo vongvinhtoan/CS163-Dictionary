@@ -10,7 +10,8 @@ API_Dummy_1::API_Dummy_1()
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
         datasets[id].dictionary = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
-        datasets[id].favorite = new PersistentTrie();
+        std::vector<std::pair<std::string, std::string>> values;
+        datasets[id].favorite->initialize(values);
     }
 }
 
@@ -61,9 +62,23 @@ std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
 {
-    if(datasets[holder].dictionary->get_version(version)->check_exist(word)) return;
-    datasets[holder].add_favorite(word);
+    if(favorite==false) {
+        delete_favorite(word);
+    }
+    else {
+        add_favorite(word);
+    }
     return;
+}
+
+void API_Dummy_1::delete_favorite(std::string word)
+{
+    // Code here
+}
+
+void API_Dummy_1::add_favorite(std::string word)
+{
+    // Code here
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()

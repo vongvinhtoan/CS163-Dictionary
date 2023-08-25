@@ -3,6 +3,7 @@
 #include <API.hpp>
 #include <PersistentTrie.hpp>
 #include <Trie.hpp>
+#include <iostream>
 
 class API_Dummy_1 : public API
 {
@@ -33,6 +34,7 @@ private:
         void delete_word(std::string word)
         {
             dictionary->delete_word(word);
+            std::cout<<"---------------------hihi\n";
             favorite->clone();
         }
 
@@ -70,6 +72,8 @@ private:
 private:
     void extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json);
     PersistentTrie* build_trie_from_value(Json::Value dictionary);
+    void add_favorite(std::string word);
+    void delete_favorite(std::string word);
 
 public:
     API_Dummy_1();

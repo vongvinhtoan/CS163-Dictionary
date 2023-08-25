@@ -50,9 +50,9 @@ int main()
     // std::vector<std::string> s = api->get_favorites_list();
      for(auto u:words) std::cout<<u<<std::endl;
     
-   for(int i=0;i<n;i++){
-    api->delete_word(words[i]);
-   }
+    for(int i=0;i<n;i++) {
+        api->delete_word(words[i]);
+    }
     while (true){
         std::string word;
         std::cout<<"Enter word: ";
