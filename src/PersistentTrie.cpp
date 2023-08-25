@@ -69,6 +69,7 @@ Trie* PersistentTrie::delete_word_helper(const std::string &word)
         if(index == word.size()) {
             bool isWord = node->isWord;
             node->isWord = false;
+            node->definition.clear();
             return isWord;
         }
 

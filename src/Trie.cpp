@@ -56,6 +56,7 @@ std::vector<std::string> Trie::search(const std::string &key)
             return std::vector<std::string>();
         node = node->children[c];
     }
+    if(!node->isWord) return std::vector<std::string>();
     return node->definition;
 }
 
