@@ -32,5 +32,5 @@ public:
     virtual bool    handleRealtimeInput();
 
 private:
-    SceneNode*      dictionaryOptionsButton[Database::DictionaryID::COUNT];
+    SceneNode*      dictionaryOptionsButton[Database::DictionaryId::SIZE];
 };
