@@ -61,8 +61,8 @@ std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
 {
-    if(datasets[holder].dictionary->get_version(version)->search_word(word)) return;
-    datasets[holder].set_favorite(word);
+    if(datasets[holder].dictionary->get_version(version)->check_exist(word)) return;
+    datasets[holder].add_favorite(word);
     return;
 }
 
@@ -86,7 +86,7 @@ std::vector<std::string> API_Dummy_1::get_history()
 void API_Dummy_1::add_definition(std::string word, std::string definition)
 {
     datasets[holder].add_definition(word,definition);
-     version++;
+    version++;
 }
 
 void API_Dummy_1::edit_definition(std::string word, int editID, std::string definition)
@@ -114,23 +114,23 @@ std::vector<std::string> API_Dummy_1::quizz_1_word_4_definition()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
+
     for(int i=0;i<4;i++){
-        random.push_back(get_random_words(0));
+        random.push_back(get_random_words_and_definition());
     }
+
      for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
-           if(i!=j) {
-            while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
-                random[j]=get_random_words(0);
+           if(i!=j && random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
+                random[i]=get_random_words_and_definition();
+                j=0;
             }
-           }
-        }
+       }
         result.push_back(random[i][0]);
-        
     }
+
     result.push_back(random[3][random[3].size()-1]);
     return result;
-    
 }
 
 std::vector<std::string> API_Dummy_1::get_random_definitions(int count)
@@ -144,21 +144,18 @@ std::vector< std::string> API_Dummy_1::quizz_1_definition_4_word()
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
     
-    for(int i=0;i<4;i++){
-        random.push_back(get_random_words(0));
-    }
+    for(int i=0;i<4;i++)  random.push_back(get_random_words_and_definition());
    
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
-           if(i!=j) {
-            while(random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
-                random[j]=get_random_words(0);
+            if(i!=j &&random[i][random[i].size()-1].compare(random[j][random[j].size()-1])==0){
+                random[i]=get_random_words_and_definition();
+                j=0;
             }
-           }
         }
         result.push_back(random[i][random[i].size()-1]);
-        
-    }
+    }       
+    
     result.push_back(random[3][0]);
     return result;
 }
@@ -166,10 +163,17 @@ std::vector< std::string> API_Dummy_1::quizz_1_definition_4_word()
 std::vector<std::string> API_Dummy_1::get_random_words(int count)
 {
     std::vector<std::string> word_and_definition;
+    std::vector<std::string> result;
+    for(int i=0;i<count;i++)    
+        word_and_definition.push_back(get_random_words_and_definition().back());
+    
     for(int i=0;i<count;i++){
-        word_and_definition.insert(word_and_definition.end()
-        ,datasets[holder].dictionary->get_version(version)->get_random_word().begin()
-        ,datasets[holder].dictionary->get_version(version)->get_random_word().end());
+        for(int j=0;j<count;j++){
+            if(i!=j && word_and_definition[i].compare(word_and_definition[j])==0){
+                word_and_definition[i]=get_random_words_and_definition().back();
+                j=0;
+            }
+        }
     }
     return word_and_definition;
 }
@@ -180,19 +184,17 @@ Json::Value API_Dummy_1::to_json()
     return json;
 }
 
-//  void API_Dummy_1:: add_favorite(std::string word)
-//  {
-//     datasets[holder].add_favorite(word);
-//     version++;
-//  }
-
-// void API_Dummy_1:: delete_favorite(std::string word)
-// {
-//     datasets[holder].delete_favorite(word);
-//     version++;
-// }
 
 std::vector<std::string> API_Dummy_1::get_favorites_list()
 {
     return datasets[holder].favorite->get_version(version)->dfs();
+}
+ 
+bool API_Dummy_1::is_favorite(std::string word)
+{
+    return datasets[holder].favorite->get_version(version)->check_exist(word);
+}
+ 
+std::vector<std::string> API_Dummy_1:: get_random_words_and_definition(){
+    return datasets[holder].dictionary->get_version(version)->get_random_word();
 }

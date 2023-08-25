@@ -44,9 +44,8 @@ private:
 
         void set_favorite(std::string word)
         {
-                favorite->insert(word, "");
-                dictionary->clone(); 
-           
+            favorite->insert(word, "");
+            dictionary->clone(); 
         }
         void delete_favorite(std::string word)
         {
@@ -98,6 +97,7 @@ public:
     Json::Value to_json();
     // virtual void serialize(std::string path);
     // virtual void deserialize(std::string path);
-
+    virtual bool is_favorite(std::string word);
     virtual std::vector<std::string> get_favorites_list();
+    virtual std::vector<std::string> get_random_words_and_definition();
 };

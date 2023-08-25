@@ -79,3 +79,7 @@ std::vector<std::string> API_Dummy_0::get_favorites_list()
 {
     return std::vector<std::string>();
 }
+ bool API_Dummy_0:: is_favorite(std::string word)
+ {
+        return false;
+ }
