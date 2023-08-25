@@ -40,7 +40,7 @@ int main()
         api->add_favorite(x);
     }    
     std::vector<std::string> s = api->get_favorites();
-for(auto x:s) std::cout<<x<<" ";
+    for(auto x:s) std::cout<<x<<" ";
     delete api;
     return 0;
 }

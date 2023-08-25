@@ -76,7 +76,8 @@ std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string defin
 
 std::vector<std::string> API_Dummy_1::get_history()
 {
-    return std::vector<std::string>();
+    
+    return history;
 }
 
 void API_Dummy_1::add_definition(std::string word, std::string definition)
@@ -87,6 +88,7 @@ void API_Dummy_1::add_definition(std::string word, std::string definition)
 void API_Dummy_1::edit_definition(std::string word, int editID, std::string definition)
 {
     
+
 }
 
 void API_Dummy_1::delete_word(std::string word)
