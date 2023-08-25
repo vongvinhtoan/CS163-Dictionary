@@ -35,4 +35,5 @@ public:
     Json::Value to_json();
     std::vector<std::string> get_random_word();
     std::vector<std::string>dfs();
+    bool check_exist(const std::string &word);
 };

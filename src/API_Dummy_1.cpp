@@ -61,12 +61,15 @@ std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
 {
-
+    if(datasets[holder].dictionary->get_version(version)->search_word(word)) return;
+    datasets[holder].set_favorite(word);
+    return;
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
-     return datasets[holder].favorite->get_version(version)->dfs();
+    return datasets[holder].favorite->get_version(version)->dfs();
+
 }
 
 std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string definition)
@@ -83,12 +86,13 @@ std::vector<std::string> API_Dummy_1::get_history()
 void API_Dummy_1::add_definition(std::string word, std::string definition)
 {
     datasets[holder].add_definition(word,definition);
+     version++;
 }
 
 void API_Dummy_1::edit_definition(std::string word, int editID, std::string definition)
 {
-    
-
+     
+     
 }
 
 void API_Dummy_1::delete_word(std::string word)
@@ -176,18 +180,19 @@ Json::Value API_Dummy_1::to_json()
     return json;
 }
 
- void API_Dummy_1:: add_favorite(std::string word)
- {
-    datasets[holder].add_favorite(word);
-    version++;
- }
-void API_Dummy_1:: delete_favorite(std::string word)
-{
-    datasets[holder].delete_favorite(word);
-    version++;
-}
-std::vector<std::string>API_Dummy_1:: dfs_favourite()
+//  void API_Dummy_1:: add_favorite(std::string word)
+//  {
+//     datasets[holder].add_favorite(word);
+//     version++;
+//  }
+
+// void API_Dummy_1:: delete_favorite(std::string word)
+// {
+//     datasets[holder].delete_favorite(word);
+//     version++;
+// }
+
+std::vector<std::string> API_Dummy_1::get_favorites_list()
 {
     return datasets[holder].favorite->get_version(version)->dfs();
-    
 }

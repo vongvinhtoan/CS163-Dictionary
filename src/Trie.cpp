@@ -151,3 +151,15 @@ std::vector<std::string> Trie:: dfs_helper(Node* node,std::vector<std::string> d
     }
     return data;
 }
+bool Trie::check_exist(const std::string &key){
+    Node* node = root;
+    
+    for(auto c: key)
+    {
+        if(node->children.find(c) == node->children.end())
+            return false;
+        node = node->children[c]; 
+    }
+    return true;
+}
+

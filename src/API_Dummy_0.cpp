@@ -75,3 +75,7 @@ std::vector<std::string> API_Dummy_0::get_random_words(int count)
     return std::vector<std::string>();
 }
 
+std::vector<std::string> API_Dummy_0::get_favorites_list()
+{
+    return std::vector<std::string>();
+}

@@ -35,11 +35,14 @@ int main()
     int n;
     std::cout<<"Enter n: ";
     std::cin>>n;
-    std::vector<std::string> words;   
-    for(auto x:words){
-        api->add_favorite(x);
-    }    
-    std::vector<std::string> s = api->get_favorites();
+    std::vector<std::string> words; 
+    for(int i=0;i<n;i++)       
+        words.push_back(api->get_random_words(0).back());
+    
+    for(auto x:words)
+        api->set_favorite(x, true);
+        
+    std::vector<std::string> s = api->get_favorites_list();
     for(auto x:s) std::cout<<x<<" ";
     delete api;
     return 0;
