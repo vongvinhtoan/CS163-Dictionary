@@ -10,7 +10,7 @@ API_Dummy_1::API_Dummy_1()
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
         datasets[id].dictionary = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
-        std::vector<std::pair<std::string, std::string>> values;
+        std::vector<std::pair<std::string, std::string>> values(0);
         datasets[id].favorite->initialize(values);
     }
 }

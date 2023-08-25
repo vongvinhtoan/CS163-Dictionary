@@ -13,7 +13,13 @@ private:
         PersistentTrie* dictionary;
         PersistentTrie* favorite;
 
-        Dataset(PersistentTrie* dictionary = 0, PersistentTrie* favorite = 0)
+        Dataset()
+        : dictionary(new PersistentTrie())
+        , favorite(new PersistentTrie())
+        {
+        }
+
+        Dataset(PersistentTrie* dictionary, PersistentTrie* favorite)
         : dictionary(dictionary)
         , favorite(favorite)
         {
