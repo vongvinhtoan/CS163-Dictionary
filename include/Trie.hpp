@@ -26,7 +26,7 @@ private:
     std::string version_description;
     void insert_helper(Node* node, const std::string &key, const std::string &definition);
     std::vector<std::string> dfs_helper( Node* node,std::vector<std::string> data,std::string word);
-    
+    std::string serialize_helper(Node* node);
 public:
     Trie();
     ~Trie();
@@ -37,4 +37,5 @@ public:
     std::vector<std::string>dfs();
     bool check_exist(const std::string &word);
     std::string serialize();
+    std::string deserialize();
 };

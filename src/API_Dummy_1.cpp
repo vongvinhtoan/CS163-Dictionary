@@ -215,10 +215,12 @@ std::vector<std::string> API_Dummy_1:: get_random_words_and_definition(){
     return datasets[holder].dictionary->get_version(version)->get_random_word();
 }
 
-void API_Dummy_1::serialize(std::string path)
+void API_Dummy_1::serialize()
 {
-    Json::Value json = to_json();
-    std::ofstream file(path);
-    file << json;
-    file.close();
+    datasets[holder].dictionary->get_version(version)->serialize();
+    datasets[holder].favorite->get_version(version)->serialize();
+}
+void API_Dummy_1::deserialize(){
+    datasets[holder].dictionary->get_version(version)->deserialize();
+    datasets[holder].favorite->get_version(version)->deserialize();
 }

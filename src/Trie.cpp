@@ -164,3 +164,42 @@ bool Trie::check_exist(const std::string &key){
     return true;
 }
 
+std::string Trie::serialize_helper(Node* node){
+    std::string data;
+    if(node->isWord){
+
+        data+=char(1);
+        for(int i=0;i<node->definition.size();i++){
+            data+=char(2);
+            data+=node->definition[i];
+            
+        }
+        data+=char(3);
+    }
+    else{
+        data+=char(0);
+    }
+    for(auto& child: node->children){
+        data+=child.first;
+        data+=serialize_helper(child.second);
+
+    }
+    data+=char(4);
+    return data;
+}
+
+std::string Trie::serialize(){
+    Node* node=root;
+    std::string data;
+    data+=serialize_helper(node);
+    return data;
+}
+
+
+
+//use ACSII char to represent the tree
+//0: not a word
+//1: is a word
+//2: start of definition
+//3: end of definition
+//4: end of word

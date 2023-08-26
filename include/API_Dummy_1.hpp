@@ -102,8 +102,8 @@ public:
     virtual std::vector<std::string> quizz_1_definition_4_word();
     virtual std::vector<std::string> get_random_words(int count);
     Json::Value to_json();
-    virtual void serialize(std::string path);
-    virtual void deserialize(std::string path);
+    virtual void deserialize();
+    virtual void serialize  ();
     virtual bool is_favorite(std::string word);
     virtual std::vector<std::string> get_favorites_list();
 
