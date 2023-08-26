@@ -4,6 +4,7 @@
 #include <SceneNode\RectangleNode.hpp>
 #include <SceneNode\TextNode.hpp>
 #include <SceneNode\ButtonNode.hpp>
+#include <SceneNode\SearchbarNode.hpp>
 
 class ActivityDictionary : public Activity
 {
@@ -34,11 +35,12 @@ public:
 
 private:
     SceneNode*                  mDictionaryOptionsButton[Database::DictionaryId::SIZE];
-    SceneNode*                  mWordIndicator;
+    TextNode*                   mWordIndicator;
     SceneNode*                  mFavoriteIndicator;
     SceneNode*                  mNextButton;
     SceneNode*                  mPrevButton;
     SceneNode*                  mDefinitionIdIndicator;
+    SearchbarNode*              mSearchbar;
     bool                        mIsFavorite;
     int                         mPagerIndex;
     sf::Texture                 mFavoriteStateTexture[2];
@@ -52,4 +54,5 @@ private:
     void prevPage();
     void setPagerIndex(int index);
     void loadDefinitions();
+    void displayWord(const std::string& word);
 };

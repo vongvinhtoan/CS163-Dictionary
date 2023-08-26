@@ -4,11 +4,13 @@
 Activity::Context::Context(sf::RenderWindow& window,
                            TextureHolder& textures,
                            FontHolder& fonts,
-                           Json::Value& data)
+                           Json::Value& data,
+                           API& api)
 : window(&window)
 , textures(&textures)
 , fonts(&fonts)
 , data(&data)
+, api(&api)
 {
 }
 

@@ -29,6 +29,7 @@ public:
     int                     handleRealtimeInput(int command = (1 << CommandCount) - 1);
     int                     handleEvent(const sf::Event& event, int command = (1 << CommandCount) - 1);
     void                    setOnClick(std::function<void(SceneNode&)> onClick);
+    void                    setOnClickAway(std::function<void(SceneNode&)> onClickAway);
     void                    setOnHover(std::function<void(SceneNode&)> onHover);
     void                    setOnHold(std::function<void(SceneNode&)> onHold);
     void                    setOnLostHover(std::function<void(SceneNode&)> onLostHover);
@@ -66,6 +67,7 @@ protected:
     SceneNode*                      mParent;
     bool                            mIsPressed;
     std::function<void(SceneNode&)> mOnClick;
+    std::function<void(SceneNode&)> mOnClickAway;
     std::function<void(SceneNode&)> mOnHover;
     std::function<void(SceneNode&)> mOnLostHover;
     std::function<void(SceneNode&)> mOnHold;

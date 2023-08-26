@@ -38,6 +38,25 @@ void ActivityDictionary::buildScene()
         ));
         mSceneLayers[Background]->attachChild(std::move(backgroundLayer));
 
+        SceneNode::Ptr searchbar(new SearchbarNode(
+            &getContext(),
+            sf::Vector2f(420.f, 75.f),
+            getContext().textures->get(Textures::DictionarySearchbar)
+        ));
+        searchbar->setPosition(290.f, 82.f);
+        mSearchbar = (SearchbarNode*)searchbar.get();
+        mSearchbar->setAlignment(SearchbarNode::Alignment(SearchbarNode::Left | SearchbarNode::Center));
+        mSearchbar->setHint("Search...");
+        mSearchbar->setFont(getContext().fonts->get(Fonts::DEFAULT));        
+        mSearchbar->setCharacterSize(50);
+        mSearchbar->setMarginHorizontal(22.f);
+        mSearchbar->setOnEnter([this] (SceneNode& node) {
+            SearchbarNode& searchbar = (SearchbarNode&)node;
+            displayWord(searchbar.getString());
+            searchbar.clear();
+        });
+        mSceneLayers[Background]->attachChild(std::move(searchbar));
+
         const std::vector<std::string> dictName = {
             "VIET-ENG",
             "ENG-ENG",
@@ -194,7 +213,7 @@ void ActivityDictionary::buildScene()
             wordText->getLocalBounds().top
         );
         wordText->setPosition(39.f, 39.f);
-        mWordIndicator = wordText.get();
+        mWordIndicator = (TextNode*)wordText.get();
 
         mFavoriteStateTexture[0] = getContext().textures->get(Textures::FavoriteStar);
         mFavoriteStateTexture[1] = getContext().textures->get(Textures::FavoriteStarFilled);
@@ -430,4 +449,16 @@ void ActivityDictionary::loadDefinitions()
         mSceneLayers[DefinitionPage]->attachChild(std::move(page));
     }
     setPagerIndex(0);
+}
+
+void ActivityDictionary::displayWord(const std::string& word)
+{
+    API* api = getContext().api;
+    mDefinitions = api->get_definition_from_word(word);
+    mIsFavorite = api->is_favorite(word);
+
+    mWordIndicator->setString(word);
+    mFavoriteIndicator->setPosition(59.f + mWordIndicator->getLocalBounds().width, 44.f);
+    ((RectangleNode*)mFavoriteIndicator)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
+    loadDefinitions();
 }

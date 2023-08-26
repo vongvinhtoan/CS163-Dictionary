@@ -7,6 +7,8 @@
 #include <any>
 #include <unordered_map>
 #include <Database.hpp>
+#include <API.hpp>
+#include <API_Dummy_0.hpp>
 
 class ActivityStack;
 
@@ -36,11 +38,13 @@ public:
         Context(sf::RenderWindow& window,
                 TextureHolder& textures,
                 FontHolder& fonts,
-                Json::Value& data);
+                Json::Value& data,
+                API& api);
         sf::RenderWindow*  window;
         TextureHolder*     textures;
         FontHolder*        fonts;
         Json::Value*       data;
+        API*               api;
     };
 
     class Intent

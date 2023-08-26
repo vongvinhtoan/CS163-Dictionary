@@ -43,6 +43,7 @@ namespace Textures
         FavoriteStar,
         FavoriteStarFilled,
         DefinitionFrame,
+        DictionarySearchbar,
         NONE
     };  
 } 

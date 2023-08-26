@@ -146,6 +146,11 @@ void SceneNode::handleEventCurrent(const sf::Event& event, int& command)
                     mOnClick(*this), command &= ~(1<<OnClick);
             }
         }
+        else 
+        {
+            if(mOnClickAway)
+                mOnClickAway(*this);
+        }
         mIsPressed = false;
     }
 }
@@ -209,6 +214,11 @@ void SceneNode::handleRealtimeInputChildren(int &command)
 void SceneNode::setOnClick(std::function<void(SceneNode&)> onClick)
 {
     mOnClick = onClick;
+}
+
+void SceneNode::setOnClickAway(std::function<void(SceneNode&)> onClickAway)
+{
+    mOnClickAway = onClickAway;
 }
 
 void SceneNode::setOnHover(std::function<void(SceneNode&)> onHover)
