@@ -18,7 +18,7 @@ private:
         bool isWord;
         int id;
 
-        Node();
+        Node(int id = id_counter++);
         ~Node();
         Json::Value to_json();
     };
@@ -39,4 +39,5 @@ public:
     bool check_exist(const std::string &word);
     std::string serialize();
     void deserialize(std::string str);
+    int get_max_index();
 };

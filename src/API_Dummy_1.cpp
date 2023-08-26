@@ -9,7 +9,7 @@ API_Dummy_1::API_Dummy_1()
 , version(0)
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
-        datasets[id].dictionary = build_trie_from_txt("data.txt");
+        datasets[id].dictionary = build_trie_from_value(database.get_dataset((Database::DictionaryId)(id)));
         std::vector<std::pair<std::string, std::string>> values(0);
         datasets[id].favorite->initialize(values);
     }
@@ -29,21 +29,15 @@ PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
 void API_Dummy_1::extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json)
 {
     
-    // for(auto& word : json ) {
-    //     std::string word_str = word["word"].asString();
-    //     std::string definition_str = word["definition"].asString();
-    //     std::string definition_temp;
-    //     std::stringstream ss(definition_str);
-    //     while(std::getline(ss,definition_temp,'|')){
-    //       values.push_back(std::make_pair(word_str, definition_temp));
-    //     }
-    // }
-    values.push_back(std::make_pair("huhu","conkak"));
-    values.push_back(std::make_pair("huhu","conku"));
-    values.push_back(std::make_pair("dcm","onkak"));
-    values.push_back(std::make_pair("lmhu","conkak"));
-    values.push_back(std::make_pair("lmhu","condddak"));
-    values.push_back(std::make_pair("meomeo gau gau","conkak"));
+    for(auto& word : json ) {
+        std::string word_str = word["word"].asString();
+        std::string definition_str = word["definition"].asString();
+        std::string definition_temp;
+        std::stringstream ss(definition_str);
+        while(std::getline(ss,definition_temp,'|')){
+          values.push_back(std::make_pair(word_str, definition_temp));
+        }
+    }
     return ;
 }
 
@@ -110,7 +104,7 @@ std::vector<std::string> API_Dummy_1::get_history()
 
 void API_Dummy_1::add_definition(std::string word, std::string definition)
 {
-    datasets[holder].add_definition(word,definition);
+    datasets[dictionary_id].add_definition(word,definition);
     version++;
 }
 
@@ -205,8 +199,7 @@ std::vector<std::string> API_Dummy_1::get_random_words(int count)
 
 Json::Value API_Dummy_1::to_json()
 {
-    Json::Value json = datasets[dictionary_id].dictionary->to_json();
-    return json;
+    return datasets[dictionary_id].dictionary->to_json();
 }
 
 

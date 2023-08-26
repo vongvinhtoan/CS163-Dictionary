@@ -4,6 +4,7 @@
 #include <cassert>
 #include <functional>
 #include <iostream>
+#include <queue>
 
 PersistentTrie::PersistentTrie()
 {
@@ -32,8 +33,13 @@ Trie* PersistentTrie::insert_helper(const std::string &word, const std::string &
 
     Trie::Node* node = trie->root;
     Trie::Node* dummy = old->root;
-    if(dummy) (*node) = (*dummy);
+    if(dummy)
+    {
+        node->definition = dummy->definition;
+        node->isWord = dummy->isWord;
+    }
 
+    std::cout<<"trie->root->id = "<<trie->root->id<<std::endl;
     for(char c: word) {
         node->children[c] = new Trie::Node();
         node = node->children[c];
@@ -42,7 +48,11 @@ Trie* PersistentTrie::insert_helper(const std::string &word, const std::string &
         else
             dummy = nullptr;
 
-        if(dummy) (*node) = (*dummy);
+        if(dummy)
+        {
+            node->definition = dummy->definition;
+            node->isWord = dummy->isWord;
+        }
     }
 
     node->isWord = true;
@@ -62,7 +72,11 @@ Trie* PersistentTrie::delete_word_helper(const std::string &word)
 
     Trie::Node* node = trie->root;
     Trie::Node* dummy = old->root;
-    if(dummy) (*node) = (*dummy);  
+    if(dummy)
+    {
+        node->definition = dummy->definition;
+        node->isWord = dummy->isWord;
+    }
 
     static std::function<bool(Trie::Node*, Trie::Node*, const std::string &, int)> 
     DFS = [&](Trie::Node* node, Trie::Node* dummy, const std::string &word, int index) -> bool {
@@ -112,7 +126,11 @@ Trie* PersistentTrie::delete_definition_helper(const std::string &word, const st
 
     Trie::Node* node = trie->root;
     Trie::Node* dummy = old->root;
-    if(dummy) (*node) = (*dummy);
+    if(dummy)
+    {
+        node->definition = dummy->definition;
+        node->isWord = dummy->isWord;
+    }
 
     static std::function<bool(Trie::Node*, Trie::Node*, const std::string&, const std::string&, int)> 
     DFS = [&](Trie::Node* node, Trie::Node* dummy, const std::string &word, const std::string &definition, int index) -> bool {
@@ -155,6 +173,7 @@ Trie* PersistentTrie::delete_definition_helper(const std::string &word, const st
 
 void PersistentTrie::insert(const std::string &word, const std::string &definition)
 {
+    std::cout<<"insert"<<std::endl;
     versions.push_back(insert_helper(word, definition));
 }
 
@@ -191,16 +210,130 @@ void PersistentTrie::initialize(std::vector<std::pair<std::string, std::string>>
 
 Json::Value PersistentTrie::to_json()
 {
-    Json::Value root = Json::Value(Json::arrayValue);
-    //std::cout<<versions.size()<<std::endl;
-    for(int i = 0; i < versions.size(); i++) {
-        Json::Value version;
-        version["version"] = i;
-        version["trie"] = versions[i]->to_json();
-        version["description"] = versions[i]->version_description;
-        root.append(version);
+    Json::Value root;
+    root["firstroot"] = Json::Value();
+    root["lastroot"] = Json::Value();
+    root["nodes"] = Json::Value(Json::arrayValue);
+
+    Trie* first = versions[0];
+    Trie* last = versions.back();
+    std::cout<<"version.size() = "<<versions.size()<<std::endl;
+    std::cout<<"first = "<<first->root->id<<std::endl;
+    std::cout<<"last = "<<last->root->id<<std::endl;
+
+    root["firstroot"] = first->root->id;
+    root["lastroot"] = last->root->id;
+
+    int maxIndex = std::max(first->get_max_index(), last->get_max_index());
+
+    std::vector<bool> visited(maxIndex + 1, false);
+
+    std::queue<Trie::Node*> q;
+    q.push(first->root);
+    while(!q.empty())
+    {
+        Trie::Node* node = q.front();
+        q.pop();
+        visited[node->id] = true;
+        Json::Value n = Json::Value();
+        n["index"] = node->id;
+        n["isWord"] = node->isWord;
+        for(auto& child: node->children) {
+            Json::Value child_node;
+            child_node["index"] = child.second->id;
+            child_node["key"] = child.first;
+            n["children"].append(child_node);
+        }
+        for(auto& def: node->definition)
+            n["definition"].append(def);
+        for(auto& child: node->children)
+        {
+            if(!visited[child.second->id])
+                q.push(child.second);
+        }
+        root["nodes"].append(n);
     }
+    q.push(last->root);
+    while(!q.empty())
+    {
+        Trie::Node* node = q.front();
+        q.pop();
+        if(visited[node->id]) continue;
+        visited[node->id] = true;
+        Json::Value n = Json::Value();
+        n["index"] = node->id;
+        n["isWord"] = node->isWord;
+        for(auto& child: node->children) {
+            Json::Value child_node;
+            child_node["index"] = child.second->id;
+            child_node["key"] = child.first;
+            n["children"].append(child_node);
+        }
+        for(auto& def: node->definition)
+            n["definition"].append(def);
+        for(auto& child: node->children)
+        {
+            if(!visited[child.second->id])
+                q.push(child.second);
+        }
+        root["nodes"].append(n);
+    }
+
     return root;
+}
+
+void PersistentTrie::init_json(Json::Value root)
+{
+    std::cout<<"init_json\n";
+    std::vector<Trie::Node*> nodes;
+    std::vector<int> index_to_id;
+    std::vector<int> id_to_index;
+    std::vector<std::vector<std::pair<char, int>>> children;
+    int maxIndex = 0;
+    for(auto& node: root["nodes"]) {
+        maxIndex = std::max(maxIndex, node["index"].asInt());
+    }
+    Trie::Node::id_counter = maxIndex + 1;
+    id_to_index.resize(maxIndex + 1, -1);
+    for(auto& node: root["nodes"]) {
+        Trie::Node* n = new Trie::Node();
+
+        n->id = node["index"].asInt();
+        id_to_index[n->id] = nodes.size();
+        index_to_id.push_back(n->id);
+
+        for(auto& def: node["definition"])
+            n->definition.push_back(def.asString());
+            
+        children.push_back(std::vector<std::pair<char, int>>());
+        n->isWord = node["isWord"].asBool();
+        for(auto& child: node["children"]) {
+            children.back().push_back(std::make_pair(child["key"].asInt(), child["index"].asInt()));
+        }
+
+        nodes.push_back(n);
+    }
+    for(int i = 0; i < nodes.size(); i++) {
+        for(auto& child: children[i]) {
+            nodes[i]->children[child.first] = nodes[id_to_index[child.second]];
+        }
+        nodes[i]->id = id_to_index[nodes[i]->id];
+    }
+
+    Trie::Node* first = nodes[id_to_index[root["firstroot"].asInt()]];
+    Trie::Node* last = nodes[id_to_index[root["lastroot"].asInt()]];
+
+    Trie* trie = new Trie();
+    delete trie->root;
+    trie->root = first;
+    versions.push_back(trie);
+
+    trie = new Trie();
+    delete trie->root;
+    trie->root = last;
+    versions.push_back(trie);
+
+    std::cout<<first->id<<" "<<last->id<<std::endl;
 }
 
 void PersistentTrie::clone()

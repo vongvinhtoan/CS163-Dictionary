@@ -17,21 +17,54 @@ int main()
     API* api = new API_Dummy_1();
     
     api->set_dictionary(Database::DictionaryId::ENG_ENG);
-   std::cout<<"Dictionary: "<<std::endl;
+    std::cout<<"Dictionary: "<<std::endl;
+
+    api->add_definition("aaaaaaaaaaaaaaaaaaa", "b");
+    api->add_definition("aaaaaaaaaaaaaaaaaaa", "c");
+    Json::Value json = ((API_Dummy_1*)api)->to_json();
+    std::ofstream file("data.json");
+    file << json;
+    file.close();
+
+    // PersistentTrie* trie = new PersistentTrie();
+    // std::vector<std::pair<std::string, std::string>> values = {
+    //     {"a", "b"},
+    //     {"c", "d"},
+    //     {"e", "f"},
+    // };
+    // trie->initialize(values);
+    // std::cout<<"Dictionary: "<<std::endl;
+    // Json::Value json = trie->to_json();
+    // std::ofstream file("data.json");
+    // file << json;
+    // file.close();
+
+    PersistentTrie* trie2 = new PersistentTrie();
+    trie2->init_json(json);
+    std::cout<<"Dictionary: "<<std::endl;
+    std::vector<std::string> definitions = trie2->get_version(1)->search("aaaaaaaaaaaaaaaaaaa");
+    std::cout<<"definitions.size() = "<<definitions.size()<<std::endl;
+    for (auto definition : definitions) {
+        std::cout<<"---------------------\n";
+        std::cout<<definition<<std::endl;
+    }
+
+    delete api;
+    return 0;    
     //Json::Value json = ((API_Dummy_1*)api)->to_json();
     
-    while (true){
-        std::string word;
-        std::cout<<"Enter word: ";
-        std:: cin>>word;
-        std::vector<std::string> definitions = api->get_definition_from_word( word);
+    // while (true){
+    //     std::string word;
+    //     std::cout<<"Enter word: ";
+    //     std:: cin>>word;
+    //     std::vector<std::string> definitions = api->get_definition_from_word( word);
         
-        //std::cout<<"Definitions: \n";
-        for (auto definition : definitions) {
-            std::cout<<"---------------------\n";
-            std::cout<<definition<<std::endl;
-        }
-    }
-    delete api;
+    //     //std::cout<<"Definitions: \n";
+    //     for (auto definition : definitions) {
+    //         std::cout<<"---------------------\n";
+    //         std::cout<<definition<<std::endl;
+    //     }
+    // }
+    // delete api;
     return 0;
 }

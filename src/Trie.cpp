@@ -5,11 +5,11 @@
 #include<time.h>
 int Trie::Node::id_counter = 0;
 
-Trie::Node::Node()
+Trie::Node::Node(int id)
 : children()
 , isWord(false)
 , definition()
-, id(id_counter++)
+, id(id)
 {
     
 }
@@ -254,6 +254,24 @@ void Trie::deserialize_helper(Node* node,std::string str,int& i){
 
     }
 
+}
+
+int Trie::get_max_index(){
+    Node* node=root;
+    int max=0;
+    std::queue<Node*> q;
+    q.push(node);
+    while(!q.empty()){
+        Node* node=q.front();
+        q.pop();
+        if(node->id>max){
+            max=node->id;
+        }
+        for(auto& child: node->children){
+            q.push(child.second);
+        }
+    }
+    return max;
 }
 
 
