@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Activity/ActivityGameDefinition.hpp>
 
-ActivityGameDefinition::ActivityGameDefinition(ActivityStack& stack, Context context, Intent::Ptr intent)
-: Activity(stack, context, std::move(intent))
+ActivityGameDefinition::ActivityGameDefinition(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
+: Activity(stack, context, std::move(intent), requestCode)
 , mSceneGraph(new SceneNode(&getContext()))
 , mResultAnnouncer(new SceneNode(&getContext()))
 , mQuestionIndex(1)

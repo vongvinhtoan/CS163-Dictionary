@@ -14,14 +14,21 @@ Activity::Context::Context(sf::RenderWindow& window,
 {
 }
 
-Activity::Activity(ActivityStack& stack, Context context, Intent::Ptr intent)
+Activity::Activity(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
 : mStack(&stack)
 , mContext(context)
+, mRequestCode(requestCode)
 , mIntent(std::move(intent))
+{
+    // Add any additional initialization code here
+}
+
+
+Activity::~Activity()
 {
 }
 
-Activity::~Activity()
+void Activity::onBackIntent(int resultCode, Intent::Ptr intent)
 {
 }
 

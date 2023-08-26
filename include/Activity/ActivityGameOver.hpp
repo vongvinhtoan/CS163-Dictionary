@@ -26,7 +26,7 @@ private:
     std::string getRank(int score);
 
 public:
-    ActivityGameOver(ActivityStack& stack, Context context, Intent::Ptr intent);
+    ActivityGameOver(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode);
     virtual void    draw();
     virtual bool    update(sf::Time dt);
     virtual bool    handleEvent(const sf::Event& event);

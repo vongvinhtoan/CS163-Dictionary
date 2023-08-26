@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Activity/ActivityGameOption.hpp>
 
-ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context, Intent::Ptr intent)
+ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
 : Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 {

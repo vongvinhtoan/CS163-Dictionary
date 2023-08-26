@@ -1,15 +1,14 @@
 #include <iostream>
 #include <Activity/ActivityDictionary.hpp>
 
-ActivityDictionary::ActivityDictionary(ActivityStack& stack, Context context, Intent::Ptr intent)
-: Activity(stack, context, std::move(intent))
+ActivityDictionary::ActivityDictionary(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
+: Activity(stack, context, std::move(intent), requestCode)
 , mSceneGraph(new SceneNode(&getContext()))
 , mDictionaryId(getContext().api->get_dictionary_id())
 , mIsFavorite(false)
 , mPagerIndex(0)
 {
     buildScene();
-
     displayWord("");
 }
 

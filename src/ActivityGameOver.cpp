@@ -1,8 +1,8 @@
 #include <iostream>
 #include <Activity/ActivityGameOver.hpp>
 
-ActivityGameOver::ActivityGameOver(ActivityStack& stack, Context context, Intent::Ptr intent)
-: Activity(stack, context, std::move(intent))
+ActivityGameOver::ActivityGameOver(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
+: Activity(stack, context, std::move(intent), requestCode)
 , mSceneGraph(new SceneNode(&getContext()))
 // , mPager(new Pager(&getContext(), intent->getExtra<std::vector<std::string>>("wrongAnswers")))
 , mPager(nullptr)

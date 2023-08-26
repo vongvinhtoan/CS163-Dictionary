@@ -75,12 +75,13 @@ public:
         }
     };
 
-                    Activity(ActivityStack& stack, Context context, Intent::Ptr intent = nullptr);
+                    Activity(ActivityStack& stack, Context context, Intent::Ptr intent = nullptr, int requestCode = 0);
     virtual         ~Activity();
     virtual void    draw() = 0;
     virtual bool    update(sf::Time dt) = 0;
     virtual bool    handleEvent(const sf::Event& event) = 0;
     virtual bool    handleRealtimeInput() = 0;
+    virtual void    onBackIntent(int resultCode, Activity::Intent::Ptr intent);
 protected: 
     void            requestStackPush(int activityID, Intent::Ptr intent = nullptr);
     void            requestStackPop();
@@ -91,4 +92,5 @@ private:
     ActivityStack*      mStack;
     Context             mContext;
     Intent::Ptr         mIntent;
+    int                 mRequestCode;
 };
