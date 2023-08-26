@@ -73,7 +73,7 @@ void API_Dummy_1::set_favorite(std::string word, bool favorite)
 
 void API_Dummy_1::delete_favorite(std::string word)
 {
-    // Code here
+    datasets[holder].delete_favorite(word);
 }
 
 void API_Dummy_1::add_favorite(std::string word)
@@ -213,4 +213,12 @@ bool API_Dummy_1::is_favorite(std::string word)
  
 std::vector<std::string> API_Dummy_1:: get_random_words_and_definition(){
     return datasets[holder].dictionary->get_version(version)->get_random_word();
+}
+
+void API_Dummy_1::serialize(std::string path)
+{
+    Json::Value json = to_json();
+    std::ofstream file(path);
+    file << json;
+    file.close();
 }

@@ -40,7 +40,6 @@ private:
         void delete_word(std::string word)
         {
             dictionary->delete_word(word);
-            std::cout<<"---------------------hihi\n";
             favorite->clone();
         }
 
@@ -103,9 +102,9 @@ public:
     virtual std::vector<std::string> quizz_1_definition_4_word();
     virtual std::vector<std::string> get_random_words(int count);
     Json::Value to_json();
-    // virtual void serialize(std::string path);
-    // virtual void deserialize(std::string path);
+    virtual void serialize(std::string path);
+    virtual void deserialize(std::string path);
     virtual bool is_favorite(std::string word);
     virtual std::vector<std::string> get_favorites_list();
-    
+
 };
