@@ -38,5 +38,5 @@ public:
     virtual std::vector<std::string> get_random_words(int count) = 0;
     virtual std::vector<std::string> get_favorites_list()=0;
     virtual bool is_favorite(std::string word)=0;
-    
+
 };

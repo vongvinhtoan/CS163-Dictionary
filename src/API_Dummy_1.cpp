@@ -9,10 +9,11 @@ API_Dummy_1::API_Dummy_1()
 , version(0)
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
-        datasets[id].dictionary = build_trie_from_value(database.get_dataset(static_cast<Database::DictionaryId>(id)));
+        datasets[id].dictionary = build_trie_from_txt("data.txt");
         std::vector<std::pair<std::string, std::string>> values(0);
         datasets[id].favorite->initialize(values);
     }
+
 }
 
 PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
@@ -27,15 +28,23 @@ PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
 
 void API_Dummy_1::extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json)
 {
-    for(auto& word : json) {
-        std::string word_str = word["word"].asString();
-        std::string definition_str = word["definition"].asString();
-        std::string definition_temp;
-        std::stringstream ss(definition_str);
-        while(std::getline(ss,definition_temp,'|')){
-          values.push_back(std::make_pair(word_str, definition_temp));
-        }
-    }
+    
+    // for(auto& word : json ) {
+    //     std::string word_str = word["word"].asString();
+    //     std::string definition_str = word["definition"].asString();
+    //     std::string definition_temp;
+    //     std::stringstream ss(definition_str);
+    //     while(std::getline(ss,definition_temp,'|')){
+    //       values.push_back(std::make_pair(word_str, definition_temp));
+    //     }
+    // }
+    values.push_back(std::make_pair("huhu","conkak"));
+    values.push_back(std::make_pair("huhu","conku"));
+    values.push_back(std::make_pair("dcm","onkak"));
+    values.push_back(std::make_pair("lmhu","conkak"));
+    values.push_back(std::make_pair("lmhu","condddak"));
+    values.push_back(std::make_pair("meomeo gau gau","conkak"));
+    return ;
 }
 
 API_Dummy_1::~API_Dummy_1()
@@ -217,10 +226,34 @@ std::vector<std::string> API_Dummy_1:: get_random_words_and_definition(){
 
 void API_Dummy_1::serialize()
 {
-    datasets[holder].dictionary->get_version(version)->serialize();
-    datasets[holder].favorite->get_version(version)->serialize();
+    std::string str1=datasets[holder].dictionary->get_version(version)->serialize();
+    std::string str2=datasets[holder].favorite->get_version(version)->serialize();
+    std::ofstream fout("data.txt");
+    fout<<str1<<std::endl;
+    //file<<str2<<std::endl;
+    fout.close();
+
 }
-void API_Dummy_1::deserialize(){
-    datasets[holder].dictionary->get_version(version)->deserialize();
-    datasets[holder].favorite->get_version(version)->deserialize();
+
+Trie* API_Dummy_1::deserialize(){
+    Trie* new_trie;
+    new_trie->deserialize(extract_from_txt());
+    return new_trie;
+}
+
+std::string API_Dummy_1::extract_from_txt(){
+
+    std::ifstream file("data.txt");
+    std::string str;
+    std::getline(file,str);
+    std::cout<<str<<std::endl;
+    return str;
+}
+
+PersistentTrie* API_Dummy_1::build_trie_from_txt(std::string str){
+    PersistentTrie* res = new PersistentTrie();
+    
+    res->initialize_again(extract_from_txt());
+
+    return res;
 }

@@ -25,6 +25,7 @@ public:
     void clone();
     Json::Value to_json();
     std::vector<std::string> dfs();
+    void  initialize_again(std::string s);
 };
 
 

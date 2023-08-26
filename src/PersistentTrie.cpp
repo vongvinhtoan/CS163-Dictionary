@@ -211,3 +211,13 @@ std::vector<std::string> PersistentTrie::dfs()
 {
     return versions.back()->dfs();
 }
+
+void PersistentTrie:: initialize_again(std::string s){
+    std::cout<<"initialize_again\n";
+    Trie* trie = new Trie();
+    
+        trie->deserialize(s);
+
+    trie->version_description = "Version 0: initialize \n";
+    versions.push_back(trie);
+}
