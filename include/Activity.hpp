@@ -24,6 +24,7 @@ namespace Activities
         GAMEWORDTOUR,
         GAMEOVER,
         DICTIONARY,
+        FAVORITELIST,
         MENU
     };
 }
@@ -83,7 +84,7 @@ public:
     virtual bool    handleRealtimeInput() = 0;
     virtual void    onBackIntent(int resultCode, Activity::Intent::Ptr intent);
 protected: 
-    void            requestStackPush(int activityID, Intent::Ptr intent = nullptr);
+    void            requestStackPush(int activityID, Intent::Ptr intent = nullptr, int requestCode = 0);
     void            requestStackPop();
     void            requestActivityClear();
     Context&        getContext();

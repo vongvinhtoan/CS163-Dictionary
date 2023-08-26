@@ -7,6 +7,7 @@
 #include <Activity/ActivityGameDefinition.hpp>
 #include <Activity/ActivityGameOver.hpp>
 #include <Activity/ActivityDictionary.hpp>
+#include <Activity/ActivityFavoriteList.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -60,6 +61,7 @@ void Application::registerActivities()
     mActivityStack.registerActivity<ActivityGameDefinition>(Activities::GAMEDEFINITION);
     mActivityStack.registerActivity<ActivityDictionary>(Activities::DICTIONARY);
     mActivityStack.registerActivity<ActivityGameOver>(Activities::GAMEOVER);
+    mActivityStack.registerActivity<ActivityFavoriteList>(Activities::FAVORITELIST);
 }
 
 void Application::run()

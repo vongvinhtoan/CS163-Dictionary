@@ -9,6 +9,13 @@
 class ActivityDictionary : public Activity
 {
 private:
+    enum REQUEST_CODE
+    {
+        FAVORITE,
+        COUNT
+    };
+
+private:
     enum Layer
     {
         Background,

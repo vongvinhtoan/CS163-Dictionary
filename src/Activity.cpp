@@ -20,7 +20,6 @@ Activity::Activity(ActivityStack& stack, Context context, Intent::Ptr intent, in
 , mRequestCode(requestCode)
 , mIntent(std::move(intent))
 {
-    // Add any additional initialization code here
 }
 
 
@@ -32,9 +31,9 @@ void Activity::onBackIntent(int resultCode, Intent::Ptr intent)
 {
 }
 
-void Activity::requestStackPush(int activityID, Intent::Ptr intent)
+void Activity::requestStackPush(int activityID, Intent::Ptr intent, int requestCode)
 {
-    mStack->pushActivity(activityID, std::move(intent));
+    mStack->pushActivity(activityID, std::move(intent), requestCode);
 }
 
 void Activity::requestStackPop()

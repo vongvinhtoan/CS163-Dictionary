@@ -145,7 +145,8 @@ void ActivityDictionary::buildScene()
             sf::Color(0xFFFFFFFF)
         ));
         favoriteTextButton->setOnClick([this] (SceneNode& node) {
-            // requestStackPush(Activities::Favorite);
+            Intent::Ptr intent(new Intent());
+            requestStackPush(Activities::FAVORITELIST, std::move(intent), FAVORITE);
         });
         favoriteTextButton->setOrigin(
             favoriteTextButton->getLocalBounds().left + favoriteTextButton->getLocalBounds().width,
