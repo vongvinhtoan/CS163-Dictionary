@@ -1,12 +1,13 @@
 #include <API_Dummy_0.hpp>
 
-void API_Dummy_0::set_dictionary(DictionaryId id)
+void API_Dummy_0::set_dictionary(Database::DictionaryId id)
 {
+    
 }
 
-API::DictionaryId API_Dummy_0::get_dictionary_id()
+Database::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return DictionaryId::ENG_ENG;
+    return Database::DictionaryId::SIZE;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
@@ -23,9 +24,9 @@ std::vector<std::string> API_Dummy_0::get_favorites()
     return std::vector<std::string>();
 }
 
-std::string API_Dummy_0::get_word_from_definition(std::string definition)
+std::vector<std::string> API_Dummy_0::get_word_from_definition(std::string definition)
 {
-    return "";
+    return std::vector<std::string>();
 }
 
 std::vector<std::string> API_Dummy_0::get_history()
@@ -54,22 +55,31 @@ void API_Dummy_0::set_version(int version)
 {
 }
 
-std::pair<std::string, std::string> API_Dummy_0::get_random_word_and_definition()
-{
-    return std::pair<std::string, std::string>();
-}
-
-std::vector<std::string> API_Dummy_0::get_randome_definitions(int count)
+std::vector<std::string> API_Dummy_0::quizz_1_word_4_definition()
 {
     return std::vector<std::string>();
 }
 
-std::pair<std::string, std::string> API_Dummy_0::get_random_definition_and_word()
-{
-    return std::pair<std::string, std::string>();
-}
-
-std::vector<std::string> API_Dummy_0::get_randome_words(int count)
+std::vector<std::string> API_Dummy_0::get_random_definitions(int count)
 {
     return std::vector<std::string>();
 }
+
+std::vector< std::string> API_Dummy_0::quizz_1_definition_4_word()
+{
+    return std::vector<std::string>();
+}
+
+std::vector<std::string> API_Dummy_0::get_random_words(int count)
+{
+    return std::vector<std::string>();
+}
+
+std::vector<std::string> API_Dummy_0::get_favorites_list()
+{
+    return std::vector<std::string>();
+}
+ bool API_Dummy_0:: is_favorite(std::string word)
+ {
+        return false;
+ }
