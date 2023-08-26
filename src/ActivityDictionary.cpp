@@ -4,19 +4,13 @@
 ActivityDictionary::ActivityDictionary(ActivityStack& stack, Context context, Intent::Ptr intent)
 : Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
-, mDictionaryId(Database::DictionaryId::VIET_ENG)
+, mDictionaryId(getContext().api->get_dictionary_id())
 , mIsFavorite(false)
 , mPagerIndex(0)
 {
-    mDefinitions = {
-        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-        "ccccccccccccccccccccccccccccccccc",
-        "ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd d",
-        "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-    };
-
     buildScene();
+
+    displayWord("");
 }
 
 void ActivityDictionary::buildScene()
@@ -79,6 +73,8 @@ void ActivityDictionary::buildScene()
             dictButton->setOnClick([this, i] (SceneNode& node) {
                 if(mDictionaryId == i) return;
                 mDictionaryId = i;
+                getContext().api->set_dictionary(Database::DictionaryId(i));
+                displayWord("");
             });
             mDictionaryOptionsButton[i] = dictButton.get();
             mSceneLayers[Background]->attachChild(std::move(dictButton));
@@ -227,6 +223,7 @@ void ActivityDictionary::buildScene()
         favoriteStar->setOnClick([this] (SceneNode& node) {
             mIsFavorite = !mIsFavorite;
             ((RectangleNode*)&node)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
+            getContext().api->set_favorite(mWordIndicator->getString(), mIsFavorite);
         });
         mFavoriteIndicator = favoriteStar.get();
 
@@ -293,6 +290,21 @@ void ActivityDictionary::buildScene()
         );
         mNextButton = nextButton.get();
 
+        SceneNode::Ptr noDefinitionsFound(new TextNode(
+            &getContext(), 
+            "No definitions found", 
+            getContext().fonts->get(Fonts::DEFAULT), 
+            50,
+            sf::Color(0xEF2424FF)
+        ));
+        noDefinitionsFound->setOrigin(
+            noDefinitionsFound->getLocalBounds().left + noDefinitionsFound->getLocalBounds().width / 2.f,
+            noDefinitionsFound->getLocalBounds().top + noDefinitionsFound->getLocalBounds().height / 2.f
+        );
+        noDefinitionsFound->setPosition(500.f, 300.f);
+        mNoDefinitionsFound = noDefinitionsFound.get();
+        mNoDefinitionsFound->disable();
+
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionBackground));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionCore));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(wordText));
@@ -301,14 +313,17 @@ void ActivityDictionary::buildScene()
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionIdText));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(prevButton));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(nextButton));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(noDefinitionsFound));
 
         fixPageIndicatorPosition();
     }
+
 
     // Definition Page
     {
         mSceneLayers[DefinitionPage]->setPosition(0, 250.f);
         loadDefinitions();
+        std::cout<<"meow"<<std::endl;
     }
 
     // Footer
@@ -432,6 +447,22 @@ void ActivityDictionary::loadDefinitions()
     mPages.clear();
     mSceneLayers[DefinitionPage]->clearChildren();
 
+    if(mDefinitions.empty())
+    {
+        mNoDefinitionsFound->enable();
+        mFavoriteIndicator->disable();
+        mNextButton->disable();
+        mPrevButton->disable();
+        mDefinitionIdIndicator->disable();
+        return;
+    }
+
+    mNoDefinitionsFound->disable();
+    mFavoriteIndicator->enable();
+    mNextButton->enable();
+    mPrevButton->enable();
+    mDefinitionIdIndicator->enable();
+
     for(int i = 0; i < mDefinitions.size(); i++) {
         SceneNode::Ptr page(new TextNode(
             &getContext(), 
@@ -453,6 +484,7 @@ void ActivityDictionary::loadDefinitions()
 
 void ActivityDictionary::displayWord(const std::string& word)
 {
+    std::cout<<"Displaying word: "<<word<<std::endl;
     API* api = getContext().api;
     mDefinitions = api->get_definition_from_word(word);
     mIsFavorite = api->is_favorite(word);

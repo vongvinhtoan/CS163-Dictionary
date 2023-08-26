@@ -8,7 +8,6 @@
 #include <unordered_map>
 #include <Database.hpp>
 #include <API.hpp>
-#include <API_Dummy_0.hpp>
 
 class ActivityStack;
 

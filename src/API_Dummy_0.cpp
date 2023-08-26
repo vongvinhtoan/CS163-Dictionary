@@ -1,22 +1,36 @@
 #include <API_Dummy_0.hpp>
+#include <Randomizer.hpp>
+#include <iostream>
 
 void API_Dummy_0::set_dictionary(Database::DictionaryId id)
 {
-    
+    std::cout<<"API_Dummy_0::set_dictionary: "<<id<<std::endl;
+    dictionaryId = id;
 }
 
 Database::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return Database::DictionaryId::SIZE;
+    std::cout<<"API_Dummy_0::get_dictionary_id: "<<dictionaryId<<std::endl;
+    return dictionaryId;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
 {
-    return std::vector<std::string>();
+    std::cout<<"API_Dummy_0::get_definition_from_word: "<<word<<std::endl;
+    std::vector<std::string> definitions;
+    Randomizer &randomizer = Randomizer::getInstance();
+    int count = randomizer.nextInt(0, 5);
+    count = randomizer.nextInt(0, count);
+    for (int i = 0; i < count; i++)
+    {
+        definitions.push_back("definition " + std::to_string(i));
+    }
+    return definitions;
 }
 
 void API_Dummy_0::set_favorite(std::string word, bool favorite)
 {
+    std::cout<<"API_Dummy_0::set_favorite: "<<word<<", "<<favorite<<std::endl;
 }
 
 std::vector<std::string> API_Dummy_0::get_favorites()

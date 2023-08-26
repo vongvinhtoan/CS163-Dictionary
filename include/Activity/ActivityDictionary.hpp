@@ -40,6 +40,7 @@ private:
     SceneNode*                  mNextButton;
     SceneNode*                  mPrevButton;
     SceneNode*                  mDefinitionIdIndicator;
+    SceneNode*                  mNoDefinitionsFound;
     SearchbarNode*              mSearchbar;
     bool                        mIsFavorite;
     int                         mPagerIndex;
