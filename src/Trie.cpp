@@ -199,22 +199,22 @@ void Trie::deserialize(std::string str)
 {
     int i=0;
     deserialize_helper(root,str,i);
-    std::cout<<"deserialize\n";
+   
     return; 
 }
 void Trie::deserialize_helper(Node* node,std::string str,int& i){
     while(i<str.size()){
         if(str[i]==char(0)){
-            std::cout<<i<<" NOT IS WORD\n";
+            //std::cout<<i<<" NOT IS WORD\n";
             node->isWord=false;
             i++;
-            std::cout<<i<<"\n";
+            //std::cout<<i<<"\n";
            
             continue;
         }
         else if(str[i]==char(1)){
- std::cout<<i;
-            std::cout<<" IS WORD\n";
+            // std::cout<<i;
+            // std::cout<<" IS WORD\n";
             node->isWord=true;
             i++;
            
@@ -228,7 +228,7 @@ void Trie::deserialize_helper(Node* node,std::string str,int& i){
                     }
                     
                     node->definition.push_back(definition);
-                    std::cout<<definition<<"\n";
+                    //std::cout<<definition<<"\n";
                 }
             }
             i++;
@@ -236,14 +236,14 @@ void Trie::deserialize_helper(Node* node,std::string str,int& i){
         }
 
         else if(str[i]==char(4)){
-            std::cout<<i<<" END OF LIST\n";
+            //std::cout<<i<<" END OF LIST\n";
             i++;
             
             return;
         }
                  
         else  {
-            std::cout<<i<<"concutobu "<<str[i] <<"\n";
+            //std::cout<<i<<"concutobu "<<str[i] <<"\n";
             node->children[str[i]]=new Node();
             int temp=i;
             i++;

@@ -239,7 +239,6 @@ std::string API_Dummy_1::extract_from_txt(){
     std::ifstream file("data.txt");
     std::string str;
     std::getline(file,str);
-    std::cout<<str<<std::endl;
     return str;
 }
 
