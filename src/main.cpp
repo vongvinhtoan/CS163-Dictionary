@@ -17,8 +17,9 @@ int main()
     API* api = new API_Dummy_1();
     
     api->set_dictionary(Database::DictionaryId::ENG_ENG);
-   std::cout<<"Dictionary: "<<std::endl;
+   
     //Json::Value json = ((API_Dummy_1*)api)->to_json();
+    api->serialize();
     
     while (true){
         std::string word;

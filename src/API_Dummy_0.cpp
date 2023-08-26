@@ -83,3 +83,7 @@ std::vector<std::string> API_Dummy_0::get_favorites_list()
  {
         return false;
  }
+void API_Dummy_0::serialize  ()
+{
+    
+}

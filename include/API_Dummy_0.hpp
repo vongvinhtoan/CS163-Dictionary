@@ -25,5 +25,5 @@ public:
     virtual std::vector<std::string> get_random_words(int count);
     virtual std::vector<std::string> get_favorites_list();
     virtual bool is_favorite(std::string word);
-    
+    virtual void serialize  ();   
 };

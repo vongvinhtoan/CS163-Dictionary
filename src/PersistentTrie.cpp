@@ -213,7 +213,7 @@ std::vector<std::string> PersistentTrie::dfs()
 }
 
 void PersistentTrie:: initialize_again(std::string s){
-    std::cout<<"initialize_again\n";
+  
     Trie* trie = new Trie();
     
         trie->deserialize(s);
