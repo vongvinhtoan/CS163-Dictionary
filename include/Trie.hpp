@@ -28,6 +28,7 @@ private:
     std::vector<std::string> dfs_helper( Node* node,std::vector<std::string> data,std::string word);
     std::string serialize_helper(Node* node);
     void deserialize_helper(Node* node,std::string str,int& i);
+   
 public:
     Trie();
     ~Trie();
@@ -40,4 +41,5 @@ public:
     std::string serialize();
     void deserialize(std::string str);
     int get_max_index();
+    std::string get_version_description();
 };

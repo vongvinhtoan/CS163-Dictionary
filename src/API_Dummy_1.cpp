@@ -2,9 +2,8 @@
 #include <iostream>
 
 
-int holder=1;
 API_Dummy_1::API_Dummy_1()
-: dictionary_id(Database::DictionaryId::ENG_ENG)
+: dictionary_id(Database::DictionaryId::SIZE)
 , datasets(Database::DictionaryId::SIZE)
 , version(0)
 {
@@ -60,7 +59,7 @@ Database::DictionaryId API_Dummy_1::get_dictionary_id()
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 {
     history.push_back(word);
-    return datasets[holder].dictionary->get_version(version)->search(word);
+    return datasets[dictionary_id].dictionary->get_version(version)->search(word);
 }
 
 void API_Dummy_1::set_favorite(std::string word, bool favorite)
@@ -76,18 +75,20 @@ void API_Dummy_1::set_favorite(std::string word, bool favorite)
 
 void API_Dummy_1::delete_favorite(std::string word)
 {
-    datasets[holder].delete_favorite(word);
+    datasets[dictionary_id].delete_favorite(word);
+    version++;
 }
 
 void API_Dummy_1::add_favorite(std::string word)
 {
-     if(datasets[holder].dictionary->get_version(version)->check_exist(word)) return;
-    datasets[holder].add_favorite(word);
+    if(datasets[dictionary_id].dictionary->get_version(version)->check_exist(word)) return;
+    datasets[dictionary_id].add_favorite(word);
+    version++;
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
-    return datasets[holder].favorite->get_version(version)->dfs();
+    return datasets[dictionary_id].favorite->get_version(version)->dfs();
 
 }
 
@@ -110,23 +111,43 @@ void API_Dummy_1::add_definition(std::string word, std::string definition)
 
 void API_Dummy_1::edit_definition(std::string word, int editID, std::string definition)
 {
-     
+    datasets[dictionary_id].edit_definition(word,editID,definition);
+    version++;
      
 }
 
 void API_Dummy_1::delete_word(std::string word)
 {
-    datasets[holder].delete_word(word);
+    datasets[dictionary_id].delete_word(word);
     version++;
 }
 
 std::vector<API::VersionDescriptor> API_Dummy_1::get_versions()
-{
-    return std::vector<API::VersionDescriptor>();
+{ 
+    std::vector<API::VersionDescriptor> result;
+    API::VersionDescriptor tmp;
+    tmp.version=0;
+    tmp.description="Initial version";
+    result.push_back(tmp);
+    for(int i=1;i<version;i++){
+        API::VersionDescriptor temp;
+        temp.version=i;
+        if(datasets[dictionary_id].favorite->get_version(i)->get_version_description().compare
+        (datasets[dictionary_id].favorite->get_version(i-1)->get_version_description())!=0){
+            temp.description=datasets[dictionary_id].favorite->get_version(i)->get_version_description();
+        }
+        else{
+            temp.description=datasets[dictionary_id].dictionary->get_version(i)->get_version_description();
+        }
+        result.push_back(temp);
+
+    }
+    return result;
 }
 
 void API_Dummy_1::set_version(int version)
 {
+    this->version = version;
 }
 
 std::vector<std::string> API_Dummy_1::quizz_1_word_4_definition()
@@ -205,22 +226,22 @@ Json::Value API_Dummy_1::to_json()
 
 std::vector<std::string> API_Dummy_1::get_favorites_list()
 {
-    return datasets[holder].favorite->get_version(version)->dfs();
+    return datasets[dictionary_id].favorite->get_version(version)->dfs();
 }
  
 bool API_Dummy_1::is_favorite(std::string word)
 {
-    return datasets[holder].favorite->get_version(version)->check_exist(word);
+    return datasets[dictionary_id].favorite->get_version(version)->check_exist(word);
 }
  
 std::vector<std::string> API_Dummy_1:: get_random_words_and_definition(){
-    return datasets[holder].dictionary->get_version(version)->get_random_word();
+    return datasets[dictionary_id].dictionary->get_version(version)->get_random_word();
 }
 
 void API_Dummy_1::serialize()
 {
-    std::string str1=datasets[holder].dictionary->get_version(version)->serialize();
-    std::string str2=datasets[holder].favorite->get_version(version)->serialize();
+    std::string str1=datasets[dictionary_id].dictionary->get_version(version)->serialize();
+    std::string str2=datasets[dictionary_id].favorite->get_version(version)->serialize();
     std::ofstream fout("data.txt");
     fout<<str1<<std::endl;
     //file<<str2<<std::endl;
@@ -242,10 +263,3 @@ std::string API_Dummy_1::extract_from_txt(){
     return str;
 }
 
-PersistentTrie* API_Dummy_1::build_trie_from_txt(std::string str){
-    PersistentTrie* res = new PersistentTrie();
-    
-    res->initialize_again(extract_from_txt());
-
-    return res;
-}

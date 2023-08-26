@@ -19,8 +19,7 @@ int main()
     api->set_dictionary(Database::DictionaryId::ENG_ENG);
     std::cout<<"Dictionary: "<<std::endl;
 
-    api->add_definition("aaaaaaaaaaaaaaaaaaa", "b");
-    api->add_definition("aaaaaaaaaaaaaaaaaaa", "c");
+    
     Json::Value json = ((API_Dummy_1*)api)->to_json();
     std::ofstream file("data.json");
     file << json;

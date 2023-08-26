@@ -205,7 +205,6 @@ void PersistentTrie::initialize(std::vector<std::pair<std::string, std::string>>
 
     trie->version_description = "Version 0: initialize \n";
     versions.push_back(trie);
-    //std::cout<<"version.push_back(trie); + initialize\n";
 }
 
 Json::Value PersistentTrie::to_json()
@@ -345,12 +344,48 @@ std::vector<std::string> PersistentTrie::dfs()
     return versions.back()->dfs();
 }
 
-void PersistentTrie:: initialize_again(std::string s){
-  
-    Trie* trie = new Trie();
+void PersistentTrie::edit_definition(std::string word, int editID, std::string definition)
+{
     
-        trie->deserialize(s);
+    versions.push_back(edit_definition_helper(word, editID, definition));
+}
 
-    trie->version_description = "Version 0: initialize \n";
-    versions.push_back(trie);
+Trie* PersistentTrie::edit_definition_helper(const std::string &word, int editID, const std::string &definition)
+{
+    Trie* trie = new Trie();
+    trie->version_description  = "Version " + std::to_string(versions.size()) + ": edit definition \n";
+    trie->version_description += "Word: " + word + "\n";
+    trie->version_description += "Definition: " + definition + "\n";
+    Trie* old = versions.back();
+    Trie::Node* node = trie->root;
+    Trie::Node* dummy = old->root;
+    if(dummy)
+    {
+        node->definition = dummy->definition;
+        node->isWord = dummy->isWord;
+    }
+
+    std::cout<<"trie->root->id = "<<trie->root->id<<std::endl;
+    for(char c: word) {
+        node->children[c] = new Trie::Node();
+        node = node->children[c];
+        if(dummy && dummy->children.find(c) != dummy->children.end())
+            dummy = dummy->children[c];
+        else
+            dummy = nullptr;
+
+        if(dummy)
+        {
+            node->definition = dummy->definition;
+            node->isWord = dummy->isWord;
+        }
+    }
+    
+    node->definition[editID]=definition;
+    node->isWord = true;
+    node->definition.push_back(definition);
+
+    return trie;
+    
+   
 }

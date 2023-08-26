@@ -273,7 +273,9 @@ int Trie::get_max_index(){
     }
     return max;
 }
-
+ std::string Trie::get_version_description(){
+     return version_description;
+ }
 
 //use ACSII char to represent the tree
 //0: not a word

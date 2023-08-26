@@ -13,7 +13,8 @@ private:
     Trie* insert_helper(const std::string &word, const std::string &definition);
     Trie* delete_word_helper(const std::string &word);
     Trie* delete_definition_helper(const std::string &word, const std::string &definition);
-
+    Trie* edit_definition_helper(const std::string &word, int editID, const std::string &definition);
+    
 public:
     PersistentTrie();
     ~PersistentTrie();
@@ -26,7 +27,7 @@ public:
     void clone();
     Json::Value to_json();
     std::vector<std::string> dfs();
-    void  initialize_again(std::string s);
+    void edit_definition(std::string word, int editID, std::string definition);
 };
 
 

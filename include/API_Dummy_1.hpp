@@ -64,7 +64,20 @@ private:
             favorite->insert(word, "");
             dictionary->clone();
         }
-        
+        Json::Value to_json()
+        {
+            Json::Value dataset;
+            dataset["dictionary"] = dictionary->to_json();
+            dataset["favorite"] = favorite->to_json();
+            return dataset;
+        }
+        void edit_definition(std::string word, int editID, std::string definition)
+        {
+            dictionary->edit_definition(word,editID, definition);
+           
+            favorite->clone();
+        }
+
     };
     
 
