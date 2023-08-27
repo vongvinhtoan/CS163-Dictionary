@@ -1,27 +1,48 @@
 #include <API_Dummy_0.hpp>
+#include <Randomizer.hpp>
+#include <iostream>
 
 void API_Dummy_0::set_dictionary(Database::DictionaryId id)
 {
-    
+    std::cout<<"API_Dummy_0::set_dictionary: "<<id<<std::endl;
+    dictionaryId = id;
 }
 
 Database::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    return Database::DictionaryId::SIZE;
+    std::cout<<"API_Dummy_0::get_dictionary_id: "<<dictionaryId<<std::endl;
+    return dictionaryId;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
 {
-    return std::vector<std::string>();
+    std::cout<<"API_Dummy_0::get_definition_from_word: "<<word<<std::endl;
+    std::vector<std::string> definitions;
+    Randomizer &randomizer = Randomizer::getInstance();
+    int count = randomizer.nextInt(0, 5);
+    count = randomizer.nextInt(0, count);
+    for (int i = 0; i < count; i++)
+    {
+        definitions.push_back("definition " + std::to_string(i));
+    }
+    return definitions;
 }
 
 void API_Dummy_0::set_favorite(std::string word, bool favorite)
 {
+    std::cout<<"API_Dummy_0::set_favorite: "<<word<<", "<<favorite<<std::endl;
 }
 
 std::vector<std::string> API_Dummy_0::get_favorites()
 {
-    return std::vector<std::string>();
+    Randomizer &randomizer = Randomizer::getInstance();
+    int n = randomizer.nextInt(0, 50);
+    std::vector<std::string> favorites;
+    for (int i = 0; i < n; i++)
+    {
+        favorites.push_back("favorite " + std::to_string(i));
+    }
+    return favorites;
 }
 
 std::vector<std::string> API_Dummy_0::get_word_from_definition(std::string definition)
@@ -36,10 +57,12 @@ std::vector<std::string> API_Dummy_0::get_history()
 
 void API_Dummy_0::add_definition(std::string word, std::string definition)
 {
+    std::cout<<"API_Dummy_0::add_definition: "<<word<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::edit_definition(std::string word, int editID, std::string definition)
 {
+    std::cout<<"API_Dummy_0::edit_definition: "<<word<<", "<<editID<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::delete_word(std::string word)
@@ -83,7 +106,3 @@ std::vector<std::string> API_Dummy_0::get_favorites_list()
  {
         return false;
  }
-void API_Dummy_0::serialize  ()
-{
-    
-}

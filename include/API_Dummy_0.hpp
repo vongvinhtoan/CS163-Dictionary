@@ -4,6 +4,9 @@
 
 class API_Dummy_0 : public API
 {
+private:
+    Database::DictionaryId dictionaryId = Database::DictionaryId::ENG_ENG;
+
 public:
     virtual void set_dictionary(Database::DictionaryId id);
     virtual Database::DictionaryId get_dictionary_id();   
@@ -25,5 +28,4 @@ public:
     virtual std::vector<std::string> get_random_words(int count);
     virtual std::vector<std::string> get_favorites_list();
     virtual bool is_favorite(std::string word);
-    virtual void serialize  ();   
 };

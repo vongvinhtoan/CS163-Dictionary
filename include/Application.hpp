@@ -12,7 +12,7 @@ public:
     void run();
 
 private:
-    void registerStates();
+    void registerActivities();
     void processInput();
     void update(sf::Time dt);
     void updateStatistics(sf::Time elapsedTime);

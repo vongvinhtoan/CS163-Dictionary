@@ -165,7 +165,6 @@ std::vector<std::string> API_Dummy_1::quizz_1_word_4_definition()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
-
     for(int i=0;i<4;i++){
         random.push_back(get_random_words_and_definition());
     }
@@ -182,11 +181,7 @@ std::vector<std::string> API_Dummy_1::quizz_1_word_4_definition()
 
     result.push_back(random[3][random[3].size()-1]);
     return result;
-}
-
-std::vector<std::string> API_Dummy_1::get_random_definitions(int count)
 {
-
     return std::vector<std::string>();
 }
 
