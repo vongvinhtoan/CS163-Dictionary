@@ -141,16 +141,16 @@ std::vector<std::string> Trie::dfs(){
    Node* node=root;
    std::vector<std::string> data;
    std::string word;
-   return dfs_helper(node,data,word); 
+   dfs_helper(node,data,word);
+   return data; 
 }
-std::vector<std::string> Trie:: dfs_helper(Node* node,std::vector<std::string> data,std::string word){
+void Trie::dfs_helper(Node* node,std::vector<std::string>& data,std::string word){
     if(node->isWord){
         data.push_back(word);
     }
     for(auto& child: node->children){
         dfs_helper(child.second,data,word+child.first);
     }
-    return data;
 }
 bool Trie::check_exist(const std::string &key){
     Node* node = root;

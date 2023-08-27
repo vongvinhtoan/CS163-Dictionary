@@ -28,6 +28,7 @@ public:
     Json::Value to_json();
     std::vector<std::string> dfs();
     void edit_definition(std::string word, int editID, std::string definition);
+    const int get_version_id();
 };
 
 

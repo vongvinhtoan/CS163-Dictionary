@@ -23,7 +23,7 @@ Application::Application()
 , mTextures(new TextureHolder())
 , mFonts(new FontHolder())
 , mActivityStack(Activity::Context(mWindow, *mTextures, *mFonts, mData, *mAPI))
-, mAPI(new API_Dummy_0())
+, mAPI(new API_Dummy_1())
 {
     // readJSON();
     mFonts->load(Fonts::DEFAULT, "data/fonts/Karantina.ttf");

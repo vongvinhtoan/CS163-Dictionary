@@ -39,8 +39,11 @@ private:
 
         void delete_word(std::string word)
         {
+            if(favorite->get_version(dictionary->get_version_id())->check_exist(word))
+                favorite->delete_word(word);
+            else 
+                favorite->clone();
             dictionary->delete_word(word);
-            favorite->clone();
         }
 
         void delete_definition(std::string word, std::string definition)

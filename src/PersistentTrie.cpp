@@ -17,7 +17,7 @@ PersistentTrie::~PersistentTrie()
 }
 
 Trie* PersistentTrie::get_version(int version_id)
-{    
+{
     return versions[version_id];
 }
 
@@ -37,9 +37,9 @@ Trie* PersistentTrie::insert_helper(const std::string &word, const std::string &
     {
         node->definition = dummy->definition;
         node->isWord = dummy->isWord;
+        node->children = dummy->children;
     }
 
-    std::cout<<"trie->root->id = "<<trie->root->id<<std::endl;
     for(char c: word) {
         node->children[c] = new Trie::Node();
         node = node->children[c];
@@ -76,6 +76,7 @@ Trie* PersistentTrie::delete_word_helper(const std::string &word)
     {
         node->definition = dummy->definition;
         node->isWord = dummy->isWord;
+        node->children = dummy->children;
     }
 
     static std::function<bool(Trie::Node*, Trie::Node*, const std::string &, int)> 
@@ -130,6 +131,7 @@ Trie* PersistentTrie::delete_definition_helper(const std::string &word, const st
     {
         node->definition = dummy->definition;
         node->isWord = dummy->isWord;
+        node->children = dummy->children;
     }
 
     static std::function<bool(Trie::Node*, Trie::Node*, const std::string&, const std::string&, int)> 
@@ -173,17 +175,16 @@ Trie* PersistentTrie::delete_definition_helper(const std::string &word, const st
 
 void PersistentTrie::insert(const std::string &word, const std::string &definition)
 {
-    std::cout<<"insert"<<std::endl;
     versions.push_back(insert_helper(word, definition));
 }
 
 bool PersistentTrie::delete_word(const std::string &word)
 {
     Trie* trie = delete_word_helper(word);
+
     if(trie == nullptr)
         return false;
     versions.push_back(trie);
-    std::cout<<"version.push_back(trie); + delete_word\n";
     return true;
 }
 
@@ -193,7 +194,6 @@ bool PersistentTrie::delete_definition(const std::string &word, const std::strin
     if(trie == nullptr)
         return false;
     versions.push_back(trie);
-    std::cout<<"version.push_back(trie); + delete_definition\n";
     return true;
 }
 
@@ -216,9 +216,6 @@ Json::Value PersistentTrie::to_json()
 
     Trie* first = versions[0];
     Trie* last = versions.back();
-    std::cout<<"version.size() = "<<versions.size()<<std::endl;
-    std::cout<<"first = "<<first->root->id<<std::endl;
-    std::cout<<"last = "<<last->root->id<<std::endl;
 
     root["firstroot"] = first->root->id;
     root["lastroot"] = last->root->id;
@@ -283,7 +280,6 @@ Json::Value PersistentTrie::to_json()
 
 void PersistentTrie::init_json(Json::Value root)
 {
-    std::cout<<"init_json\n";
     std::vector<Trie::Node*> nodes;
     std::vector<int> index_to_id;
     std::vector<int> id_to_index;
@@ -331,8 +327,6 @@ void PersistentTrie::init_json(Json::Value root)
     delete trie->root;
     trie->root = last;
     versions.push_back(trie);
-
-    std::cout<<first->id<<" "<<last->id<<std::endl;
 }
 
 void PersistentTrie::clone()
@@ -351,6 +345,11 @@ void PersistentTrie::edit_definition(std::string word, int editID, std::string d
     versions.push_back(edit_definition_helper(word, editID, definition));
 }
 
+const int PersistentTrie::get_version_id()
+{
+    return versions.size() - 1;
+}
+
 Trie* PersistentTrie::edit_definition_helper(const std::string &word, int editID, const std::string &definition)
 {
     Trie* trie = new Trie();
@@ -364,9 +363,9 @@ Trie* PersistentTrie::edit_definition_helper(const std::string &word, int editID
     {
         node->definition = dummy->definition;
         node->isWord = dummy->isWord;
+        node->children = dummy->children;
     }
 
-    std::cout<<"trie->root->id = "<<trie->root->id<<std::endl;
     for(char c: word) {
         node->children[c] = new Trie::Node();
         node = node->children[c];

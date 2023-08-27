@@ -25,7 +25,7 @@ private:
     Node* root;
     std::string version_description;
     void insert_helper(Node* node, const std::string &key, const std::string &definition);
-    std::vector<std::string> dfs_helper( Node* node,std::vector<std::string> data,std::string word);
+    void dfs_helper( Node* node,std::vector<std::string>& data,std::string word);
     std::string serialize_helper(Node* node);
     void deserialize_helper(Node* node,std::string str,int& i);
    

@@ -4,6 +4,7 @@
 #include <ActivityStack.hpp>
 #include <API.hpp>
 #include <API_Dummy_0.hpp>
+#include <API_Dummy_1.hpp>
 
 class Application
 {

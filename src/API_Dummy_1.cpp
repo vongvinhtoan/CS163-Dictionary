@@ -3,20 +3,15 @@
 
 
 API_Dummy_1::API_Dummy_1()
-: dictionary_id(Database::DictionaryId::SIZE)
+: dictionary_id(Database::DictionaryId::ENG_ENG)
 , datasets(Database::DictionaryId::SIZE)
 , version(0)
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
-      
-
         datasets[id].dictionary = build_trie_from_value(database.get_dataset((Database::DictionaryId)(id)));
-        //datasets[id].dictionary=build_trie_from_json( database.get_dataset((Database::DictionaryId)(id))["dictionary"]);
         std::vector<std::pair<std::string, std::string>> values(0);
         datasets[id].favorite->initialize(values);
-        //datasets[id].favorite=build_trie_from_json(database.get_dataset((Database::DictionaryId)(id))["favorite"]);
     }
-    version++;
 }
 
 PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
@@ -36,17 +31,15 @@ PersistentTrie* API_Dummy_1::build_trie_from_json(Json:: Value dictionary)
 }
 void API_Dummy_1::extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json)
 {
-    
-    for(auto& word : json ) {
+    for(auto& word : json) {
         std::string word_str = word["word"].asString();
         std::string definition_str = word["definition"].asString();
         std::string definition_temp;
         std::stringstream ss(definition_str);
         while(std::getline(ss,definition_temp,'|')){
-          values.push_back(std::make_pair(word_str, definition_temp));
+            values.push_back(std::make_pair(word_str, definition_temp));
         }
     }
-    return ;
 }
 
 API_Dummy_1::~API_Dummy_1()
@@ -56,13 +49,14 @@ API_Dummy_1::~API_Dummy_1()
 
 void API_Dummy_1::set_dictionary(Database::DictionaryId id)
 {
+    std::cout<<"set_dictionary: "<<id<<std::endl;
     dictionary_id = id;
+    version = datasets[id].dictionary->get_version_id();
 }
 
 Database::DictionaryId API_Dummy_1::get_dictionary_id()
 {
-
-   return Database::DictionaryId::SIZE;
+    return dictionary_id;
 }
 
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
@@ -84,21 +78,24 @@ void API_Dummy_1::set_favorite(std::string word, bool favorite)
 
 void API_Dummy_1::delete_favorite(std::string word)
 {
+    std::cout<<"delete_favorite: "<<word<<std::endl;
     datasets[dictionary_id].delete_favorite(word);
     version++;
 }
 
 void API_Dummy_1::add_favorite(std::string word)
 {
-    if(datasets[dictionary_id].dictionary->get_version(version)->check_exist(word)) return;
+    if(!datasets[dictionary_id].dictionary->get_version(version)->check_exist(word)) return;
+    std::cout<<"add_favorite: "<<word<<std::endl;
     datasets[dictionary_id].add_favorite(word);
     version++;
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
+    std::cout<<"get_favorites: "<<std::endl;
+    std::cout<<version<<std::endl;
     return datasets[dictionary_id].favorite->get_version(version)->dfs();
-    
 }
 
 std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string definition)
@@ -108,7 +105,6 @@ std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string defin
 
 std::vector<std::string> API_Dummy_1::get_history()
 {
-    
     return history;
 }
 
@@ -122,7 +118,6 @@ void API_Dummy_1::edit_definition(std::string word, int editID, std::string defi
 {
     datasets[dictionary_id].edit_definition(word,editID,definition);
     version++;
-     
 }
 
 void API_Dummy_1::delete_word(std::string word)
