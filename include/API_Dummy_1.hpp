@@ -93,8 +93,7 @@ private:
     void add_favorite(std::string word);
     void delete_favorite(std::string word);
     std::vector<std::string> get_random_words_and_definition();
-   PersistentTrie* build_trie_from_json(Json::Value dictionary);
-    PersistentTrie* build_trie_from_txt(std::string str);
+    PersistentTrie* build_trie_from_json(Json::Value dictionary);
 public:
     API_Dummy_1();
     ~API_Dummy_1();

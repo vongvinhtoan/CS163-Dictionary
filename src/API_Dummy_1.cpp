@@ -181,11 +181,9 @@ std::vector<std::string> API_Dummy_1::quizz_1_word_4_definition()
 
     result.push_back(random[3][random[3].size()-1]);
     return result;
-{
-    return std::vector<std::string>();
 }
 
-std::vector< std::string> API_Dummy_1::quizz_1_definition_4_word()
+std::vector<std::string> API_Dummy_1::quizz_1_definition_4_word()
 {
     std::vector<std::vector<std::string>>random;
     std::vector<std::string> result;
