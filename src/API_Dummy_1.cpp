@@ -60,7 +60,7 @@ Database::DictionaryId API_Dummy_1::get_dictionary_id()
 
 std::vector<std::string> API_Dummy_1::get_definition_from_word(std::string word)
 {
-    history.push_back(word);
+    if(!word.empty()) datasets[dictionary_id].history.push_back(word);
     return datasets[dictionary_id].dictionary->get_version(version)->search(word);
 }
 
@@ -100,7 +100,7 @@ std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string defin
 
 std::vector<std::string> API_Dummy_1::get_history()
 {
-    return history;
+    return datasets[dictionary_id].history;
 }
 
 void API_Dummy_1::add_definition(std::string word, std::string definition)

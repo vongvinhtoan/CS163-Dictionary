@@ -9,7 +9,12 @@ ActivityDictionary::ActivityDictionary(ActivityStack& stack, Context context, In
 , mPagerIndex(0)
 {
     buildScene();
-    displayWord("");
+    if(getIntent()!= nullptr && getIntent()->hasExtra("word")) {
+        displayWord(getIntent()->getExtra<std::string>("word"));
+    }
+    else {
+        displayWord("");
+    }
 }
 
 void ActivityDictionary::buildScene()

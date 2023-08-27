@@ -30,6 +30,7 @@ namespace Activities
         FAVCONFIRM,
         EDITDEFINITION,
         WORDDELCONFIRM,
+        HISTORY,
         MENU
     };
 }
@@ -80,6 +81,15 @@ public:
                 throw std::runtime_error("Key not found");
             }
             return std::any_cast<T>(found->second);
+        }
+
+        bool hasExtra(const std::string& key)
+        {
+            auto found = mExtras.find(key);
+            if (found == mExtras.end()) {
+                return false;
+            }
+            return true;
         }
     };
 

@@ -79,6 +79,10 @@ void ActivityDashboard::buildScene()
     SceneNode::Ptr historyButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "History", 50));
     historyButton->setPosition(0, 35 + 40);
+    historyButton->setOnClick([this](SceneNode& node){
+        ((ButtonNode*)&node)->setBackgroundColor(sf::Color(0xA02C2CFF));
+        requestStackPush(Activities::HISTORY);
+    });
     
     SceneNode::Ptr creditButton(
         new ButtonNode(&getContext(), sf::Vector2f(180.f, 40.f), "Credit", 50));

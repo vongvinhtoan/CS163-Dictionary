@@ -12,6 +12,7 @@ private:
     {
         PersistentTrie* dictionary;
         PersistentTrie* favorite;
+        std::vector<std::string> history;
 
         Dataset()
         : dictionary(new PersistentTrie())
@@ -77,7 +78,7 @@ private:
         void edit_definition(std::string word, int editID, std::string definition)
         {
             dictionary->edit_definition(word,editID, definition);
-           
+
             favorite->clone();
         }
 
@@ -88,7 +89,6 @@ private:
     int version;
     Database::DictionaryId dictionary_id;
     std::vector<Dataset> datasets;
-    std::vector<std::string> history;
 
 private:
     void extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json);

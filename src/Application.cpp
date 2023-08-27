@@ -12,6 +12,7 @@
 #include <Activity/ActivityWordDelConfirm.hpp>
 #include <Activity/ActivityFavConfirm.hpp>
 #include <Activity/ActivityEditDefinition.hpp>
+#include <Activity/ActivityHistory.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -79,6 +80,7 @@ void Application::registerActivities()
     mActivityStack.registerActivity<ActivityWordDelConfirm>(Activities::WORDDELCONFIRM);
     mActivityStack.registerActivity<ActivityFavConfirm>(Activities::FAVCONFIRM);
     mActivityStack.registerActivity<ActivityEditDefinition>(Activities::EDITDEFINITION);
+    mActivityStack.registerActivity<ActivityHistory>(Activities::HISTORY);
 }
 
 void Application::run()
