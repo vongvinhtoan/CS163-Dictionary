@@ -8,9 +8,19 @@
 class ActivityDashboard : public Activity
 {
 private:
+    const float horSpacing = 30.f;
+    const float verSpacing = 30.f;
+    std::vector<sf::Vector2f> mParticlePositions;
+    std::vector<SceneNode*> mParticles;
+    sf::Time mParticleTimer;
+    const sf::Time mParticleInterval = sf::seconds(1.5f);
+    float curve(float t);
+    sf::Vector2f lerp(float t);
+private:
     enum Layer
     {
         Background,
+        Particles,
         DashboardBackground,
         Logo,
         Button,

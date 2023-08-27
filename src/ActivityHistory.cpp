@@ -50,7 +50,7 @@ void ActivityHistory::buildScene()
         "History", 
         getContext().fonts->get(Fonts::DEFAULT), 
         90,
-        sf::Color(0x000000FF)));
+        sf::Color(0xFFFFFFFF)));
     
     sf::FloatRect bounds = title->getLocalBounds();
     title->setOrigin(bounds.left + bounds.width/2.f, bounds.top);

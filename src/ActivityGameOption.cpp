@@ -1,11 +1,13 @@
 #include <iostream>
 #include <Activity/ActivityGameOption.hpp>
+#include <math.h>
 
 ActivityGameOption::ActivityGameOption(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode)
 : Activity(stack, context, std::move(intent))
 , mSceneGraph(new SceneNode(&getContext()))
 {
     buildScene();
+    mParticleTimer = getIntent()->getExtra<sf::Time>("particleTimer");
 }
 
 void ActivityGameOption::buildScene()
@@ -24,6 +26,35 @@ void ActivityGameOption::buildScene()
     SceneNode::Ptr background(new RectangleNode(&getContext(), sf::Vector2f(1000.f, 793.f), sf::Color(0xF4CBEDFF)));
     
     mSceneLayers[Background]->attachChild(std::move(background));
+
+    // Particles layer
+    sf::Vector2f sta(-3*horSpacing, -3*verSpacing);
+    sf::Vector2f end(1000.f + horSpacing, 800.f + verSpacing);
+    for(float x = sta.x; x < end.x; x += horSpacing)
+    {
+        for(float y = sta.y; y < end.y; y += verSpacing)
+        {
+            mParticlePositions.push_back(sf::Vector2f(x, y));
+        }
+    }
+    sta = sf::Vector2f(-horSpacing / 2.f - 2*horSpacing, -verSpacing / 2.f - 2*verSpacing);
+    end = sf::Vector2f(1000.f + horSpacing / 2.f, 800.f + verSpacing / 2.f);
+    for(float x = sta.x; x < end.x; x += horSpacing)
+    {
+        for(float y = sta.y; y < end.y; y += verSpacing)
+        {
+            mParticlePositions.push_back(sf::Vector2f(x, y));
+        }
+    }
+
+    for(int i=0; i<mParticlePositions.size(); i++)
+    {
+        SceneNode::Ptr particle(
+            new RectangleNode(&getContext(), sf::Vector2f(2.f, 2.f), sf::Color(0xFFFFFFFF)));
+        particle->setPosition(mParticlePositions[i]);
+        mParticles.push_back(particle.get());
+        mSceneLayers[Particles]->attachChild(std::move(particle));
+    }
 
     // Dashboard background layer
     SceneNode::Ptr startingFrameBackground(
@@ -134,10 +165,31 @@ void ActivityGameOption::draw()
     window.draw(*mSceneGraph);
 }
 
+
+float ActivityGameOption::curve(float t)
+{
+    return std::pow(std::cos(3.14159265359f * (t - .5f)), 2) + t;
+}
+
+sf::Vector2f ActivityGameOption::lerp(float t)
+{
+    sf::Vector2f velocity = sf::Vector2f(horSpacing, 2 * verSpacing);
+    return velocity * curve(t);
+}
+
 bool ActivityGameOption::update(sf::Time dt)
 {
     mSceneGraph->update(dt);
-    return false;
+    mParticleTimer += dt;
+    while(mParticleTimer >= mParticleInterval) mParticleTimer -= mParticleInterval;
+
+    for(int i=0; i<mParticles.size(); i++)
+    {
+        float t = mParticleTimer.asSeconds() / mParticleInterval.asSeconds();
+        mParticles[i]->setPosition(mParticlePositions[i] + lerp(t));
+    }
+
+    return true;
 }
 
 bool ActivityGameOption::handleEvent(const sf::Event& event)
