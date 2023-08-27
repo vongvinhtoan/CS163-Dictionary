@@ -8,6 +8,7 @@
 #include <Activity/ActivityGameOver.hpp>
 #include <Activity/ActivityDictionary.hpp>
 #include <Activity/ActivityFavoriteList.hpp>
+#include <Activity/ActivityAdd.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -41,6 +42,9 @@ Application::Application()
     mTextures->load(Textures::FavoriteStarFilled, "data/textures/FavoriteStarFilled.png");
     mTextures->load(Textures::DefinitionFrame, "data/textures/DefinitionFrame.png");
     mTextures->load(Textures::DictionarySearchbar, "data/textures/DictionarySearchbar.png");
+    mTextures->load(Textures::FavoriteFrame, "data/textures/FavoriteFrame.png");
+    mTextures->load(Textures::AddWordBar, "data/textures/AddWordBar.png");
+    mTextures->load(Textures::AddDefBar, "data/textures/AddDefBar.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);
@@ -62,6 +66,7 @@ void Application::registerActivities()
     mActivityStack.registerActivity<ActivityDictionary>(Activities::DICTIONARY);
     mActivityStack.registerActivity<ActivityGameOver>(Activities::GAMEOVER);
     mActivityStack.registerActivity<ActivityFavoriteList>(Activities::FAVORITELIST);
+    mActivityStack.registerActivity<ActivityAdd>(Activities::ADD);
 }
 
 void Application::run()

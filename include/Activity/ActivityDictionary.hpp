@@ -12,6 +12,7 @@ private:
     enum REQUEST_CODE
     {
         FAVORITE,
+        ADD,
         COUNT
     };
 
@@ -32,6 +33,7 @@ private:
 private:
     void   buildScene();
     void   buttonize(SceneNode* node);
+    virtual void    onBackActivity(int resultCode, Activity::Intent::Ptr intent);
 
 public:
     ActivityDictionary(ActivityStack& stack, Context context, Intent::Ptr intent, int requestCode);

@@ -147,6 +147,7 @@ void ActivityDictionary::buildScene()
         favoriteTextButton->setOnClick([this] (SceneNode& node) {
             Intent::Ptr intent(new Intent());
             requestStackPush(Activities::FAVORITELIST, std::move(intent), FAVORITE);
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
         });
         favoriteTextButton->setOrigin(
             favoriteTextButton->getLocalBounds().left + favoriteTextButton->getLocalBounds().width,
@@ -161,6 +162,11 @@ void ActivityDictionary::buildScene()
             50,
             sf::Color(0xFFFFFFFF)
         ));
+        addTextButton->setOnClick([this] (SceneNode& node) {
+            Intent::Ptr intent(new Intent());
+            requestStackPush(Activities::ADD, std::move(intent), ADD);
+            ((TextNode*)&node)->setColor(sf::Color(0xFFFFFFFF));
+        });
         addTextButton->setOrigin(
             addTextButton->getLocalBounds().left + addTextButton->getLocalBounds().width,
             0
@@ -493,4 +499,14 @@ void ActivityDictionary::displayWord(const std::string& word)
     mFavoriteIndicator->setPosition(59.f + mWordIndicator->getLocalBounds().width, 44.f);
     ((RectangleNode*)mFavoriteIndicator)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
     loadDefinitions();
+}
+
+void ActivityDictionary::onBackActivity(int resultCode, Activity::Intent::Ptr intent)
+{
+    if(resultCode == FAVORITE)
+    {
+        if(intent == nullptr) return;
+        std::string word = intent->getExtra<std::string>("word");
+        displayWord(word);
+    }
 }

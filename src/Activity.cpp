@@ -27,7 +27,7 @@ Activity::~Activity()
 {
 }
 
-void Activity::onBackIntent(int resultCode, Intent::Ptr intent)
+void Activity::onBackActivity(int resultCode, Intent::Ptr intent)
 {
 }
 
@@ -46,6 +46,11 @@ void Activity::requestActivityClear()
     mStack->clearActivities();
 }
 
+void Activity::requestBackActivity(Intent::Ptr intent)
+{
+    mStack->backActivity(getRequestCode(), std::move(intent));
+}
+
 Activity::Context& Activity::getContext()
 {
     return mContext;
@@ -54,4 +59,9 @@ Activity::Context& Activity::getContext()
 Activity::Intent* Activity::getIntent()
 {
     return mIntent.get();
+}
+
+int Activity::getRequestCode()
+{
+    return mRequestCode;
 }

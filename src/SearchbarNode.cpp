@@ -259,7 +259,7 @@ void SearchbarNode::putText()
 
     mCursor.setPosition(sf::Vector2f(
         mText.findCharacterPos(mString.size()).x,
-        mText.getCharacterSize() * 0.3f
+        mHintText.getLocalBounds().top
     ));
 }
 

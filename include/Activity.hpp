@@ -25,6 +25,7 @@ namespace Activities
         GAMEOVER,
         DICTIONARY,
         FAVORITELIST,
+        ADD,
         MENU
     };
 }
@@ -82,13 +83,15 @@ public:
     virtual bool    update(sf::Time dt) = 0;
     virtual bool    handleEvent(const sf::Event& event) = 0;
     virtual bool    handleRealtimeInput() = 0;
-    virtual void    onBackIntent(int resultCode, Activity::Intent::Ptr intent);
+    virtual void    onBackActivity(int resultCode, Activity::Intent::Ptr intent);
 protected: 
     void            requestStackPush(int activityID, Intent::Ptr intent = nullptr, int requestCode = 0);
     void            requestStackPop();
     void            requestActivityClear();
+    void            requestBackActivity(Intent::Ptr intent = nullptr);
     Context&        getContext();
     Intent*         getIntent();
+    int             getRequestCode();
 private:
     ActivityStack*      mStack;
     Context             mContext;

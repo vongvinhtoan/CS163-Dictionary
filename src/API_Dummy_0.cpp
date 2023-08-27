@@ -35,7 +35,14 @@ void API_Dummy_0::set_favorite(std::string word, bool favorite)
 
 std::vector<std::string> API_Dummy_0::get_favorites()
 {
-    return std::vector<std::string>();
+    Randomizer &randomizer = Randomizer::getInstance();
+    int n = randomizer.nextInt(0, 50);
+    std::vector<std::string> favorites;
+    for (int i = 0; i < n; i++)
+    {
+        favorites.push_back("favorite " + std::to_string(i));
+    }
+    return favorites;
 }
 
 std::vector<std::string> API_Dummy_0::get_word_from_definition(std::string definition)

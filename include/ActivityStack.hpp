@@ -12,7 +12,8 @@ public:
     {
         Push,
         Pop,
-        Clear
+        Clear,
+        BackActivity
     };
 
     ActivityStack(Activity::Context context);
@@ -25,7 +26,7 @@ public:
     void    pushActivity(int activityID, Activity::Intent::Ptr intent = nullptr, int requestCode = 0);
     void    popActivity();
     void    clearActivities();
-    void    backIntent(int resultCode, Activity::Intent::Ptr intent = nullptr);
+    void    backActivity(int resultCode, Activity::Intent::Ptr intent = nullptr);
     bool    isEmpty() const;
 
 private:

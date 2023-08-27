@@ -44,6 +44,9 @@ namespace Textures
         FavoriteStarFilled,
         DefinitionFrame,
         DictionarySearchbar,
+        FavoriteFrame,
+        AddWordBar,
+        AddDefBar,
         NONE
     };  
 } 

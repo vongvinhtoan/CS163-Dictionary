@@ -115,7 +115,7 @@ sf::Vector2f SceneNode::getWorldPosition() const
 int SceneNode::handleEvent(const sf::Event& event, int command)
 {
     handleEventChildren(event, command);
-    handleEventCurrent(event, command);
+    if(mIsEnabled) handleEventCurrent(event, command);
     return command;
 }
 
@@ -167,7 +167,7 @@ void SceneNode::handleEventChildren(const sf::Event& event, int& command)
 int SceneNode::handleRealtimeInput(int command)
 {
     handleRealtimeInputChildren(command);
-    handleRealtimeInputCurrent(command);
+    if(mIsEnabled) handleRealtimeInputCurrent(command);
     return command;
 }
 
@@ -175,7 +175,6 @@ int SceneNode::handleRealtimeInput(int command)
 
 void SceneNode::handleRealtimeInputCurrent(int& command)
 {
-    if(!mIsEnabled) return;
     sf::Vector2i mousePosition = sf::Mouse::getPosition(*getContext()->window);
     sf::Vector2f localMousePosition = getWorldTransform().getInverse().transformPoint(mousePosition.x, mousePosition.y);
 
@@ -203,7 +202,6 @@ void SceneNode::handleRealtimeInputCurrent(int& command)
 
 void SceneNode::handleRealtimeInputChildren(int &command)
 {
-    if(!mIsEnabled) return;
     for(auto it = mChildren.rbegin(); it != mChildren.rend(); ++it)
     {
         Ptr &child = *it;

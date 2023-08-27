@@ -64,12 +64,9 @@ void ActivityStack::clearActivities()
     mPendingList.push_back(PendingChange(Clear));
 }
 
-void ActivityStack::backIntent(int resultCode, Activity::Intent::Ptr intent)
+void ActivityStack::backActivity(int resultCode, Activity::Intent::Ptr intent)
 {
-    if (isEmpty())
-        return;
-
-    mStack.back()->onBackIntent(resultCode, std::move(intent));
+    mPendingList.push_back(PendingChange(BackActivity, 0, std::move(intent), resultCode));
 }
 
 bool ActivityStack::isEmpty() const
@@ -101,6 +98,11 @@ void ActivityStack::applyPendingChanges()
 
             case Clear:
                 mStack.clear();
+                break;
+
+            case BackActivity:
+                if (!mStack.empty())
+                    mStack.back()->onBackActivity(change.requestCode, std::move(change.intent));
                 break;
         }
     }
