@@ -239,9 +239,7 @@ void SearchbarNode::handleEventCurrent(const sf::Event& event, int& command)
             }
             else
             {
-                sf::Text text(mString + std::string(1, event.text.unicode), *mText.getFont(), mText.getCharacterSize());
-                if(text.getLocalBounds().width <= mBackground.getSize().x - mMarginHorizontal * 2.f)
-                    mString += event.text.unicode;
+                mString += event.text.unicode;
             }
             putText();
         }
@@ -253,14 +251,47 @@ bool SearchbarNode::isFocused() const
     return mIsFocused;
 }
 
+void SearchbarNode::setFocus(bool focus)
+{
+    mIsFocused = focus;
+}
+
 void SearchbarNode::putText()
 {
-    mText.setString(mString);
+    const float width = mBackground.getSize().x - mMarginHorizontal * 2.f;
+    const float height = mBackground.getSize().y - mMarginVertical * 2.f;
+
+    std::string line;
+    sf::Text lineText("", *mText.getFont(), mText.getCharacterSize());
+    for (auto& word : mString)
+    {
+        lineText.setString(line + std::string(1, word));
+        if (width != -1 && lineText.getLocalBounds().width > width)
+        {
+            lineText.setString(line + "\n" + std::string(1, word));
+            if(height != -1 &&lineText.getLocalBounds().height > height) break;
+            line += "\n" + std::string(1, word);
+        }
+        else
+        {
+            line += std::string(1, word);
+        }
+    }
+
+    mText.setString(line);
+
+    mCursor.setOrigin(sf::Vector2f(0.f, mCursor.getLocalBounds().height));
 
     mCursor.setPosition(sf::Vector2f(
-        mText.findCharacterPos(mString.size()).x,
-        mHintText.getLocalBounds().top
+        mText.findCharacterPos(line.size()).x,
+        mText.findCharacterPos(line.size()).y + mHintText.getLocalBounds().top + mHintText.getLocalBounds().height
     ));
+
+    if(mString.empty())
+        mCursor.setPosition(sf::Vector2f(
+            mText.findCharacterPos(mHintString.size()).x,
+            mHintText.findCharacterPos(mHintString.size()).y + mHintText.getLocalBounds().top + mHintText.getLocalBounds().height
+        ));
 }
 
 void SearchbarNode::setOnEnter(std::function<void(SceneNode&)> onEnter)

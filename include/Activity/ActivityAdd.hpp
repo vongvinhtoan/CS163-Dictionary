@@ -23,4 +23,5 @@ public:
 
 private:
     SearchbarNode*              mAddWordBar;
+    SearchbarNode*              mAddDefBar;
 };

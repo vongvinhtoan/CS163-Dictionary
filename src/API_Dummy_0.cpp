@@ -57,6 +57,7 @@ std::vector<std::string> API_Dummy_0::get_history()
 
 void API_Dummy_0::add_definition(std::string word, std::string definition)
 {
+    std::cout<<"API_Dummy_0::add_definition: "<<word<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::edit_definition(std::string word, int editID, std::string definition)

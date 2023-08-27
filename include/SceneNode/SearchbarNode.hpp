@@ -41,6 +41,7 @@ public:
     void setAlignment(Alignment alignment);
     void setHint(const std::string& hint);
     bool isFocused() const;
+    void setFocus(bool focus);
     void setOnEnter(std::function<void(SceneNode&)> onEnter);
     void setCharacterSize(unsigned int size);
     void setFont(const sf::Font& font);

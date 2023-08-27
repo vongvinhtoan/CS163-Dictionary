@@ -70,10 +70,38 @@ void ActivityAdd::buildScene()
     mAddWordBar->setMarginHorizontal(22.f);
     mAddWordBar->setOnEnter([this](SceneNode& node) {
         std::cout << "Enter pressed" << std::endl;
+        mAddDefBar->setFocus(true);
+        mAddWordBar->setFocus(false);
+    });
+
+    SceneNode::Ptr addDefBar(new SearchbarNode(
+        &getContext(),
+        sf::Vector2f(721.f, 217.f),
+        getContext().textures->get(Textures::AddDefBar)
+    ));
+    mAddDefBar = static_cast<SearchbarNode*>(addDefBar.get());
+    mAddDefBar->setAlignment(SearchbarNode::Alignment(
+        SearchbarNode::Alignment::Left | SearchbarNode::Alignment::Top
+    ));
+    mAddDefBar->setPosition(2.f, 406.f);
+    mAddDefBar->setCharacterSize(50);
+    mAddDefBar->setFont(getContext().fonts->get(Fonts::DEFAULT));
+    mAddDefBar->setHint("New definition here");
+    mAddDefBar->setMarginHorizontal(22.f);
+    mAddDefBar->setMarginVertical(12.f);
+    mAddDefBar->setOnEnter([this](SceneNode& node) {
+        std::cout << "Enter pressed" << std::endl;
+        std::string word = mAddWordBar->getString();
+        std::string def = mAddDefBar->getString();
+        if(word.empty() || def.empty())
+            return;
+        getContext().api->add_definition(word, def);
+        requestStackPop();
     });
 
     background2->attachChild(std::move(title));
     background2->attachChild(std::move(addWordBar));
+    background2->attachChild(std::move(addDefBar));
     mSceneGraph->attachChild(std::move(dimBackground));
     mSceneGraph->attachChild(std::move(background1));
     mSceneGraph->attachChild(std::move(background2));
