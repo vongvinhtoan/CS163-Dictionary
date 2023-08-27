@@ -49,9 +49,9 @@ void ActivityStack::handleRealtimeInput()
     applyPendingChanges();
 }
 
-void ActivityStack::pushActivity(int activityID)
+void ActivityStack::pushActivity(int activityID, Activity::Intent::Ptr intent, int requestCode)
 {
-    mPendingList.push_back(PendingChange(Push, activityID));
+    mPendingList.push_back(PendingChange(Push, activityID, std::move(intent), requestCode));
 }
 
 void ActivityStack::popActivity()
@@ -64,17 +64,22 @@ void ActivityStack::clearActivities()
     mPendingList.push_back(PendingChange(Clear));
 }
 
+void ActivityStack::backActivity(int resultCode, Activity::Intent::Ptr intent)
+{
+    mPendingList.push_back(PendingChange(BackActivity, 0, std::move(intent), resultCode));
+}
+
 bool ActivityStack::isEmpty() const
 {
     return mStack.empty();
 }
 
-Activity::Ptr ActivityStack::createActivity(int activityID)
+Activity::Ptr ActivityStack::createActivity(int activityID, Activity::Intent::Ptr intent, int requestCode)
 {
     auto found = mFactories.find(activityID);
     assert(found != mFactories.end());
 
-    return found->second();
+    return (found->second)(std::move(intent), requestCode);
 }
 
 void ActivityStack::applyPendingChanges()
@@ -84,7 +89,7 @@ void ActivityStack::applyPendingChanges()
         switch (change.action)
         {
             case Push:
-                mStack.push_back(createActivity(change.activityID));
+                mStack.push_back(createActivity(change.activityID, std::move(change.intent), change.requestCode));
                 break;
 
             case Pop:
@@ -94,14 +99,21 @@ void ActivityStack::applyPendingChanges()
             case Clear:
                 mStack.clear();
                 break;
+
+            case BackActivity:
+                if (!mStack.empty())
+                    mStack.back()->onBackActivity(change.requestCode, std::move(change.intent));
+                break;
         }
     }
 
     mPendingList.clear();
 }
 
-ActivityStack::PendingChange::PendingChange(Action action, int activityID)
+ActivityStack::PendingChange::PendingChange(Action action, int activityID, Activity::Intent::Ptr intent, int requestCode)
 : action(action)
 , activityID(activityID)
+, intent(std::move(intent))
+, requestCode(requestCode)
 {
 }

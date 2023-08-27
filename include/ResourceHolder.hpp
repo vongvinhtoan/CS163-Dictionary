@@ -25,6 +25,34 @@ namespace Textures
 {
     enum ID
     {
+        Logo,
+        StartingFrameBackground,
+        DashboardBackground,
+        MenuBackground,
+        Footer,
+        WoodenBackground1,
+        WoodenBackground2,
+        GameBackground,
+        PlayzoneBackground,
+        DefinitionBackground,
+        DictionaryBackground,
+        DefinitionWoodenBackground,
+        DefinitionCore,
+        GameOverBackground,
+        WrongAnswersBackground,
+        FavoriteStar,
+        FavoriteStarFilled,
+        DefinitionFrame,
+        DictionarySearchbar,
+        FavoriteFrame,
+        AddWordBar,
+        AddDefBar,
+        EditIcon,
+        DeleteIcon,
+        EditIconBlured,
+        DeleteIconBlured,
+        ConfirmBackground1,
+        ConfirmBackground2,
         NONE
     };  
 } 
