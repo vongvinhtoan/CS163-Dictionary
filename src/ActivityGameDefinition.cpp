@@ -199,6 +199,8 @@ void ActivityGameDefinition::buildScene()
             definitionCore->getLocalBounds().width / 2.f,
             definitionText->getLocalBounds().height + definitionText->getLocalBounds().top
         );
+        ((TextNode*)definition.get())->setWidth(definitionCore->getLocalBounds().width - 20.f);
+        ((TextNode*)definition.get())->setHeight(definitionBackground->getLocalBounds().height);
 
         mDefinitionCore = definitionCore.get();
         mDefinitionText = (TextNode*)definitionText.get();
@@ -373,19 +375,25 @@ void ActivityGameDefinition::buildScene()
 
 void ActivityGameDefinition::loadQuestion()
 {
+    Randomizer &randomizer = Randomizer::getInstance();
     mTimeLeft = mTimePerQuestion;
-    Randomizer& randomizer = Randomizer::getInstance();
 
-    mDefinition->setString(std::string(randomizer.nextInt(2, 10), 'k'));
+    std::vector<std::string> words = getContext().api->quizz_1_definition_4_word();
 
-    mCorrectAnswerIndex = randomizer.nextInt(0, 3);
+    mDefinition->setString(words[4]);
+    std::cout<<mDefinition->getWidth() << " " << mDefinition->getHeight() << "\n";
+
+    std::vector<int> randomPermutation = {0, 1, 2, 3};
+    for(int t=10; t--;) {
+        int x = randomizer.nextInt(0, 3);
+        int y = randomizer.nextInt(0, 3);
+        std::swap(randomPermutation[x], randomPermutation[y]);
+    }
+
+    mCorrectAnswerIndex = randomPermutation[3];
 
     for(int i=0; i<4; i++) {
-        if(i == mCorrectAnswerIndex) {
-            mOptions[i]->setText(mDefinition->getString());
-        } else {
-            mOptions[i]->setText(std::string(randomizer.nextInt(2, 10), 's'));
-        }
+        mOptions[i]->setText(words[randomPermutation[i]]);
     }
 }
 

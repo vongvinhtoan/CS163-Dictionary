@@ -520,7 +520,6 @@ void ActivityDictionary::loadDefinitions()
 
 void ActivityDictionary::displayWord(const std::string& word)
 {
-    std::cout<<"Displaying word: "<<word<<std::endl;
     API* api = getContext().api;
     mDefinitions = api->get_definition_from_word(word);
     mIsFavorite = api->is_favorite(word);

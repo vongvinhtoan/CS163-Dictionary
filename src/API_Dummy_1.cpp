@@ -49,7 +49,6 @@ API_Dummy_1::~API_Dummy_1()
 
 void API_Dummy_1::set_dictionary(Database::DictionaryId id)
 {
-    std::cout<<"set_dictionary: "<<id<<std::endl;
     dictionary_id = id;
     version = datasets[id].dictionary->get_version_id();
 }

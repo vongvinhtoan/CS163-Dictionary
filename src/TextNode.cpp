@@ -113,3 +113,13 @@ void TextNode::setHeight(int height)
     this->height = height;
     setString(getString());
 }
+
+int TextNode::getWidth()
+{
+    return this->width;
+}
+
+int TextNode::getHeight()
+{
+    return this->height;
+}

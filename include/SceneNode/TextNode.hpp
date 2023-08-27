@@ -17,6 +17,8 @@ public:
     void alignCenter();
     void setWidth(int width);
     void setHeight(int height);
+    int getWidth();
+    int getHeight();
 
 private:
     int width;
