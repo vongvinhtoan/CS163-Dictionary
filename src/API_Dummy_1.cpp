@@ -253,3 +253,11 @@ void API_Dummy_1::serialize()
 
 }
 
+ std::vector<std::string>API_Dummy_1:: get_random_definitions(int count){
+    std::vector<std::string> s;
+    s.push_back(get_random_words_and_definition().front()) ;
+    s.push_back(get_random_words_and_definition().back());
+    return s;
+}
+//từ đầu là definition
+//từ cuối là word

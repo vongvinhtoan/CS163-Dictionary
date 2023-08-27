@@ -56,7 +56,10 @@ int main()
     for(auto i:a){
         std::cout<<i.version<<" "<<i.description<<std::endl;
     }
-
+    std::vector<std::string>s=api->get_random_definitions(0);
+    for(auto i:s){
+        std::cout<<i<<std::endl;
+    }
     delete api;
     return 0;    
     //Json::Value json = ((API_Dummy_1*)api)->to_json();
