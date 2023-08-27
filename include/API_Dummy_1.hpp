@@ -93,7 +93,7 @@ private:
     void add_favorite(std::string word);
     void delete_favorite(std::string word);
     std::vector<std::string> get_random_words_and_definition();
-    std::string extract_from_txt();
+   PersistentTrie* build_trie_from_json(Json::Value dictionary);
     PersistentTrie* build_trie_from_txt(std::string str);
 public:
     API_Dummy_1();
@@ -117,7 +117,6 @@ public:
     virtual std::vector<std::string> quizz_1_definition_4_word();
     virtual std::vector<std::string> get_random_words(int count);
     Json::Value to_json();
-    virtual Trie* deserialize();
     virtual void serialize  ();
     virtual bool is_favorite(std::string word);
     virtual std::vector<std::string> get_favorites_list();

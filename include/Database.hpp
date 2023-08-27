@@ -26,7 +26,7 @@ private:
 
     Json::Value dataset_Slang_Word;
 
-   
+   Json::Value dataset_Dummy;
 
 public:
    Json::Value get_dataset(DictionaryId id);

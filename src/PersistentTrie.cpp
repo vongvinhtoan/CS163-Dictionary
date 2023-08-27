@@ -292,7 +292,7 @@ void PersistentTrie::init_json(Json::Value root)
     for(auto& node: root["nodes"]) {
         maxIndex = std::max(maxIndex, node["index"].asInt());
     }
-    Trie::Node::id_counter = maxIndex + 1;
+    Trie::Node::id_counter = std::max(Trie::Node::id_counter,maxIndex + 1);
     id_to_index.resize(maxIndex + 1, -1);
     for(auto& node: root["nodes"]) {
         Trie::Node* n = new Trie::Node();
@@ -339,6 +339,7 @@ void PersistentTrie::clone()
 {
     versions.push_back(versions.back());
 }
+
 std::vector<std::string> PersistentTrie::dfs()
 {
     return versions.back()->dfs();

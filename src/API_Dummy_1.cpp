@@ -8,11 +8,15 @@ API_Dummy_1::API_Dummy_1()
 , version(0)
 {
     for(int id = 0; id < Database::DictionaryId::SIZE; id++) {
+      
+
         datasets[id].dictionary = build_trie_from_value(database.get_dataset((Database::DictionaryId)(id)));
+        //datasets[id].dictionary=build_trie_from_json( database.get_dataset((Database::DictionaryId)(id))["dictionary"]);
         std::vector<std::pair<std::string, std::string>> values(0);
         datasets[id].favorite->initialize(values);
+        //datasets[id].favorite=build_trie_from_json(database.get_dataset((Database::DictionaryId)(id))["favorite"]);
     }
-
+    version++;
 }
 
 PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
@@ -21,10 +25,15 @@ PersistentTrie* API_Dummy_1::build_trie_from_value(Json::Value dictionary)
     std::vector<std::pair<std::string, std::string>> values;
     extract_from_json(values, dictionary);
     res->initialize(values);
-
     return res;
 }
 
+PersistentTrie* API_Dummy_1::build_trie_from_json(Json:: Value dictionary)
+{
+    PersistentTrie* res = new PersistentTrie();
+    res->init_json(dictionary);
+    return res;
+}
 void API_Dummy_1::extract_from_json(std::vector<std::pair<std::string, std::string>> &values, const Json::Value &json)
 {
     
@@ -89,7 +98,7 @@ void API_Dummy_1::add_favorite(std::string word)
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
     return datasets[dictionary_id].favorite->get_version(version)->dfs();
-
+    
 }
 
 std::vector<std::string> API_Dummy_1::get_word_from_definition(std::string definition)
@@ -129,15 +138,17 @@ std::vector<API::VersionDescriptor> API_Dummy_1::get_versions()
     tmp.version=0;
     tmp.description="Initial version";
     result.push_back(tmp);
-    for(int i=1;i<version;i++){
+    tmp.version=1;
+    tmp.description="Last version";
+    for(int i=2;i<=version;i++){
         API::VersionDescriptor temp;
         temp.version=i;
         if(datasets[dictionary_id].favorite->get_version(i)->get_version_description().compare
         (datasets[dictionary_id].favorite->get_version(i-1)->get_version_description())!=0){
-            temp.description=datasets[dictionary_id].favorite->get_version(i)->get_version_description();
+            temp.description="Favourite list "+datasets[dictionary_id].favorite->get_version(i)->get_version_description();
         }
         else{
-            temp.description=datasets[dictionary_id].dictionary->get_version(i)->get_version_description();
+            temp.description="Dictionary "+datasets[dictionary_id].dictionary->get_version(i)->get_version_description();
         }
         result.push_back(temp);
 
@@ -247,19 +258,5 @@ void API_Dummy_1::serialize()
     //file<<str2<<std::endl;
     fout.close();
 
-}
-
-Trie* API_Dummy_1::deserialize(){
-    Trie* new_trie;
-    new_trie->deserialize(extract_from_txt());
-    return new_trie;
-}
-
-std::string API_Dummy_1::extract_from_txt(){
-
-    std::ifstream file("data.txt");
-    std::string str;
-    std::getline(file,str);
-    return str;
 }
 

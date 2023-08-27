@@ -9,7 +9,7 @@ class Trie;
 class PersistentTrie
 {
 private:
-    std::vector<Trie*> versions;//version 0: dictionary, version 1 : favourite list
+    std::vector<Trie*> versions;
     Trie* insert_helper(const std::string &word, const std::string &definition);
     Trie* delete_word_helper(const std::string &word);
     Trie* delete_definition_helper(const std::string &word, const std::string &definition);

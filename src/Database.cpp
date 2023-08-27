@@ -8,6 +8,8 @@ Database::Database()
     std::ifstream dataset_Vie_Eng_file(".\\data\\json\\dataset_Vie_Eng.json");
     std::ifstream dataset_Emoji_file(".\\data\\json\\dataset_Emoji.json");
     std::ifstream dataset_Slang_Word_file(".\\data\\json\\dataset_Slang_Word.json");
+    //std::ifstream dataset_Dummy_file(".\\data.json");
+
 
 
     reader.parse(dataset_Eng_Eng_file, dataset_Eng_Eng);
@@ -15,8 +17,10 @@ Database::Database()
     reader.parse(dataset_Vie_Eng_file,dataset_Vie_Eng);
     reader.parse(dataset_Emoji_file,dataset_Emoji);
     reader.parse(dataset_Slang_Word_file,dataset_Slang_Word);
+    //reader.parse(dataset_Dummy_file,dataset_Dummy);
 }
 Json::Value Database::get_dataset(DictionaryId id){
+    //return dataset_Dummy;
     if     (id == DictionaryId::EMOJI) return dataset_Emoji;
     else if(id == DictionaryId::ENG_ENG) return dataset_Eng_Eng;
     else if(id == DictionaryId::ENG_VIET) return dataset_Eng_Vie;

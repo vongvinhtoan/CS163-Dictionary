@@ -21,9 +21,7 @@ int main()
 
     
     Json::Value json = ((API_Dummy_1*)api)->to_json();
-    std::ofstream file("data.json");
-    file << json;
-    file.close();
+    
 
     // PersistentTrie* trie = new PersistentTrie();
     // std::vector<std::pair<std::string, std::string>> values = {
@@ -46,6 +44,17 @@ int main()
     for (auto definition : definitions) {
         std::cout<<"---------------------\n";
         std::cout<<definition<<std::endl;
+    }
+    api->set_favorite("a",true);
+    api->set_favorite("b",true);
+    api->set_favorite("car",true);
+    api->set_favorite("dog",true);
+    std::ofstream file("data.json");
+    file << json;
+    file.close();
+    std::vector<API::VersionDescriptor> a=api->get_versions();
+    for(auto i:a){
+        std::cout<<i.version<<" "<<i.description<<std::endl;
     }
 
     delete api;
