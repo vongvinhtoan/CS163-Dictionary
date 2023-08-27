@@ -355,7 +355,6 @@ void ActivityDictionary::buildScene()
     {
         mSceneLayers[DefinitionPage]->setPosition(0, 250.f);
         loadDefinitions();
-        std::cout<<"meow"<<std::endl;
     }
 
     // Footer

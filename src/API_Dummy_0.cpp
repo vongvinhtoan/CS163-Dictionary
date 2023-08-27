@@ -4,19 +4,16 @@
 
 void API_Dummy_0::set_dictionary(Database::DictionaryId id)
 {
-    std::cout<<"API_Dummy_0::set_dictionary: "<<id<<std::endl;
     dictionaryId = id;
 }
 
 Database::DictionaryId API_Dummy_0::get_dictionary_id()
 {
-    std::cout<<"API_Dummy_0::get_dictionary_id: "<<dictionaryId<<std::endl;
     return dictionaryId;
 }
 
 std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
 {
-    std::cout<<"API_Dummy_0::get_definition_from_word: "<<word<<std::endl;
     std::vector<std::string> definitions;
     Randomizer &randomizer = Randomizer::getInstance();
     int count = randomizer.nextInt(0, 5);
@@ -30,7 +27,6 @@ std::vector<std::string> API_Dummy_0::get_definition_from_word(std::string word)
 
 void API_Dummy_0::set_favorite(std::string word, bool favorite)
 {
-    std::cout<<"API_Dummy_0::set_favorite: "<<word<<", "<<favorite<<std::endl;
 }
 
 std::vector<std::string> API_Dummy_0::get_favorites()
@@ -57,12 +53,10 @@ std::vector<std::string> API_Dummy_0::get_history()
 
 void API_Dummy_0::add_definition(std::string word, std::string definition)
 {
-    std::cout<<"API_Dummy_0::add_definition: "<<word<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::edit_definition(std::string word, int editID, std::string definition)
 {
-    std::cout<<"API_Dummy_0::edit_definition: "<<word<<", "<<editID<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::delete_word(std::string word)

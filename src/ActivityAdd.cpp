@@ -69,7 +69,6 @@ void ActivityAdd::buildScene()
     mAddWordBar->setHint("New word here");
     mAddWordBar->setMarginHorizontal(22.f);
     mAddWordBar->setOnEnter([this](SceneNode& node) {
-        std::cout << "Enter pressed" << std::endl;
         mAddDefBar->setFocus(true);
         mAddWordBar->setFocus(false);
     });
@@ -90,7 +89,6 @@ void ActivityAdd::buildScene()
     mAddDefBar->setMarginHorizontal(22.f);
     mAddDefBar->setMarginVertical(12.f);
     mAddDefBar->setOnEnter([this](SceneNode& node) {
-        std::cout << "Enter pressed" << std::endl;
         std::string word = mAddWordBar->getString();
         std::string def = mAddDefBar->getString();
         if(word.empty() || def.empty())

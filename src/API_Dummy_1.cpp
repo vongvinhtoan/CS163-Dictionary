@@ -77,7 +77,6 @@ void API_Dummy_1::set_favorite(std::string word, bool favorite)
 
 void API_Dummy_1::delete_favorite(std::string word)
 {
-    std::cout<<"delete_favorite: "<<word<<std::endl;
     datasets[dictionary_id].delete_favorite(word);
     version++;
 }
@@ -85,15 +84,12 @@ void API_Dummy_1::delete_favorite(std::string word)
 void API_Dummy_1::add_favorite(std::string word)
 {
     if(!datasets[dictionary_id].dictionary->get_version(version)->check_exist(word)) return;
-    std::cout<<"add_favorite: "<<word<<std::endl;
     datasets[dictionary_id].add_favorite(word);
     version++;
 }
 
 std::vector<std::string> API_Dummy_1::get_favorites()
 {
-    std::cout<<"get_favorites: "<<std::endl;
-    std::cout<<version<<std::endl;
     return datasets[dictionary_id].favorite->get_version(version)->dfs();
 }
 

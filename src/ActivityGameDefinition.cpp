@@ -381,7 +381,6 @@ void ActivityGameDefinition::loadQuestion()
     std::vector<std::string> words = getContext().api->quizz_1_definition_4_word();
 
     mDefinition->setString(words[4]);
-    std::cout<<mDefinition->getWidth() << " " << mDefinition->getHeight() << "\n";
 
     std::vector<int> randomPermutation = {0, 1, 2, 3};
     for(int t=10; t--;) {
