@@ -59,8 +59,8 @@ void ActivityDictionary::buildScene()
             "VIET-ENG",
             "ENG-ENG",
             "ENG-VIET",
-            "SLANG",
-            "EMOJI"
+            "EMOJI",
+            "SLANG"
         };
         const float width = 180.f;
         const float height = 40.f;
