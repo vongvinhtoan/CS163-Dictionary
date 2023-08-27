@@ -62,6 +62,7 @@ void API_Dummy_0::add_definition(std::string word, std::string definition)
 
 void API_Dummy_0::edit_definition(std::string word, int editID, std::string definition)
 {
+    std::cout<<"API_Dummy_0::edit_definition: "<<word<<", "<<editID<<", "<<definition<<std::endl;
 }
 
 void API_Dummy_0::delete_word(std::string word)

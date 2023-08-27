@@ -9,6 +9,9 @@
 #include <Activity/ActivityDictionary.hpp>
 #include <Activity/ActivityFavoriteList.hpp>
 #include <Activity/ActivityAdd.hpp>
+#include <Activity/ActivityWordDelConfirm.hpp>
+#include <Activity/ActivityFavConfirm.hpp>
+#include <Activity/ActivityEditDefinition.hpp>
 
 Application::Application() 
 : mWindow(sf::VideoMode(1000, 800), "Dictionary", sf::Style::Close)
@@ -45,6 +48,12 @@ Application::Application()
     mTextures->load(Textures::FavoriteFrame, "data/textures/FavoriteFrame.png");
     mTextures->load(Textures::AddWordBar, "data/textures/AddWordBar.png");
     mTextures->load(Textures::AddDefBar, "data/textures/AddDefBar.png");
+    mTextures->load(Textures::EditIcon, "data/textures/EditIcon.png");
+    mTextures->load(Textures::DeleteIcon, "data/textures/DeleteIcon.png");
+    mTextures->load(Textures::EditIconBlured, "data/textures/EditIconBlured.png");
+    mTextures->load(Textures::DeleteIconBlured, "data/textures/DeleteIconBlured.png");
+    mTextures->load(Textures::ConfirmBackground1, "data/textures/ConfirmBackground1.png");
+    mTextures->load(Textures::ConfirmBackground2, "data/textures/ConfirmBackground2.png");
     
     registerActivities();
     mActivityStack.pushActivity(Activities::DASHBOARD);
@@ -67,6 +76,9 @@ void Application::registerActivities()
     mActivityStack.registerActivity<ActivityGameOver>(Activities::GAMEOVER);
     mActivityStack.registerActivity<ActivityFavoriteList>(Activities::FAVORITELIST);
     mActivityStack.registerActivity<ActivityAdd>(Activities::ADD);
+    mActivityStack.registerActivity<ActivityWordDelConfirm>(Activities::WORDDELCONFIRM);
+    mActivityStack.registerActivity<ActivityFavConfirm>(Activities::FAVCONFIRM);
+    mActivityStack.registerActivity<ActivityEditDefinition>(Activities::EDITDEFINITION);
 }
 
 void Application::run()

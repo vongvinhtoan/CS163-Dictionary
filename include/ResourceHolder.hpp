@@ -47,6 +47,12 @@ namespace Textures
         FavoriteFrame,
         AddWordBar,
         AddDefBar,
+        EditIcon,
+        DeleteIcon,
+        EditIconBlured,
+        DeleteIconBlured,
+        ConfirmBackground1,
+        ConfirmBackground2,
         NONE
     };  
 } 

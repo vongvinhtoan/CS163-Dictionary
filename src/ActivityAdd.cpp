@@ -96,7 +96,11 @@ void ActivityAdd::buildScene()
         if(word.empty() || def.empty())
             return;
         getContext().api->add_definition(word, def);
+
+        Intent::Ptr intent(new Intent());
+        intent->putExtra("word", word);
         requestStackPop();
+        requestBackActivity(std::move(intent));
     });
 
     background2->attachChild(std::move(title));

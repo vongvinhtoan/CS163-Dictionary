@@ -121,22 +121,6 @@ void ActivityDictionary::buildScene()
         );
         tutorialTextButton->setPosition(1000.f - 14.f, -7.f);
 
-        SceneNode::Ptr editTextButton(new TextNode(
-            &getContext(), 
-            "Edit", 
-            getContext().fonts->get(Fonts::DEFAULT), 
-            50,
-            sf::Color(0xFFFFFFFF)
-        ));
-        editTextButton->setOnClick([this] (SceneNode& node) {
-            // requestStackPush(Activities::Edit);
-        });
-        editTextButton->setOrigin(
-            editTextButton->getLocalBounds().left + editTextButton->getLocalBounds().width,
-            0
-        );
-        editTextButton->setPosition(-spacing, 0);
-
         SceneNode::Ptr favoriteTextButton(new TextNode(
             &getContext(), 
             "Favorite", 
@@ -175,15 +159,13 @@ void ActivityDictionary::buildScene()
 
         buttonize(backTextButton.get());
         buttonize(tutorialTextButton.get());
-        buttonize(editTextButton.get());
         buttonize(favoriteTextButton.get());
         buttonize(addTextButton.get());
 
         mSceneLayers[Taskbar]->attachChild(std::move(taskbar));
         mSceneLayers[Taskbar]->attachChild(std::move(backTextButton));
         favoriteTextButton->attachChild(std::move(addTextButton));
-        editTextButton->attachChild(std::move(favoriteTextButton));
-        tutorialTextButton->attachChild(std::move(editTextButton));
+        tutorialTextButton->attachChild(std::move(favoriteTextButton));
         mSceneLayers[Taskbar]->attachChild(std::move(tutorialTextButton));
     }
 
@@ -227,11 +209,53 @@ void ActivityDictionary::buildScene()
         ));
         favoriteStar->setPosition(59.f + mWordIndicator->getLocalBounds().width, 44.f);
         favoriteStar->setOnClick([this] (SceneNode& node) {
-            mIsFavorite = !mIsFavorite;
-            ((RectangleNode*)&node)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
-            getContext().api->set_favorite(mWordIndicator->getString(), mIsFavorite);
+            requestStackPush(Activities::FAVCONFIRM, Intent::Ptr(new Intent()), FAVORITE_CONFIRM);
         });
         mFavoriteIndicator = favoriteStar.get();
+
+        mEditStateTexture[0] = getContext().textures->get(Textures::EditIcon);
+        mEditStateTexture[1] = getContext().textures->get(Textures::EditIconBlured);
+
+        SceneNode::Ptr editIcon(new RectangleNode(
+            &getContext(),
+            sf::Vector2f(40.f, 40.f),
+            getContext().textures->get(Textures::EditIcon)
+        ));
+        editIcon->setPosition(59.f + mWordIndicator->getLocalBounds().width + 50.f, 44.f);
+        editIcon->setOnHover([this] (SceneNode& node) {
+            ((RectangleNode*)&node)->setTexture(&mEditStateTexture[1]);
+        });
+        editIcon->setOnLostHover([this] (SceneNode& node) {
+            ((RectangleNode*)&node)->setTexture(&mEditStateTexture[0]);
+        });
+        editIcon->setOnClick([this] (SceneNode& node) {
+            Intent::Ptr intent(new Intent());
+            intent->putExtra("word", mWordIndicator->getString().toAnsiString());
+            intent->putExtra("definition", mDefinitions[mPagerIndex]);
+            intent->putExtra("definitionId", mPagerIndex);
+            requestStackPush(Activities::EDITDEFINITION, std::move(intent), EDIT);
+        });
+        mEditIndicator = editIcon.get();
+
+        mDeleteStateTexture[0] = getContext().textures->get(Textures::DeleteIcon);
+        mDeleteStateTexture[1] = getContext().textures->get(Textures::DeleteIconBlured);
+
+        SceneNode::Ptr deleteIcon(new RectangleNode(
+            &getContext(),
+            sf::Vector2f(40.f, 40.f),
+            getContext().textures->get(Textures::DeleteIcon)
+        ));
+        deleteIcon->setPosition(59.f + mWordIndicator->getLocalBounds().width + 100.f, 44.f);
+        deleteIcon->setOnHover([this] (SceneNode& node) {
+            ((RectangleNode*)&node)->setTexture(&mDeleteStateTexture[1]);
+        });
+        deleteIcon->setOnLostHover([this] (SceneNode& node) {
+            ((RectangleNode*)&node)->setTexture(&mDeleteStateTexture[0]);
+        });
+        deleteIcon->setOnClick([this] (SceneNode& node) {
+            requestStackPush(Activities::WORDDELCONFIRM, Intent::Ptr(new Intent()), DELETE);
+        });
+        mDeleteIndicator = deleteIcon.get();
 
         SceneNode::Ptr definitionFrame(new RectangleNode(
             &getContext(),
@@ -315,6 +339,8 @@ void ActivityDictionary::buildScene()
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionCore));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(wordText));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(favoriteStar));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(editIcon));
+        mSceneLayers[DefinitionBackground]->attachChild(std::move(deleteIcon));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionFrame));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(definitionIdText));
         mSceneLayers[DefinitionBackground]->attachChild(std::move(prevButton));
@@ -457,6 +483,8 @@ void ActivityDictionary::loadDefinitions()
     {
         mNoDefinitionsFound->enable();
         mFavoriteIndicator->disable();
+        mEditIndicator->disable();
+        mDeleteIndicator->disable();
         mNextButton->disable();
         mPrevButton->disable();
         mDefinitionIdIndicator->disable();
@@ -465,6 +493,8 @@ void ActivityDictionary::loadDefinitions()
 
     mNoDefinitionsFound->disable();
     mFavoriteIndicator->enable();
+    mEditIndicator->enable();
+    mDeleteIndicator->enable();
     mNextButton->enable();
     mPrevButton->enable();
     mDefinitionIdIndicator->enable();
@@ -497,6 +527,8 @@ void ActivityDictionary::displayWord(const std::string& word)
 
     mWordIndicator->setString(word);
     mFavoriteIndicator->setPosition(59.f + mWordIndicator->getLocalBounds().width, 44.f);
+    mEditIndicator->setPosition(59.f + mWordIndicator->getLocalBounds().width + 50.f, 44.f);
+    mDeleteIndicator->setPosition(59.f + mWordIndicator->getLocalBounds().width + 100.f, 44.f);
     ((RectangleNode*)mFavoriteIndicator)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
     loadDefinitions();
 }
@@ -504,6 +536,35 @@ void ActivityDictionary::displayWord(const std::string& word)
 void ActivityDictionary::onBackActivity(int resultCode, Activity::Intent::Ptr intent)
 {
     if(resultCode == FAVORITE)
+    {
+        if(intent == nullptr) return;
+        std::string word = intent->getExtra<std::string>("word");
+        displayWord(word);
+    }
+    else if(resultCode == FAVORITE_CONFIRM)
+    {
+        if(intent == nullptr) return;
+        bool confirmed = intent->getExtra<bool>("confirmed");
+        if(!confirmed) return;
+        mIsFavorite = !mIsFavorite;
+        ((RectangleNode*)mFavoriteIndicator)->setTexture(&mFavoriteStateTexture[mIsFavorite]);
+        getContext().api->set_favorite(mWordIndicator->getString(), mIsFavorite);
+    }
+    else if(resultCode == DELETE)
+    {
+        if(intent == nullptr) return;
+        bool confirmed = intent->getExtra<bool>("confirmed");
+        if(!confirmed) return;
+        getContext().api->delete_word(mWordIndicator->getString());
+        displayWord("");
+    }
+    else if(resultCode == EDIT)
+    {
+        if(intent == nullptr) return;
+        std::string word = intent->getExtra<std::string>("word");
+        displayWord(word);
+    }
+    else if(resultCode == ADD)
     {
         if(intent == nullptr) return;
         std::string word = intent->getExtra<std::string>("word");

@@ -13,6 +13,9 @@ private:
     {
         FAVORITE,
         ADD,
+        FAVORITE_CONFIRM,
+        EDIT,
+        DELETE,
         COUNT
     };
 
@@ -46,6 +49,8 @@ private:
     SceneNode*                  mDictionaryOptionsButton[Database::DictionaryId::SIZE];
     TextNode*                   mWordIndicator;
     SceneNode*                  mFavoriteIndicator;
+    SceneNode*                  mEditIndicator;
+    SceneNode*                  mDeleteIndicator;
     SceneNode*                  mNextButton;
     SceneNode*                  mPrevButton;
     SceneNode*                  mDefinitionIdIndicator;
@@ -54,6 +59,8 @@ private:
     bool                        mIsFavorite;
     int                         mPagerIndex;
     sf::Texture                 mFavoriteStateTexture[2];
+    sf::Texture                 mEditStateTexture[2];
+    sf::Texture                 mDeleteStateTexture[2];
     std::size_t                 mDictionaryId;
     std::vector<std::string>    mDefinitions;
     std::vector<SceneNode*>     mPages;

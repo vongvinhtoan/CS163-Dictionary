@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <Database.hpp>
 #include <API.hpp>
+#include <iostream>
 
 class ActivityStack;
 
@@ -26,6 +27,9 @@ namespace Activities
         DICTIONARY,
         FAVORITELIST,
         ADD,
+        FAVCONFIRM,
+        EDITDEFINITION,
+        WORDDELCONFIRM,
         MENU
     };
 }
@@ -71,8 +75,10 @@ public:
         T getExtra(const std::string& key)
         {
             auto found = mExtras.find(key);
-            if (found == mExtras.end())
+            if (found == mExtras.end()) {
+                std::cout<<"Key not found"<<std::endl;
                 throw std::runtime_error("Key not found");
+            }
             return std::any_cast<T>(found->second);
         }
     };
